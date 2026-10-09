@@ -428,7 +428,7 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
     <div class="ai-head"><b>AI ANALYSIS</b><span>최신 뉴스를 검색해서 Claude가 정리해요</span></div>
     <div class="size" id="size">
       <div class="size-top">
-        <label for="cap">내 투자 자본 (원)<input id="cap" type="text" inputmode="numeric" autocomplete="off" placeholder="예: 1,000,000"></label>
+        <label for="cap">내 투자 자본 ($)<input id="cap" type="text" inputmode="decimal" autocomplete="off" placeholder="예: 1,000"></label>
         <span class="tier" id="tier">—</span>
       </div>
       <div class="size-out" id="sizeOut"></div>
@@ -867,8 +867,8 @@ function tierOf(t, cat) {
   if (cat && cat.startsWith("E_")) return {k: "ETF", name: "섹터·배당·국가 ETF", lo: 10, hi: 20, why: "여러 종목에 나눠 담지만 한 업종이나 나라에 몰려 있어서, 지수 ETF보다는 적게 담는 편이에요."};
   return {k: "STOCK", name: "대형 개별주", lo: 3, hi: 10, why: "탄탄한 회사도 실적 한 번에 20~30% 빠질 수 있어요. 한 종목에는 자본의 한 자릿수 %만 담는 게 일반적인 기준이에요."};
 }
-const won = n => Math.round(n).toLocaleString("ko-KR") + "원";
-function getCap() { try { return Number(localStorage.getItem("cap") || 0); } catch (e) { return 0; } }
+const usd = n => "$" + n.toLocaleString("en-US", {minimumFractionDigits: n < 100 ? 2 : 0, maximumFractionDigits: n < 100 ? 2 : 0});
+function getCap() { try { return Number(localStorage.getItem("capUsd") || 0); } catch (e) { return 0; } }
 function renderSize(lean) {
   const r = currentT ? (DB.find(d => d[0] === currentT) || []) : [];
   const tier = tierOf(currentT, r[5] || null);
@@ -879,16 +879,20 @@ function renderSize(lean) {
     : lean === "up" ? " 상승 근거가 많아도 범위 위쪽을 넘기지 않는 게 기본이에요. 좋은 뉴스는 이미 가격에 반영돼 있을 때가 많아요." : "";
   const bar = `<div class="size-bar" aria-hidden="true"><i style="left:${tier.lo}%;width:${Math.max(tier.hi - tier.lo, 1)}%"></i></div>`;
   out.innerHTML = (cap > 0
-    ? `<div class="size-amt">${won(cap * tier.lo / 100)} ~ ${won(cap * tier.hi / 100)}<small>자본의 ${tier.lo}~${tier.hi}%</small></div>`
-    : `<div class="size-amt">${tier.lo}~${tier.hi}%<small>자본 대비</small></div><p class="fine">위에 자본을 넣으면 금액으로 바꿔서 보여줘요.</p>`)
+    ? `<div class="size-amt">${usd(cap * tier.lo / 100)} ~ ${usd(cap * tier.hi / 100)}<small>자본의 ${tier.lo}~${tier.hi}%</small></div>`
+    : `<div class="size-amt">${tier.lo}~${tier.hi}%<small>자본 대비</small></div><p class="fine">위에 자본을 달러로 넣으면 금액으로 바꿔서 보여줘요.</p>`)
     + bar + `<p>${tier.why}${leanNote}</p>`
     + `<p class="fine">자본은 생활비·비상금을 뺀, 잃어도 생활에 지장 없는 돈 기준이에요. 이건 종목 종류별 일반적인 분산 기준이지 투자 추천이 아니에요. 입력한 자본은 이 기기에만 저장돼요.</p>`;
 }
-$("cap").value = getCap() ? getCap().toLocaleString("ko-KR") : "";
+$("cap").value = getCap() ? getCap().toLocaleString("en-US", {maximumFractionDigits: 2}) : "";
 $("cap").addEventListener("input", e => {
-  const digits = e.target.value.replace(/[^\d]/g, "").slice(0, 13);
-  e.target.value = digits ? Number(digits).toLocaleString("ko-KR") : "";
-  try { localStorage.setItem("cap", digits || "0"); } catch (err) {}
+  let raw = e.target.value.replace(/[^\d.]/g, "");
+  const dot = raw.indexOf(".");
+  if (dot >= 0) raw = raw.slice(0, dot + 1) + raw.slice(dot + 1).replace(/\./g, "").slice(0, 2);
+  raw = raw.slice(0, 14);
+  const [ip, fp] = raw.split(".");
+  e.target.value = raw ? (ip ? Number(ip).toLocaleString("en-US") : "0") + (fp !== undefined ? "." + fp : "") : "";
+  try { localStorage.setItem("capUsd", String(Number(raw) || 0)); } catch (err) {}
   renderSize(lastLean);
 });
 let lastLean = null;

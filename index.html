@@ -517,7 +517,7 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
         <div class="side" id="tSide"><button type="button" data-v="buy" aria-pressed="true">매수</button><button type="button" data-v="sell" aria-pressed="false">매도</button></div>
       </div>
       <div class="f-cur"><label>입력 방식</label>
-        <div class="side" id="tCur"><button type="button" data-v="KRW" aria-pressed="true">₩ 원화 금액 (소수점)</button><button type="button" data-v="USD" aria-pressed="false">$ 1주 가격</button></div>
+        <div class="side" id="tCur"><button type="button" data-v="USD" aria-pressed="true">$ 1주 가격</button><button type="button" data-v="KRW" aria-pressed="false">₩ 원화 금액 (소수점)</button></div>
       </div>
       <label class="f-p" for="tP"><span id="tPLbl">매입금액 (원)</span><input id="tP" type="number" inputmode="decimal" step="any" min="0" placeholder="10000"></label>
       <label class="f-q" for="tQ">수량<input id="tQ" type="number" inputmode="decimal" step="any" min="0" placeholder="3"></label>
@@ -1184,8 +1184,8 @@ $("trades").addEventListener("click", async e => {
   try { await tradesRef.doc(b.dataset.id).delete(); } catch (err) { b.disabled = false; tMsg("삭제하지 못했어요. 잠시 뒤 다시 눌러 주세요.", true); }
 });
 
-let curMode = "KRW";
-try { curMode = localStorage.getItem("tCur") || "KRW"; } catch (e) {}
+let curMode = "USD";
+try { curMode = localStorage.getItem("tCur") || "USD"; } catch (e) {}
 function applyCur() {
   $("tCur").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === curMode)));
   $("tPLbl").textContent = curMode === "KRW" ? (side === "sell" ? "매도금액 (원)" : "매입금액 (원)") : "1주 가격 ($)";

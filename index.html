@@ -255,6 +255,32 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--amber); outline
 .size p { margin: 0; font-family: var(--font-kr); font-size: 13px; line-height: 1.6; color: var(--steel); }
 .size .fine { font-size: 11.5px; color: var(--dim); }
 
+/* basket */
+.cart { border: 1px solid var(--line); background: var(--panel); padding: 14px; display: grid; gap: 12px; }
+.cart-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cart-head b { color: var(--amber); font-size: 11px; letter-spacing: .24em; }
+.cart-head span { color: var(--dim); font-size: 11px; font-family: var(--font-kr); }
+.cart-cap { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; font-size: 13px; font-family: var(--font-kr); color: var(--steel); }
+.cart-cap b { font-family: var(--font-display); font-weight: 400; font-size: 26px; color: var(--fg); letter-spacing: .02em; }
+.alloc { display: flex; height: 14px; border: 1px solid var(--line); background: var(--bg); overflow: hidden; }
+.alloc i { display: block; height: 100%; border-right: 1px solid var(--bg); }
+.rows { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.crow { display: grid; grid-template-columns: 12px minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding: 10px 12px; background: var(--bg); }
+.crow .sw { width: 10px; height: 10px; }
+.crow .nm { min-width: 0; display: grid; gap: 1px; }
+.crow .nm b { font-family: var(--font-display); font-weight: 400; font-size: 19px; letter-spacing: .02em; line-height: 1.1; }
+.crow .nm span { font-size: 11.5px; color: var(--dim); font-family: var(--font-kr); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.crow .amt { text-align: right; font-variant-numeric: tabular-nums; display: grid; gap: 1px; }
+.crow .amt b { font-size: 15px; font-weight: 600; }
+.crow .amt span { font-size: 11px; color: var(--dim); }
+.crow.cash .nm b { font-family: var(--font-kr); font-size: 14px; font-weight: 700; color: var(--steel); }
+.rm { font: inherit; font-size: 14px; width: 30px; height: 30px; border: 1px solid var(--line); background: transparent; color: var(--dim); cursor: pointer; }
+.rm:hover { color: var(--amber); border-color: var(--amber-dim); }
+.cart-empty { padding: 16px 12px; text-align: center; font-family: var(--font-kr); font-size: 13px; color: var(--dim); background: var(--bg); }
+.cart p { margin: 0; font-family: var(--font-kr); font-size: 12.5px; line-height: 1.6; color: var(--steel); }
+.cart .fine { color: var(--dim); font-size: 11.5px; }
+.cart-btn[aria-pressed="true"] { border-color: var(--amber); color: var(--amber); }
+
 /* AI analysis */
 .ai { border: 1px solid var(--amber-dim); background: var(--bg); padding: 14px; display: grid; gap: 12px; }
 .ai-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -420,9 +446,17 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
 
   <div class="readout" id="readout"></div>
   <div class="rbar" id="rbar">
-    <button class="star" id="star" type="button" aria-pressed="false">☆ 관심종목</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="star" id="star" type="button" aria-pressed="false">☆ 관심종목</button><button class="star cart-btn" id="addCart" type="button" aria-pressed="false">+ 장바구니</button></div>
     <div class="hist" id="hist" hidden></div>
   </div>
+
+  <section class="cart" id="cart">
+    <div class="cart-head"><b>F5 BASKET</b><span>담은 종목에 자본을 나눠줘요</span></div>
+    <div class="cart-cap" id="cartCap"></div>
+    <div class="alloc" id="alloc" aria-hidden="true"></div>
+    <div class="rows" id="rows"></div>
+    <div id="cartNote"></div>
+  </section>
 
   <section class="ai" id="ai">
     <div class="ai-head"><b>AI ANALYSIS</b><span>최신 뉴스를 검색해서 Claude가 정리해요</span></div>
@@ -576,6 +610,7 @@ function render(input) {
   if (r.cat && r.cat !== activeCat) showCat(r.cat); else markTile(r.t);
   $("verdict").hidden = true; $("aiMsg").hidden = true;
   lastLean = null; if (typeof renderSize === "function" && $("sizeOut")) renderSize(null);
+  if (typeof syncCartBtn === "function" && $("addCart")) syncCartBtn();
   $("prompt").textContent = `${label} 최근 실적이랑 주요 뉴스 찾아서 정리해줘`;
   try { localStorage.setItem("lastQ", input); } catch (e) {}
 }
@@ -893,9 +928,75 @@ $("cap").addEventListener("input", e => {
   const [ip, fp] = raw.split(".");
   e.target.value = raw ? (ip ? Number(ip).toLocaleString("en-US") : "0") + (fp !== undefined ? "." + fp : "") : "";
   try { localStorage.setItem("capUsd", String(Number(raw) || 0)); } catch (err) {}
-  renderSize(lastLean);
+  renderSize(lastLean); renderCart();
 });
 let lastLean = null;
+
+// ---- basket: split capital across chosen tickers by risk tier ----
+const PALETTE = ["#ff1f3d","#ff6b7d","#c9c2c2","#8a1324","#ff9aa6","#6e6466","#ffd1d6","#b0273a","#e9e2e2","#5e0d17","#ff4d63","#9d9294","#ffb3bc","#7a1a28","#d8d0d0"];
+function getCart() { try { const v = JSON.parse(localStorage.getItem("cart") || "[]"); return Array.isArray(v) ? v.filter(t => DB.some(d => d[0] === t) || /^[A-Z.\-]{1,6}$/.test(t)) : []; } catch (e) { return []; } }
+function setCart(list) { try { localStorage.setItem("cart", JSON.stringify(list)); } catch (e) {} renderCart(); syncCartBtn(); }
+function syncCartBtn() {
+  const on = !!(currentT && getCart().includes(currentT));
+  $("addCart").setAttribute("aria-pressed", String(on));
+  $("addCart").textContent = on ? "✓ 담김 (빼기)" : "+ 장바구니";
+  $("addCart").hidden = !currentT;
+}
+// target = middle of each tier's range; never above the tier's ceiling; what cannot be placed stays as cash
+function allocate(list) {
+  const items = list.map(t => { const d = DB.find(x => x[0] === t) || []; const tier = tierOf(t, d[5] || null); return {t, name: d[2] || t, tier, w: (tier.lo + tier.hi) / 2}; });
+  const sum = items.reduce((a, x) => a + x.w, 0);
+  if (sum >= 100) items.forEach(x => x.w = x.w * 100 / sum);
+  else {
+    let free = 100 - sum;
+    for (let pass = 0; pass < 20 && free > 1e-6; pass++) {
+      const room = items.filter(x => x.w < x.tier.hi - 1e-9);
+      if (!room.length) break;
+      const base = room.reduce((a, x) => a + x.w, 0);
+      let used = 0;
+      room.forEach(x => { const add = Math.min(free * x.w / base, x.tier.hi - x.w); x.w += add; used += add; });
+      free -= used;
+      if (used < 1e-9) break;
+    }
+  }
+  const cash = Math.max(0, 100 - items.reduce((a, x) => a + x.w, 0));
+  return {items, cash};
+}
+function renderCart() {
+  const list = getCart(), cap = getCap();
+  $("cartCap").innerHTML = cap > 0
+    ? `자본 <b>${usd(cap)}</b> · ${list.length}종목`
+    : `<span>위 AI 분석 칸의 "내 투자 자본($)"을 넣으면 달러로 나눠줘요.</span>`;
+  if (!list.length) {
+    $("alloc").innerHTML = ""; $("alloc").hidden = true;
+    $("rows").innerHTML = `<div class="cart-empty">종목을 고르고 <b>+ 장바구니</b>를 누르면 여기에 담겨요. 여러 개를 담으면 자본을 나눠서 보여줘요.</div>`;
+    $("cartNote").innerHTML = ""; return;
+  }
+  const {items, cash} = allocate(list);
+  $("alloc").hidden = false;
+  $("alloc").innerHTML = items.map((x, i) => `<i style="width:${x.w}%;background:${PALETTE[i % PALETTE.length]}"></i>`).join("") + (cash > 0.05 ? `<i style="width:${cash}%;background:var(--line)"></i>` : "");
+  const amt = w => cap > 0 ? usd(cap * w / 100) : `${w.toFixed(1)}%`;
+  $("rows").innerHTML = items.map((x, i) => `<div class="crow">
+      <span class="sw" style="background:${PALETTE[i % PALETTE.length]}"></span>
+      <span class="nm"><b>${esc(x.t)}</b><span>${esc(x.name)} · ${esc(x.tier.name)} ${x.tier.lo}~${x.tier.hi}%</span></span>
+      <span class="amt"><b>${amt(x.w)}</b><span>${x.w.toFixed(1)}%${FRACTIONAL.has(x.t) ? " · 소수점 OK" : ""}</span></span>
+      <button class="rm" type="button" data-t="${esc(x.t)}" aria-label="${esc(x.t)} 빼기">×</button></div>`).join("")
+    + (cash > 0.05 ? `<div class="crow cash"><span class="sw" style="background:var(--line)"></span><span class="nm"><b>현금으로 남김</b><span>종목마다 상한이 있어서 다 못 넣은 돈</span></span><span class="amt"><b>${amt(cash)}</b><span>${cash.toFixed(1)}%</span></span><span></span></div>` : "");
+  const hasCore = items.some(x => x.tier.k === "CORE");
+  const tips = [];
+  if (cash > 20 && !hasCore) tips.push("현금이 많이 남는 건 담은 종목이 전부 한 종목에 많이 넣으면 위험한 종류라서예요. VOO·QQQ 같은 지수 ETF를 하나 담으면 그 돈이 거기로 가요.");
+  if (items.some(x => x.tier.k === "LEV")) tips.push("레버리지 ETF는 0~2%만 배정했어요. 장기 보유용이 아니에요.");
+  if (items.length >= 2 && !items.some(x => x.tier.k === "CORE" || x.tier.k === "ETF")) tips.push("개별주만 담았어요. 한 업종에 몰렸는지도 확인해 보세요.");
+  $("cartNote").innerHTML = (tips.length ? `<p>${tips.map(esc).join("<br>")}</p>` : "")
+    + `<p class="fine">각 종목 종류의 일반적인 비중 범위 가운데값을 기준으로, 범위를 넘지 않게 나눈 거예요. 매수 추천이 아니고, 장바구니는 이 기기에만 저장돼요.</p>`;
+}
+$("addCart").addEventListener("click", () => {
+  if (!currentT) return;
+  const list = getCart();
+  if (list.includes(currentT)) setCart(list.filter(t => t !== currentT));
+  else { if (list.length >= 15) { $("cartNote").innerHTML = `<p>장바구니에는 15개까지 담을 수 있어요.</p>`; return; } setCart([...list, currentT]); }
+});
+$("rows").addEventListener("click", e => { const b = e.target.closest(".rm"); if (b) setCart(getCart().filter(t => t !== b.dataset.t)); });
 
 const MCP_ERR = {
   server_not_connected: "Parallel Search 커넥터가 연결돼 있지 않아서 뉴스 없이 분석했어요. claude.ai 설정의 커넥터에서 연결하면 최신 뉴스로 분석해요.",
@@ -1352,6 +1453,7 @@ let start = "구글";
 try { start = localStorage.getItem("lastQ") || "구글"; } catch (e) {}
 $("q").value = start;
 tick(); setInterval(tick, 1000);
+renderCart();
 showCat(CATS[0][0]);
 render(start);
 </script>

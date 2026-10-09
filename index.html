@@ -120,6 +120,22 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--amber); outline
 }
 .chip:hover { color: var(--amber); border-color: var(--amber-dim); }
 
+/* search suggestions */
+.search { position: relative; }
+.sugg {
+  position: absolute; left: 0; right: 0; top: 62px; z-index: 20; max-height: 340px; overflow-y: auto;
+  background: var(--panel); border: 1px solid var(--amber); box-shadow: 0 18px 40px rgba(0,0,0,.6), 0 0 24px rgba(255,31,61,.15);
+}
+.sg { display: grid; grid-template-columns: 76px 1fr auto; gap: 10px; align-items: center; width: 100%; padding: 10px 14px;
+  border: 0; border-top: 1px dashed var(--line); background: transparent; color: var(--fg); text-align: left; font: inherit; cursor: pointer; }
+.sg:first-child { border-top: 0; }
+.sg b { font-family: var(--font-display); font-weight: 400; font-size: 19px; letter-spacing: .02em; }
+.sg span { font-family: var(--font-kr); font-size: 14px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sg small { font-family: var(--font-kr); font-size: 11px; color: var(--dim); white-space: nowrap; }
+.sg.hl, .sg:hover { background: var(--amber-dim); }
+.sg.hl b { color: var(--fg); }
+.sg-none { padding: 12px 14px; font-family: var(--font-kr); font-size: 13px; color: var(--dim); }
+
 /* watchlist, recent, readout bar */
 .watch { align-items: center; }
 .watch .lbl-w { font-size: 11px; font-weight: 800; letter-spacing: .14em; color: var(--amber); margin-right: 2px; }
@@ -359,14 +375,14 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
     <div class="reg"><small>REG · KST</small><b id="reg">--:--</b></div>
   </div>
 
-  <div>
+  <div class="search">
     <form id="f">
       <label for="q" hidden>종목 이름 또는 티커</label>
       <span class="prompt-sign">&gt;_</span>
-      <input id="q" type="search" list="list" placeholder="구글, 스페이스X, NVDA…" autocomplete="off" enterkeyhint="search" spellcheck="false">
+      <input id="q" type="search" role="combobox" aria-autocomplete="list" aria-controls="sugg" aria-expanded="false" placeholder="구글, 스페이스X, NVDA…" autocomplete="off" enterkeyhint="search" spellcheck="false">
       <button class="go" type="submit">GO</button>
     </form>
-    <datalist id="list"></datalist>
+    <div class="sugg" id="sugg" role="listbox" hidden></div>
     <div class="chips" id="chips"></div>
     <div class="chips watch" id="watch" hidden></div>
   </div>
@@ -463,7 +479,6 @@ const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'
 
 // ticker tape: symbols and exchanges only, no invented prices
 const ETF = new Set(DB.filter(d => d[4]).map(d => d[0]));
-$("list").innerHTML = DB.map(([t,ex,name]) => `<option value="${name}">${t}</option>`).join("");
 const tapeItems = DB.slice(0, 40).map(([t,ex,name]) => `<span><b>${t}</b><i>${ex} · ${name}</i></span>`).join("");
 $("tape").innerHTML = tapeItems + tapeItems;
 
@@ -617,10 +632,56 @@ $("chips").addEventListener("click", e => {
 $("watch").addEventListener("click", e => {
   const b = e.target.closest(".chip"); if (b) { $("q").value = b.dataset.v; render(b.dataset.v); }
 });
+
+// ---- search suggestions (replaces the browser's own popup so typing is never interrupted) ----
+let sgList = [], sgIdx = -1;
+function suggest(v) {
+  const n = norm(v);
+  if (!n) return [];
+  const scored = [];
+  for (const d of DB) {
+    const [t, , name, al] = d, tl = t.toLowerCase();
+    let sc = 0;
+    if (tl === n) sc = 100; else if (tl.startsWith(n)) sc = 80;
+    else if (norm(name).startsWith(n)) sc = 70; else if (al.some(a => norm(a).startsWith(n))) sc = 60;
+    else if (norm(name).includes(n)) sc = 40; else if (al.some(a => norm(a).includes(n))) sc = 30;
+    if (sc) scored.push([sc, d]);
+  }
+  return scored.sort((a, b) => b[0] - a[0] || a[1][0].length - b[1][0].length).slice(0, 8).map(x => x[1]);
+}
+function drawSugg() {
+  const box = $("sugg"), v = $("q").value.trim();
+  if (!v || document.activeElement !== $("q")) { box.hidden = true; $("q").setAttribute("aria-expanded", "false"); return; }
+  sgList = suggest(v);
+  const catName = c => (CATS.find(x => x[0] === c) || [, ""])[1];
+  box.innerHTML = sgList.length
+    ? sgList.map(([t, , name, , , c], i) => `<button type="button" class="sg${i === sgIdx ? " hl" : ""}" role="option" data-t="${esc(t)}"><b>${esc(t)}</b><span>${esc(name)}</span><small>${esc(catName(c))}</small></button>`).join("")
+    : `<div class="sg-none">목록에 없어요. 티커를 입력하고 GO를 누르면 그대로 찾아요.</div>`;
+  box.hidden = false; $("q").setAttribute("aria-expanded", "true");
+}
+function pickSugg(t) {
+  $("sugg").hidden = true; sgIdx = -1;
+  $("q").value = t; $("q").blur(); render(t);
+}
+$("q").addEventListener("input", () => { sgIdx = -1; drawSugg(); });
+$("q").addEventListener("focus", drawSugg);
+$("q").addEventListener("blur", () => setTimeout(() => { $("sugg").hidden = true; }, 150));
+$("q").addEventListener("keydown", e => {
+  if ($("sugg").hidden || !sgList.length || e.isComposing) return;
+  if (e.key === "ArrowDown") { e.preventDefault(); sgIdx = (sgIdx + 1) % sgList.length; drawSugg(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); sgIdx = (sgIdx - 1 + sgList.length) % sgList.length; drawSugg(); }
+  else if (e.key === "Enter" && sgIdx >= 0) { e.preventDefault(); pickSugg(sgList[sgIdx][0]); }
+  else if (e.key === "Escape") { $("sugg").hidden = true; }
+});
+// pointerdown + preventDefault keeps the keyboard and the half-typed Korean syllable intact
+$("sugg").addEventListener("pointerdown", e => { if (e.target.closest(".sg")) e.preventDefault(); });
+$("sugg").addEventListener("click", e => { const b = e.target.closest(".sg"); if (b) pickSugg(b.dataset.t); });
+
 $("f").addEventListener("submit", e => {
   e.preventDefault();
   const v = $("q").value.trim();
-  if (v) render(v);
+  $("sugg").hidden = true;
+  if (v) { $("q").blur(); render(v); }
 });
 $("copy").addEventListener("click", async () => {
   const text = $("prompt").textContent, btn = $("copy");

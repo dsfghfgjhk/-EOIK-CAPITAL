@@ -829,6 +829,12 @@ function li(arr) {
 function showVerdict(d, src) {
   const lean = ["up","down","flat"].includes(d.lean) ? d.lean : "flat";
   lastLean = lean; renderSize(lean);
+  if (currentT) {
+    let sc = Number(d.score); if (!isFinite(sc)) sc = 0;
+    const all = getLeans(); all[currentT] = {score: Math.max(-100, Math.min(100, sc)), lean, at: new Date().toISOString()};
+    try { localStorage.setItem("leans", JSON.stringify(all)); } catch (e) {}
+    if (typeof renderCart === "function") renderCart();
+  }
   const word = {up: "상승 근거 우세", down: "하락 근거 우세", flat: "엇갈림"}[lean];
   let score = Number(d.score); if (!isFinite(score)) score = 0;
   score = Math.max(-100, Math.min(100, score));
@@ -932,7 +938,17 @@ $("cap").addEventListener("input", e => {
 });
 let lastLean = null;
 
-// ---- basket: split capital across chosen tickers by risk tier ----
+// ---- basket: split capital across chosen tickers by risk tier, tilted by the latest AI analysis ----
+const FRESH_DAYS = 7;
+function getLeans() { try { const v = JSON.parse(localStorage.getItem("leans") || "{}"); return v && typeof v === "object" ? v : {}; } catch (e) { return {}; } }
+function leanFor(t) {
+  const local = getLeans()[t];
+  const saved = (typeof analyses !== "undefined" ? analyses : []).filter(a => a.t === t).sort((a, b) => b.at.localeCompare(a.at))[0];
+  const pick = [local, saved].filter(Boolean).sort((a, b) => b.at.localeCompare(a.at))[0];
+  if (!pick) return null;
+  const age = (Date.now() - new Date(pick.at).getTime()) / 864e5;
+  return {score: Number(pick.score) || 0, lean: pick.lean, at: pick.at, stale: age > FRESH_DAYS};
+}
 const PALETTE = ["#ff1f3d","#ff6b7d","#c9c2c2","#8a1324","#ff9aa6","#6e6466","#ffd1d6","#b0273a","#e9e2e2","#5e0d17","#ff4d63","#9d9294","#ffb3bc","#7a1a28","#d8d0d0"];
 function getCart() { try { const v = JSON.parse(localStorage.getItem("cart") || "[]"); return Array.isArray(v) ? v.filter(t => DB.some(d => d[0] === t) || /^[A-Z.\-]{1,6}$/.test(t)) : []; } catch (e) { return []; } }
 function setCart(list) { try { localStorage.setItem("cart", JSON.stringify(list)); } catch (e) {} renderCart(); syncCartBtn(); }
@@ -944,7 +960,12 @@ function syncCartBtn() {
 }
 // target = middle of each tier's range; never above the tier's ceiling; what cannot be placed stays as cash
 function allocate(list) {
-  const items = list.map(t => { const d = DB.find(x => x[0] === t) || []; const tier = tierOf(t, d[5] || null); return {t, name: d[2] || t, tier, w: (tier.lo + tier.hi) / 2}; });
+  const items = list.map(t => {
+    const d = DB.find(x => x[0] === t) || [], tier = tierOf(t, d[5] || null), ln = leanFor(t);
+    // score -100..100 moves the starting point from the bottom to the top of the tier's own range
+    const tilt = ln && !ln.stale ? ln.score / 200 : 0;
+    return {t, name: d[2] || t, tier, ln, w: tier.lo + (tier.hi - tier.lo) * (0.5 + tilt)};
+  });
   const sum = items.reduce((a, x) => a + x.w, 0);
   if (sum >= 100) items.forEach(x => x.w = x.w * 100 / sum);
   else {
@@ -954,13 +975,22 @@ function allocate(list) {
       if (!room.length) break;
       const base = room.reduce((a, x) => a + x.w, 0);
       let used = 0;
-      room.forEach(x => { const add = Math.min(free * x.w / base, x.tier.hi - x.w); x.w += add; used += add; });
+      const pull = x => x.w * (1 + (x.ln && !x.ln.stale ? x.ln.score / 100 : 0) * 0.5);
+      const pbase = room.reduce((a, x) => a + pull(x), 0) || base;
+      room.forEach(x => { const add = Math.min(free * pull(x) / pbase, x.tier.hi - x.w); x.w += add; used += add; });
       free -= used;
       if (used < 1e-9) break;
     }
   }
   const cash = Math.max(0, 100 - items.reduce((a, x) => a + x.w, 0));
   return {items, cash};
+}
+function leanTag(ln) {
+  if (!ln) return `<span style="color:var(--dim)">분석 전 · 가운데값</span>`;
+  const d = new Date(ln.at), when = `${d.getMonth() + 1}/${d.getDate()}`;
+  if (ln.stale) return `<span style="color:var(--dim)">${when} 분석 (7일 지나서 반영 안 함)</span>`;
+  const cls = ln.lean === "up" ? "var(--up)" : ln.lean === "down" ? "var(--down)" : "var(--steel)";
+  return `<span style="color:${cls}">${ln.score > 0 ? "+" : ""}${Math.round(ln.score)} 반영 · ${when}</span>`;
 }
 function renderCart() {
   const list = getCart(), cap = getCap();
@@ -978,17 +1008,19 @@ function renderCart() {
   const amt = w => cap > 0 ? usd(cap * w / 100) : `${w.toFixed(1)}%`;
   $("rows").innerHTML = items.map((x, i) => `<div class="crow">
       <span class="sw" style="background:${PALETTE[i % PALETTE.length]}"></span>
-      <span class="nm"><b>${esc(x.t)}</b><span>${esc(x.name)} · ${esc(x.tier.name)} ${x.tier.lo}~${x.tier.hi}%</span></span>
+      <span class="nm"><b>${esc(x.t)}</b><span>${esc(x.tier.name)} ${x.tier.lo}~${x.tier.hi}% · ${leanTag(x.ln)}</span></span>
       <span class="amt"><b>${amt(x.w)}</b><span>${x.w.toFixed(1)}%${FRACTIONAL.has(x.t) ? " · 소수점 OK" : ""}</span></span>
       <button class="rm" type="button" data-t="${esc(x.t)}" aria-label="${esc(x.t)} 빼기">×</button></div>`).join("")
     + (cash > 0.05 ? `<div class="crow cash"><span class="sw" style="background:var(--line)"></span><span class="nm"><b>현금으로 남김</b><span>종목마다 상한이 있어서 다 못 넣은 돈</span></span><span class="amt"><b>${amt(cash)}</b><span>${cash.toFixed(1)}%</span></span><span></span></div>` : "");
   const hasCore = items.some(x => x.tier.k === "CORE");
   const tips = [];
+  const todo = items.filter(x => !x.ln || x.ln.stale).map(x => x.t);
   if (cash > 20 && !hasCore) tips.push("현금이 많이 남는 건 담은 종목이 전부 한 종목에 많이 넣으면 위험한 종류라서예요. VOO·QQQ 같은 지수 ETF를 하나 담으면 그 돈이 거기로 가요.");
   if (items.some(x => x.tier.k === "LEV")) tips.push("레버리지 ETF는 0~2%만 배정했어요. 장기 보유용이 아니에요.");
   if (items.length >= 2 && !items.some(x => x.tier.k === "CORE" || x.tier.k === "ETF")) tips.push("개별주만 담았어요. 한 업종에 몰렸는지도 확인해 보세요.");
-  $("cartNote").innerHTML = (tips.length ? `<p>${tips.map(esc).join("<br>")}</p>` : "")
-    + `<p class="fine">각 종목 종류의 일반적인 비중 범위 가운데값을 기준으로, 범위를 넘지 않게 나눈 거예요. 매수 추천이 아니고, 장바구니는 이 기기에만 저장돼요.</p>`;
+  $("cartNote").innerHTML = (todo.length ? `<p>아직 분석이 없거나 오래된 종목: ${todo.map(t => `<button class="chip" type="button" data-go="${esc(t)}">${esc(t)}</button>`).join(" ")} 눌러서 분석하면 비율에 반영돼요.</p>` : "")
+    + (tips.length ? `<p>${tips.map(esc).join("<br>")}</p>` : "")
+    + `<p class="fine">종목 종류별 비중 범위 안에서, 최근 7일 안의 AI 분석 점수(-100~+100)만큼 아래쪽이나 위쪽으로 옮겨서 나눠요. 상승 근거가 아무리 많아도 범위 위쪽을 넘기지 않아요. 매수 추천이 아니고, 장바구니는 이 기기에만 저장돼요.</p>`;
 }
 $("addCart").addEventListener("click", () => {
   if (!currentT) return;
@@ -997,6 +1029,11 @@ $("addCart").addEventListener("click", () => {
   else { if (list.length >= 15) { $("cartNote").innerHTML = `<p>장바구니에는 15개까지 담을 수 있어요.</p>`; return; } setCart([...list, currentT]); }
 });
 $("rows").addEventListener("click", e => { const b = e.target.closest(".rm"); if (b) setCart(getCart().filter(t => t !== b.dataset.t)); });
+$("cartNote").addEventListener("click", e => {
+  const b = e.target.closest("[data-go]"); if (!b) return;
+  $("q").value = b.dataset.go; render(b.dataset.go);
+  $("ai").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"});
+});
 
 const MCP_ERR = {
   server_not_connected: "Parallel Search 커넥터가 연결돼 있지 않아서 뉴스 없이 분석했어요. claude.ai 설정의 커넥터에서 연결하면 최신 뉴스로 분석해요.",
@@ -1372,7 +1409,7 @@ function startMember() {
   stopMember();
   const ref = profileRef(); if (!ref) return;
   unsubProfile = ref.onSnapshot(snap => { watch = (snap.exists && Array.isArray(snap.data().watch)) ? snap.data().watch : []; renderWatch(); updateRbar(); }, () => {});
-  unsubAn = ref.collection("analyses").onSnapshot(snap => { analyses = snap.docs.filter(d => d.exists).map(d => d.data()).filter(a => a.t && a.at); updateRbar(); }, () => {});
+  unsubAn = ref.collection("analyses").onSnapshot(snap => { analyses = snap.docs.filter(d => d.exists).map(d => d.data()).filter(a => a.t && a.at); updateRbar(); if (typeof renderCart === "function") renderCart(); }, () => {});
 }
 function stopMember() {
   if (unsubProfile) unsubProfile(); if (unsubAn) unsubAn();

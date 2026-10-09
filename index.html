@@ -1062,6 +1062,7 @@ $("logout").addEventListener("click", () => {
 });
 
 (async () => {
+  if (!window.claude) return; // outside Claude the Puter journal below takes over
   try {
     const [db, user] = await Promise.all([claude.use("db"), claude.use("user")]);
     const uid = user ? await user.id() : null;
@@ -1088,14 +1089,14 @@ $("logout").addEventListener("click", () => {
 // ---- review: price context via search + Claude reads the whole log ----
 function rvMsg(html, err) { const m = $("rvMsg"); m.hidden = !html; m.innerHTML = html || ""; m.className = "ai-msg" + (err ? " err" : ""); }
 $("rv").addEventListener("click", async () => {
-  const sample = await samplePromise;
-  if (!sample) return rvMsg("이 화면에서는 AI 복기를 쓸 수 없어요.", true);
+  const sample = window.__usePuter ? null : await samplePromise;
+  if (!sample && !window.__usePuter) return rvMsg("이 화면에서는 AI 복기를 쓸 수 없어요.", true);
   const btn = $("rv"); btn.disabled = true; $("review").hidden = true;
   try {
     const list = [...trades].sort((a, b) => (a.date + a.at).localeCompare(b.date + b.at)).slice(-60);
     const recent = [...new Set([...list].reverse().map(t => t.t))].slice(0, 3);
     let ctx = [];
-    const mcp = await mcpPromise;
+    const mcp = window.__usePuter ? null : await mcpPromise;
     if (mcp && recent.length) {
       rvMsg(`<div class="steps"><span class="on">▸ ${esc(recent.join(", "))} 가격 흐름 검색</span><span>· Claude가 매매 복기 (10~60초)</span></div>`);
       const first = t => list.find(x => x.t === t).date;
@@ -1127,7 +1128,19 @@ ${ctx.length ? `<가격·뉴스 자료>\n${block}\n</가격·뉴스 자료>\n자
 
 반드시 아래 JSON 하나만 출력해.
 {"grade": "B", "headline": "...", "good": ["..."], "bad": ["..."], "patterns": ["..."], "rules": ["..."], "basis": "근거와 한계 한 문장"}`;
-    const d = await sample.json(prompt, {modelTier: "default"});
+    let d;
+    if (window.__usePuter) {
+      rvMsg(`<div class="steps"><span class="on">▸ 가격 흐름 검색 + 매매 복기 (Puter · 10~40초)</span></div>`);
+      const p = await loadPuter();
+      const resp = await p.ai.chat(prompt.replace("가격 자료를 가져오지 못했어. 매매기록과 네가 아는 일반 지식만으로 판단하고 그 한계를 밝혀.",
+        "웹을 검색해서 매매한 종목들의 매수 시점 이후 가격 흐름과 주요 뉴스를 찾아 근거로 써. 찾은 출처 번호를 [1]처럼 붙여."), {model: "perplexity/sonar"});
+      const m = textOf(resp).match(/\{[\s\S]*\}/);
+      if (!m) throw {code: "invalid_json"};
+      try { d = JSON.parse(m[0]); } catch (e) { throw {code: "invalid_json"}; }
+      ctx = citesOf(resp);
+    } else {
+      d = await sample.json(prompt, {modelTier: "default"});
+    }
     const L = a => (Array.isArray(a) ? a : []).slice(0, 5).map(x => `<li>${cite(x)}</li>`).join("") || "<li>없음</li>";
     $("review").innerHTML = `
       <div class="card"><div class="grade">${esc(String(d.grade || "?")).slice(0, 2)}</div><p>${cite(d.headline || "")}</p></div>
@@ -1169,7 +1182,7 @@ $("star").addEventListener("click", async () => {
   if (!me) { $("log").scrollIntoView({behavior: "smooth", block: "start"}); aMsg("관심종목은 로그인하면 저장돼요."); return; }
   const next = watch.includes(currentT) ? watch.filter(t => t !== currentT) : [...watch, currentT].slice(-30);
   watch = next; renderWatch(); updateRbar();
-  try { await profileRef().update({watch: next}); } catch (e) { aMsg("관심종목을 저장하지 못했어요."); }
+  try { if (window.__puterWatchSave) await window.__puterWatchSave(next); else await profileRef().update({watch: next}); } catch (e) { aMsg("관심종목을 저장하지 못했어요."); }
 });
 async function saveAnalysis(t, d) {
   if (!me || !DB_ || !t) return;
@@ -1206,16 +1219,56 @@ if (!window.claude) {
   note.innerHTML = `여기서는 무료 AI 서비스 <b>Puter</b>(Perplexity 검색 모델)로 분석해요. 처음 누를 때 Puter 무료 계정 로그인 창이 떠요. 무료 한도가 끝나면 <a href="${CLAUDE_URL}" target="_blank" rel="noopener" style="color:var(--amber)">Claude에서 열기 ↗</a>로 분석하세요.`;
   $("run").after(note);
   window.__usePuter = true;
+  // ---- trade log on Puter: each member signs in with their own free Puter account ----
   const log = $("log");
   if (log) {
-    log.querySelector("#auth") && (log.querySelector("#auth").hidden = true);
-    const body = $("logBody"); if (body) body.hidden = true;
-    const a = document.createElement("a");
-    a.className = "run open-claude"; a.href = CLAUDE_URL; a.target = "_blank"; a.rel = "noopener";
-    a.textContent = "매매일지 · 복기 열기 ↗";
-    const p = document.createElement("p"); p.className = "open-note";
-    p.textContent = "로그인, 매매일지, AI 매매 평가는 Claude 안의 같은 페이지에서 쓸 수 있어요.";
-    log.append(a, p);
+    $("auth").hidden = true;
+    log.querySelector(".log-head span").textContent = "매매일지 · Puter 계정별로 따로 저장돼요";
+    const gate = document.createElement("div"); gate.className = "auth"; gate.id = "pGate";
+    gate.innerHTML = `<button class="run" id="pIn" type="button">PUTER로 로그인 ▸</button>
+      <p class="hint">무료 Puter 계정으로 로그인하면 내 매매일지가 그 계정에 저장돼요. 동아리원마다 각자 Puter 계정을 쓰면 일지가 섞이지 않아요.</p>
+      <div class="msg" id="pMsg"></div>`;
+    $("me").before(gate);
+    const KEY = "eoik_trades_v1", WKEY = "eoik_watch_v1";
+    const saveAll = async () => { await window.puter.kv.set(KEY, JSON.stringify(trades)); };
+    // a tiny stand-in with the same calls the log code already makes
+    const puterRef = {
+      doc: id => ({
+        set: async body => { trades = [...trades.filter(t => t.id !== id), {id, ...body}]; await saveAll(); renderLog(); },
+        delete: async () => { trades = trades.filter(t => t.id !== id); await saveAll(); renderLog(); }
+      })
+    };
+    const enterPuter = async () => {
+      const p = await loadPuter();
+      const u = await p.auth.getUser();
+      let raw = null; try { raw = await p.kv.get(KEY); } catch (e) {}
+      try { trades = (JSON.parse(raw || "[]") || []).filter(t => t && t.t && t.price > 0 && t.qty > 0); } catch (e) { trades = []; }
+      let w = null; try { w = JSON.parse((await p.kv.get(WKEY)) || "[]"); } catch (e) {}
+      watch = Array.isArray(w) ? w : [];
+      me = {pid: "puter", name: (u && u.username) || "Puter"};
+      tradesRef = puterRef;
+      gate.hidden = true; $("me").hidden = false; $("logBody").hidden = false;
+      $("meName").textContent = me.name;
+      renderLog(); renderWatch(); updateRbar();
+    };
+    $("pIn").addEventListener("click", async () => {
+      $("pMsg").textContent = "Puter 로그인 창을 여는 중이에요";
+      try {
+        const p = await loadPuter();
+        if (!p.auth.isSignedIn()) await p.auth.signIn();
+        $("pMsg").textContent = ""; await enterPuter();
+      } catch (e) { $("pMsg").textContent = "로그인하지 못했어요. 팝업 차단을 끄고 다시 눌러 주세요."; }
+    });
+    // already signed in from an earlier visit: open straight away
+    loadPuter().then(p => { if (p.auth.isSignedIn()) enterPuter(); }).catch(() => {});
+    const lo = $("logout").cloneNode(true); $("logout").replaceWith(lo); // drop the nickname-login handler
+    lo.addEventListener("click", async () => {
+      try { (await loadPuter()).auth.signOut(); } catch (e) {}
+      me = null; tradesRef = null; trades = []; watch = [];
+      gate.hidden = false; $("me").hidden = true; $("logBody").hidden = true; $("auth").hidden = true;
+      renderWatch(); updateRbar();
+    });
+    window.__puterWatchSave = async list => { await window.puter.kv.set(WKEY, JSON.stringify(list)); };
   }
 }
 

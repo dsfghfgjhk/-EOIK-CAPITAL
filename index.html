@@ -240,6 +240,21 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--amber); outline
   padding: 8px 14px; border: 1px solid var(--amber); background: transparent; color: var(--amber); cursor: pointer;
 }
 .copy:hover { background: var(--amber); color: var(--bg); }
+/* sizing */
+.size { display: grid; gap: 10px; border: 1px solid var(--line); background: var(--panel); padding: 12px; }
+.size-top { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.size label { display: grid; gap: 4px; font-size: 10.5px; letter-spacing: .14em; color: var(--dim); flex: 1 1 180px; min-width: 0; }
+.size input { font: inherit; font-size: 16px; padding: 9px 10px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); outline: 0; width: 100%; font-variant-numeric: tabular-nums; }
+.size input:focus { border-color: var(--amber-dim); }
+.tier { font-size: 11px; font-weight: 800; letter-spacing: .1em; padding: 4px 8px; border: 1px solid var(--amber-dim); color: var(--amber); white-space: nowrap; }
+.size-out { display: grid; gap: 6px; }
+.size-amt { font-family: var(--font-display); font-size: 30px; line-height: 1.05; color: var(--fg); font-variant-numeric: tabular-nums; }
+.size-amt small { font-family: var(--font-mono); font-size: 12px; color: var(--dim); margin-left: 6px; letter-spacing: .06em; }
+.size-bar { height: 8px; background: var(--bg); border: 1px solid var(--line); position: relative; }
+.size-bar i { position: absolute; top: 0; bottom: 0; background: var(--amber); box-shadow: 0 0 10px var(--glow); }
+.size p { margin: 0; font-family: var(--font-kr); font-size: 13px; line-height: 1.6; color: var(--steel); }
+.size .fine { font-size: 11.5px; color: var(--dim); }
+
 /* AI analysis */
 .ai { border: 1px solid var(--amber-dim); background: var(--bg); padding: 14px; display: grid; gap: 12px; }
 .ai-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -411,6 +426,13 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
 
   <section class="ai" id="ai">
     <div class="ai-head"><b>AI ANALYSIS</b><span>최신 뉴스를 검색해서 Claude가 정리해요</span></div>
+    <div class="size" id="size">
+      <div class="size-top">
+        <label for="cap">내 투자 자본 (원)<input id="cap" type="text" inputmode="numeric" autocomplete="off" placeholder="예: 1,000,000"></label>
+        <span class="tier" id="tier">—</span>
+      </div>
+      <div class="size-out" id="sizeOut"></div>
+    </div>
     <button class="run" id="run" type="button">SCAN NEWS + ANALYZE ▸</button>
     <div class="ai-msg" id="aiMsg" hidden></div>
     <div class="verdict" id="verdict" hidden></div>
@@ -553,6 +575,7 @@ function render(input) {
   if (r.t && $("tT")) $("tT").value = r.t;
   if (r.cat && r.cat !== activeCat) showCat(r.cat); else markTile(r.t);
   $("verdict").hidden = true; $("aiMsg").hidden = true;
+  lastLean = null; if (typeof renderSize === "function" && $("sizeOut")) renderSize(null);
   $("prompt").textContent = `${label} 최근 실적이랑 주요 뉴스 찾아서 정리해줘`;
   try { localStorage.setItem("lastQ", input); } catch (e) {}
 }
@@ -770,6 +793,7 @@ function li(arr) {
 }
 function showVerdict(d, src) {
   const lean = ["up","down","flat"].includes(d.lean) ? d.lean : "flat";
+  lastLean = lean; renderSize(lean);
   const word = {up: "상승 근거 우세", down: "하락 근거 우세", flat: "엇갈림"}[lean];
   let score = Number(d.score); if (!isFinite(score)) score = 0;
   score = Math.max(-100, Math.min(100, score));
@@ -830,6 +854,44 @@ async function analyzeWithPuter(label) {
   let data; try { data = JSON.parse(m[0]); } catch (e) { throw {code: "invalid_json"}; }
   return {data, src: citesOf(resp)};
 }
+
+
+// ---- position sizing: a plain rule of thumb by how risky the asset type is ----
+const HIGHVOL = new Set("PLTR IONQ RGTI QBTS QUBT SOUN BBAI AI CRWV NBIS OKLO SMR VST RKLB ASTS LUNR SPCX RIVN LCID NIO XPEV LI COIN MSTR HOOD SOFI GME AMC CVNA HIMS SMCI APP MRNA CELH RDDT DUOL SNAP U RBLX AFRM PATH IBIT FBTC ETHA BITO ARKK ARKG".split(" "));
+const CASHLIKE = new Set(["SGOV","BIL","SHY","BND","AGG","IEF"]);
+function tierOf(t, cat) {
+  if (!t) return null;
+  if (cat === "E_LEV") return {k: "LEV", name: "레버리지·인버스", lo: 0, hi: 2, why: "하루 수익률의 배수를 따라가서 오래 들고 있으면 손실이 커지기 쉬워요. 짧게, 아주 적게만 쓰는 상품이에요."};
+  if (cat === "E_IDX" || CASHLIKE.has(t)) return {k: "CORE", name: "지수·채권 코어", lo: 30, hi: 60, why: "수백 개 종목에 나눠 투자하는 상품이라 한 회사가 망해도 타격이 작아요. 포트폴리오의 중심으로 많이 담는 편이에요."};
+  if (HIGHVOL.has(t) || cat === "E_THEME" || cat === "AI") return {k: "HIGH", name: "고변동", lo: 1, hi: 5, why: "하루에 10% 넘게 움직이는 일이 흔하고, 이익이 아직 안 나는 회사도 많아요. 0이 돼도 버틸 만큼만 담는 편이에요."};
+  if (cat && cat.startsWith("E_")) return {k: "ETF", name: "섹터·배당·국가 ETF", lo: 10, hi: 20, why: "여러 종목에 나눠 담지만 한 업종이나 나라에 몰려 있어서, 지수 ETF보다는 적게 담는 편이에요."};
+  return {k: "STOCK", name: "대형 개별주", lo: 3, hi: 10, why: "탄탄한 회사도 실적 한 번에 20~30% 빠질 수 있어요. 한 종목에는 자본의 한 자릿수 %만 담는 게 일반적인 기준이에요."};
+}
+const won = n => Math.round(n).toLocaleString("ko-KR") + "원";
+function getCap() { try { return Number(localStorage.getItem("cap") || 0); } catch (e) { return 0; } }
+function renderSize(lean) {
+  const r = currentT ? (DB.find(d => d[0] === currentT) || []) : [];
+  const tier = tierOf(currentT, r[5] || null);
+  const out = $("sizeOut"), cap = getCap();
+  $("tier").textContent = tier ? tier.name : "티커 없음";
+  if (!tier) { out.innerHTML = `<p class="fine">종목을 고르면 적당한 투자 비중을 보여줘요.</p>`; return; }
+  const leanNote = lean === "down" ? " 지금은 하락 근거가 더 많아서, 들어가더라도 범위 아래쪽부터 나눠서 사는 쪽이 일반적이에요."
+    : lean === "up" ? " 상승 근거가 많아도 범위 위쪽을 넘기지 않는 게 기본이에요. 좋은 뉴스는 이미 가격에 반영돼 있을 때가 많아요." : "";
+  const bar = `<div class="size-bar" aria-hidden="true"><i style="left:${tier.lo}%;width:${Math.max(tier.hi - tier.lo, 1)}%"></i></div>`;
+  out.innerHTML = (cap > 0
+    ? `<div class="size-amt">${won(cap * tier.lo / 100)} ~ ${won(cap * tier.hi / 100)}<small>자본의 ${tier.lo}~${tier.hi}%</small></div>`
+    : `<div class="size-amt">${tier.lo}~${tier.hi}%<small>자본 대비</small></div><p class="fine">위에 자본을 넣으면 금액으로 바꿔서 보여줘요.</p>`)
+    + bar + `<p>${tier.why}${leanNote}</p>`
+    + `<p class="fine">자본은 생활비·비상금을 뺀, 잃어도 생활에 지장 없는 돈 기준이에요. 이건 종목 종류별 일반적인 분산 기준이지 투자 추천이 아니에요. 입력한 자본은 이 기기에만 저장돼요.</p>`;
+}
+$("cap").value = getCap() ? getCap().toLocaleString("ko-KR") : "";
+$("cap").addEventListener("input", e => {
+  const digits = e.target.value.replace(/[^\d]/g, "").slice(0, 13);
+  e.target.value = digits ? Number(digits).toLocaleString("ko-KR") : "";
+  try { localStorage.setItem("cap", digits || "0"); } catch (err) {}
+  renderSize(lastLean);
+});
+let lastLean = null;
 
 const MCP_ERR = {
   server_not_connected: "Parallel Search 커넥터가 연결돼 있지 않아서 뉴스 없이 분석했어요. claude.ai 설정의 커넥터에서 연결하면 최신 뉴스로 분석해요.",

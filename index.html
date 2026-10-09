@@ -784,6 +784,43 @@ function showVerdict(d, src) {
   $("verdict").hidden = false;
 }
 
+
+// ---- Puter path (outside Claude): one call to a web-search model returns the analysis ----
+let puterLoad = null;
+function loadPuter() {
+  if (window.puter) return Promise.resolve(window.puter);
+  if (!puterLoad) puterLoad = new Promise((res, rej) => {
+    const sc = document.createElement("script");
+    sc.src = "https://js.puter.com/v2/";
+    sc.onload = () => window.puter ? res(window.puter) : rej(new Error("puter missing"));
+    sc.onerror = () => { puterLoad = null; rej(new Error("load failed")); };
+    document.head.appendChild(sc);
+  });
+  return puterLoad;
+}
+function textOf(resp) {
+  const c = resp && resp.message ? resp.message.content : resp;
+  if (typeof c === "string") return c;
+  if (Array.isArray(c)) return c.map(x => typeof x === "string" ? x : (x && x.text) || "").join("");
+  return String(c || "");
+}
+function citesOf(resp) {
+  const raw = (resp && (resp.citations || (resp.message && resp.message.citations) || resp.search_results || (resp.message && resp.message.search_results))) || [];
+  return raw.map(x => typeof x === "string" ? {url: x, title: x} : {url: x.url, title: x.title || x.url, date: x.date || ""})
+            .filter(x => x.url && /^https?:/.test(x.url)).slice(0, 12).map(x => ({...x, ex: ""}));
+}
+async function analyzeWithPuter(label) {
+  const p = await loadPuter();
+  const prompt = buildPrompt(label, []).replace(
+    /검색 자료를 가져오지 못했어\.[^\n]*/,
+    "웹을 검색해서 최근 2주 안의 뉴스와 가장 최근 분기 실적, 애널리스트 목표주가를 찾아 근거로 써. 찾은 출처 번호를 [1]처럼 문장 끝에 붙여.");
+  const resp = await p.ai.chat(prompt, {model: "perplexity/sonar"});
+  const txt = textOf(resp), m = txt.match(/\{[\s\S]*\}/);
+  if (!m) throw {code: "invalid_json"};
+  let data; try { data = JSON.parse(m[0]); } catch (e) { throw {code: "invalid_json"}; }
+  return {data, src: citesOf(resp)};
+}
+
 const MCP_ERR = {
   server_not_connected: "Parallel Search 커넥터가 연결돼 있지 않아서 뉴스 없이 분석했어요. claude.ai 설정의 커넥터에서 연결하면 최신 뉴스로 분석해요.",
   not_granted: "검색 사용을 허용하지 않아서 뉴스 없이 분석했어요.",
@@ -792,6 +829,19 @@ const MCP_ERR = {
 
 $("run").addEventListener("click", async () => {
   const btn = $("run");
+  if (window.__usePuter) {
+    const label = current; btn.disabled = true; $("verdict").hidden = true;
+    aiMsg(`<div class="steps"><span class="on">▸ 웹 검색 + 분석 중 (Puter · 10~40초)</span></div>`);
+    try {
+      const {data, src} = await analyzeWithPuter(label);
+      if (label !== current) return;
+      aiMsg(""); showVerdict(data, src);
+    } catch (e) {
+      aiMsg(e && e.code === "invalid_json" ? "답변 형식이 깨졌어요. 한 번 더 눌러 주세요."
+        : "Puter 분석이 실패했어요. 로그인 창을 닫았거나 무료 한도가 끝났을 수 있어요. 아래 'Claude에서 열기'로 분석해 보세요.", "err");
+    } finally { btn.disabled = false; }
+    return;
+  }
   const sample = await samplePromise;
   if (!sample) { aiMsg("이 화면에서는 AI 분석을 쓸 수 없어요. Claude 앱이나 claude.ai에서 페이지를 열어 주세요.", "err"); return; }
   const label = current, t = currentT;
@@ -1151,7 +1201,11 @@ if (!window.claude) {
     const p = document.createElement("p"); p.className = "open-note"; p.textContent = note;
     b.replaceWith(a); a.after(p);
   };
-  swap("run", "OPEN IN CLAUDE ↗", "AI 요약은 Claude 안에서 돌아가요. 동아리 계정으로 로그인된 상태에서 열면 따로 돈 없이 이 계정 사용량으로 분석해요.");
+  // AI summary here runs through Puter (free, each viewer signs in to their own Puter account)
+  const note = document.createElement("p"); note.className = "open-note";
+  note.innerHTML = `여기서는 무료 AI 서비스 <b>Puter</b>(Perplexity 검색 모델)로 분석해요. 처음 누를 때 Puter 무료 계정 로그인 창이 떠요. 무료 한도가 끝나면 <a href="${CLAUDE_URL}" target="_blank" rel="noopener" style="color:var(--amber)">Claude에서 열기 ↗</a>로 분석하세요.`;
+  $("run").after(note);
+  window.__usePuter = true;
   const log = $("log");
   if (log) {
     log.querySelector("#auth") && (log.querySelector("#auth").hidden = true);

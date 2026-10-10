@@ -155,6 +155,12 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--amber); outline
 .countdown { font-size: 11px; color: var(--dim); letter-spacing: .08em; font-variant-numeric: tabular-nums; text-align: right; }
 .countdown b { color: var(--fg); font-weight: 600; }
 
+.tab.sig-up { color: var(--up); border-color: var(--amber-dim); }
+.tab.sig-down { color: var(--down); border-color: #1d3557; }
+.tab.sig-up[aria-selected="true"] { background: var(--up); color: var(--bg); }
+.tab.sig-down[aria-selected="true"] { background: var(--down); border-color: var(--down); color: var(--bg); }
+.tile.sig em { font-style: normal; font-family: var(--font-mono); font-weight: 600; }
+.tile.sig.u em { color: var(--up); } .tile.sig.d em { color: var(--down); }
 .tab.frac { border-color: var(--amber-dim); color: var(--fg); }
 .tab.frac::before { content: "0.1 "; font-family: var(--font-mono); font-size: 10px; color: var(--amber); }
 .tab.frac[aria-selected="true"]::before { color: var(--bg); }
@@ -444,6 +450,7 @@ footer { font-size: 11px; color: var(--dim); letter-spacing: .04em; font-family:
   <section class="sectors">
     <h2><span><b>F0</b> SECTOR MAP</span><span class="kr">카테고리</span></h2>
     <div class="tabs" id="tabs" role="tablist" aria-label="카테고리"></div>
+    <p class="frac-note" id="sigNote" hidden></p>
     <p class="frac-note" id="fracNote" hidden>국내 주요 증권사(토스·키움·미래에셋·한투 등) 대부분이 소수점 매매를 지원하는 대형주와 대표 ETF예요. 증권사마다 가능 종목이 조금씩 달라서, 주문 전에 내 증권사 앱에서 "소수점" 표시를 꼭 확인하세요. 레버리지·인버스 ETF는 소수점이 안 되는 곳이 많아서 뺐어요.</p>
     <div class="tiles" id="tiles"></div>
   </section>
@@ -677,13 +684,66 @@ function tick() {
 }
 
 let activeCat = null;
-$("tabs").innerHTML = `<button class="tab frac" type="button" role="tab" data-c="FRAC" aria-selected="false">소수점 투자<small>${FRACTIONAL.size}</small></button>` +
-  CATS.map(([c, n]) => `<button class="tab" type="button" role="tab" data-c="${c}" aria-selected="false">${n}<small>${DB.filter(d => d[5] === c).length}</small></button>`).join("");
+// ---- daily signals: filled each morning by a scheduled Claude run, plus the viewer's own recent analyses ----
+let SIG = null;
+const cleanSig = arr => (Array.isArray(arr) ? arr : []).filter(x => x && typeof x.t === "string" && /^[A-Z.\-]{1,6}$/.test(x.t))
+  .map(x => ({t: x.t, score: Math.max(-100, Math.min(100, Number(x.score) || 0)), reason: String(x.reason || "").slice(0, 200)})).slice(0, 60);
+function setSig(d) {
+  SIG = d && typeof d === "object" ? {date: String(d.date || ""), up: cleanSig(d.up), down: cleanSig(d.down)} : null;
+  renderTabs();
+  if (activeCat === "SIG_UP" || activeCat === "SIG_DOWN") showCat(activeCat);
+}
+function sigList(c) {
+  const want = c === "SIG_UP" ? "up" : "down", seen = new Set(), out = [];
+  ((SIG && SIG[want]) || []).forEach(x => { seen.add(x.t); out.push({...x, mine: false}); });
+  // the viewer's own analyses from the last 7 days add tickers the daily run did not cover
+  const leans = getLeansSafe();
+  Object.keys(leans).forEach(t => {
+    const l = leans[t]; if (seen.has(t) || !l || !l.at) return;
+    if ((Date.now() - new Date(l.at).getTime()) / 864e5 > 7) return;
+    const sc = Number(l.score) || 0;
+    if (want === "up" ? sc >= 20 : sc <= -20) out.push({t, score: sc, reason: "내가 돌린 분석", mine: true});
+  });
+  return out.sort((a, b) => want === "up" ? b.score - a.score : a.score - b.score);
+}
+function getLeansSafe() { try { const v = JSON.parse(localStorage.getItem("leans") || "{}"); return v && typeof v === "object" ? v : {}; } catch (e) { return {}; } }
+function renderTabs() {
+  $("tabs").innerHTML =
+    `<button class="tab sig-up" type="button" role="tab" data-c="SIG_UP" aria-selected="false">▲ 상승 근거 우세<small>${sigList("SIG_UP").length}</small></button>` +
+    `<button class="tab sig-down" type="button" role="tab" data-c="SIG_DOWN" aria-selected="false">▼ 하락 근거 우세<small>${sigList("SIG_DOWN").length}</small></button>` +
+    `<button class="tab frac" type="button" role="tab" data-c="FRAC" aria-selected="false">소수점 투자<small>${FRACTIONAL.size}</small></button>` +
+    CATS.map(([c, n]) => `<button class="tab" type="button" role="tab" data-c="${c}" aria-selected="false">${n}<small>${DB.filter(d => d[5] === c).length}</small></button>`).join("");
+  document.querySelectorAll(".tab").forEach(el => el.setAttribute("aria-selected", String(el.dataset.c === activeCat)));
+}
+renderTabs();
+(async () => {
+  if (window.claude) {
+    try {
+      const db = await claude.use("db");
+      if (db) db.doc("signals/latest").onSnapshot(snap => setSig(snap.exists ? snap.data() : null), () => {});
+    } catch (e) {}
+  } else {
+    try { const r = await fetch("signals.json", {cache: "no-store"}); if (r.ok) setSig(await r.json()); } catch (e) {}
+  }
+})();
 function markTile(t) { document.querySelectorAll(".tile").forEach(el => el.classList.toggle("on", el.dataset.t === t)); }
 function showCat(c) {
   activeCat = c;
   document.querySelectorAll(".tab").forEach(el => el.setAttribute("aria-selected", String(el.dataset.c === c)));
   $("fracNote").hidden = c !== "FRAC";
+  const isSig = c === "SIG_UP" || c === "SIG_DOWN";
+  $("sigNote").hidden = !isSig;
+  if (isSig) {
+    const list = sigList(c), up = c === "SIG_UP";
+    const d = SIG && SIG.date ? SIG.date.replace(/^\d{4}-0?(\d+)-0?(\d+)$/, "$1/$2") : "";
+    $("sigNote").innerHTML = (d ? `<b>${esc(d)} 아침 기준</b> · ` : `<b>아직 오늘 분석 전</b> · `) +
+      `매일 아침 Claude가 주요 종목 뉴스·실적을 찾아 점수를 매겨요. ${up ? "+20" : "-20"} ${up ? "이상" : "이하"}만 모았어요. 근거가 어느 쪽에 많은지일 뿐 주가 예측이 아니에요.`;
+    $("tiles").innerHTML = list.length ? list.map(x => {
+      const nm = (DB.find(z => z[0] === x.t) || [])[2] || x.t;
+      return `<button class="tile sig ${up ? "u" : "d"}" type="button" data-t="${esc(x.t)}" title="${esc(x.reason)}"><b>${esc(x.t)}</b><span><em>${x.score > 0 ? "+" : ""}${Math.round(x.score)}</em> ${x.mine ? "· 내 분석" : esc(nm)}</span></button>`;
+    }).join("") : `<div class="cart-empty" style="grid-column:1/-1">${up ? "상승" : "하락"} 근거가 우세한 종목이 아직 없어요. 다음 아침 갱신 때 채워져요.</div>`;
+    markTile(currentT); return;
+  }
   $("tiles").innerHTML = DB.filter(d => c === "FRAC" ? FRACTIONAL.has(d[0]) : d[5] === c).map(([t,, name]) => `<button class="tile" type="button" data-t="${t}"><b>${t}</b><span>${esc(name)}</span></button>`).join("");
   markTile(currentT);
 }
@@ -853,6 +913,7 @@ function showVerdict(d, src) {
     let sc = Number(d.score); if (!isFinite(sc)) sc = 0;
     const all = getLeans(); all[currentT] = {score: Math.max(-100, Math.min(100, sc)), lean, at: new Date().toISOString()};
     try { localStorage.setItem("leans", JSON.stringify(all)); } catch (e) {}
+    renderTabs(); if (activeCat === "SIG_UP" || activeCat === "SIG_DOWN") showCat(activeCat);
     if (typeof renderCart === "function") renderCart();
   }
   const word = {up: "상승 근거 우세", down: "하락 근거 우세", flat: "엇갈림"}[lean];

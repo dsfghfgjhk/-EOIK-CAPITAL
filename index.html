@@ -687,14 +687,35 @@ function tick() {
 
 let activeCat = null;
 // ---- daily signals: filled each morning by a scheduled Claude run, plus the viewer's own recent analyses ----
-let SIG = null;
+let SIG = null, SIGHIST = [];
+function pastCalls(t) {
+  const rows = [];
+  SIGHIST.forEach(day => {
+    const all = Array.isArray(day.all) ? day.all : [...(day.up || []), ...(day.down || [])];
+    const call = all.find(x => x && x.t === t); if (!call) return;
+    const g1 = day.graded1 && Array.isArray(day.graded1.results) ? day.graded1.results.find(x => x.t === t) : null;
+    const g5 = day.graded && Array.isArray(day.graded.results) ? day.graded.results.find(x => x.t === t) : null;
+    rows.push({date: day.date, score: Number(call.score) || 0, ex1: g1 ? Number(g1.excess) : null, ex5: g5 ? Number(g5.excess) : null});
+  });
+  return rows.sort((a, b) => b.date.localeCompare(a.date)).slice(0, 10);
+}
+function memoryBlock(t) {
+  const rows = t ? pastCalls(t) : [];
+  const tr = SIG && SIG.track;
+  const f = v => v == null || !isFinite(v) ? "아직 모름" : `${v > 0 ? "+" : ""}${v.toFixed(2)}%p`;
+  let out = "";
+  if (rows.length) out += `\n<이 종목에 대한 과거 판단과 실제 결과 (시장 대비 초과수익)>\n` + rows.map(r => `${r.date}: 점수 ${r.score > 0 ? "+" : ""}${r.score} → 다음 거래일 ${f(r.ex1)}, 5거래일 ${f(r.ex5)}`).join("\n") + `\n</이 종목에 대한 과거 판단과 실제 결과>`;
+  if (tr && tr.n) out += `\n<전체 성적표> 상승 신호 적중률 ${tr.upHit == null ? "-" : Math.round(tr.upHit * 100) + "%"}, 하락 신호 적중률 ${tr.downHit == null ? "-" : Math.round(tr.downHit * 100) + "%"} (채점 ${tr.n}개)` + (tr.lessons.length ? `. 배운 점: ${tr.lessons.join(" / ")}` : "") + ` </전체 성적표>`;
+  if (!out) return "";
+  return out + `\n과거 판단이 틀렸던 패턴(예: 상승이라 했는데 실제로 빠짐)이 있으면 그 이유를 생각해서 이번 판단에 반영해. 다만 과거 결과는 운도 섞여 있으니, 오늘의 새로운 근거보다 앞세우지는 마. 과거 기록을 참고했다면 reason에 한 문장으로 밝혀.`;
+}
 const cleanSig = arr => (Array.isArray(arr) ? arr : []).filter(x => x && typeof x.t === "string" && /^[A-Z.\-]{1,6}$/.test(x.t))
   .map(x => ({t: x.t, score: Math.max(-100, Math.min(100, Number(x.score) || 0)), reason: String(x.reason || "").slice(0, 200)})).slice(0, 60);
 function setSig(d) {
   const tr = d && d.track && typeof d.track === "object" ? d.track : null;
   const num = v => (typeof v === "number" && isFinite(v)) ? v : null;
   SIG = d && typeof d === "object" ? {date: String(d.date || ""), up: cleanSig(d.up), down: cleanSig(d.down),
-    track: tr ? {n: num(tr.n) || 0, upHit: num(tr.upHit), downHit: num(tr.downHit), upEx: num(tr.upAvgExcess), downEx: num(tr.downAvgExcess),
+    track: tr ? {n: num(tr.n) || 0, upHit: num(tr.upHit), downHit: num(tr.downHit), upEx: num(tr.upAvgExcess), downEx: num(tr.downAvgExcess), d1Up: num(tr.d1UpHit), d1Down: num(tr.d1DownHit),
       lessons: (Array.isArray(tr.lessons) ? tr.lessons : []).map(x => String(x).slice(0, 160)).slice(0, 5)} : null} : null;
   renderTabs();
   if (activeCat === "SIG_UP" || activeCat === "SIG_DOWN") showCat(activeCat);
@@ -716,9 +737,10 @@ function trackHtml(up) {
   const tr = SIG && SIG.track;
   const pct = v => v == null ? "—" : Math.round(v * 100) + "%";
   const ex = v => v == null ? "" : ` · 평균 ${v > 0 ? "+" : ""}${v.toFixed(2)}%p`;
-  if (!tr || !tr.n) return `<br><span class="trk">성적표: 신호가 나온 지 일주일이 지나면 5거래일 뒤 실제 주가를 S&amp;P500(SPY)과 비교해서 채점하고, 그 결과로 다음 점수를 조정해요. 아직 채점된 신호가 없어요.</span>`;
+  if (!tr || !tr.n) return `<br><span class="trk">성적표: 신호마다 다음 거래일과 5거래일 뒤 실제 주가를 S&amp;P500(SPY)과 비교해서 채점하고, 틀린 판단의 이유까지 기록해서 다음 점수에 반영해요. 아직 채점된 신호가 없어요.</span>`;
   const hit = up ? tr.upHit : tr.downHit, e = up ? tr.upEx : tr.downEx;
-  return `<br><span class="trk"><b>지난 성적표</b> · ${up ? "상승" : "하락"} 신호가 5거래일 뒤 시장보다 ${up ? "더 오른" : "더 빠진"} 비율 <b>${pct(hit)}</b>${ex(e)} (채점 ${tr.n}개)</span>`
+  const d1 = up ? tr.d1Up : tr.d1Down;
+  return `<br><span class="trk"><b>지난 성적표</b> · ${up ? "상승" : "하락"} 신호가 시장보다 ${up ? "더 오른" : "더 빠진"} 비율: 다음 날 <b>${pct(d1)}</b> · 5거래일 <b>${pct(hit)}</b>${ex(e)} (채점 ${tr.n}개)</span>`
     + (tr.lessons.length ? `<br><span class="trk">배운 점: ${tr.lessons.map(esc).join(" / ")}</span>` : "");
 }
 function getLeansSafe() { try { const v = JSON.parse(localStorage.getItem("leans") || "{}"); return v && typeof v === "object" ? v : {}; } catch (e) { return {}; } }
@@ -735,7 +757,13 @@ renderTabs();
   if (window.claude) {
     try {
       const db = await claude.use("db");
-      if (db) db.doc("signals/latest").onSnapshot(snap => setSig(snap.exists ? snap.data() : null), () => {});
+      if (db) {
+        db.doc("signals/latest").onSnapshot(snap => setSig(snap.exists ? snap.data() : null), () => {});
+        // every archived day with its graded outcomes, so a ticker's own past calls can inform today's analysis
+        db.collection("signals").onSnapshot(snap => {
+          SIGHIST = snap.docs.filter(d => d.exists && /^\d{4}-\d{2}-\d{2}$/.test(d.id)).map(d => ({date: d.id, ...d.data()}));
+        }, () => {});
+      }
     } catch (e) {}
   } else {
     try { const r = await fetch("signals.json", {cache: "no-store"}); if (r.ok) setSig(await r.json()); } catch (e) {}
@@ -906,6 +934,8 @@ ${hasSrc
 - 하락 요인을 억지로 줄이지 마. 자료에 하락 근거가 많으면 down을 주는 게 맞아.
 - 순서를 지켜: ① 하락 쪽 근거부터 전부 찾아 적고 ② 그다음 상승 쪽 근거를 적고 ③ 둘을 저울질해. 상승 쪽으로 판단했다면 "하락 근거를 내가 가볍게 넘긴 건 아닌가?"를 한 번 더 확인해.
 - 최근 한 달 주가가 내리막이거나, 실적·가이던스가 실망스러웠거나, 하향 조정이 이어지면 망설이지 말고 -10 이하, 근거가 강하면 -40 이하를 줘. 하락 판단을 상승 판단과 똑같이 분명하게 내려.
+
+${memoryBlock(currentT)}
 
 해야 할 일:
 1. 최근 상황을 3~4문장으로 요약 (가장 최근 소식 위주).

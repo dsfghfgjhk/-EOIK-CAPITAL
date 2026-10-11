@@ -518,6 +518,7 @@ footer b { color: var(--steel); font-weight: 600; }
         </div>
         <div class="card flush">
           <div class="head"><h2><i>HEATMAP</i>S&amp;P 500 지도</h2><span>칸 크기 = 시가총액 · 색 = 오늘 등락</span></div>
+          <p class="ta-guide"><b>Electronic Technology</b> 반도체·하드웨어 · <b>Technology Services</b> 소프트웨어·인터넷 · <b>Finance</b> 금융 · <b>Health Technology</b> 제약·바이오 · <b>Retail Trade</b> 유통 · <b>Consumer Non-Durables</b> 생활소비재 · <b>Energy Minerals</b> 에너지 · <b>Producer Manufacturing</b> 산업재 · <b>Utilities</b> 유틸리티</p>
           <div class="tv" id="tvHeat" style="height:520px"></div>
         </div>
       </div>
@@ -527,7 +528,7 @@ footer b { color: var(--steel); font-weight: 600; }
           <div class="cal" id="cal"><div class="tv-fallback">이번 주 일정을 불러오는 중이에요</div></div>
         </div>
         <div class="card flush">
-          <div class="head"><h2><i>WIRE</i>시장 헤드라인</h2></div>
+          <div class="head"><h2><i>WIRE</i>시장 헤드라인</h2><span>영문 기사 · 제목을 누르면 원문이 열려요</span></div>
           <div class="tv" id="tvWire" style="height:470px"></div>
         </div>
       </div>
@@ -562,10 +563,12 @@ footer b { color: var(--steel); font-weight: 600; }
           </div>
         </div>
         <div class="card flush">
+          <p class="ta-guide" style="padding-top:12px"><b>Market cap</b> 시가총액 · <b>Volume</b> 거래량 · <b>Day's range</b> 오늘 가격 범위 · <b>52 wk range</b> 1년 가격 범위 · <b>P/E</b> 주가수익비율 · <b>Div yield</b> 배당수익률</p>
           <div class="tv" id="tvInfo" style="min-height:150px"></div>
         </div>
         <div class="card flush">
           <div class="head"><h2><i>CHART</i>차트</h2><span>기간·지표는 차트 안에서 바꿀 수 있어요</span></div>
+          <p class="ta-guide"><b>1D</b> 일봉 · <b>1W</b> 주봉 · <b>1M</b> 월봉 · <b>Indicators</b> 보조지표 추가 · <b>Vol</b> 거래량 · <b>O H L C</b> 시가·고가·저가·종가</p>
           <div class="tv" id="tvChart" style="height:500px"></div>
         </div>
         <section class="card ai" id="ai">
@@ -589,7 +592,7 @@ footer b { color: var(--steel); font-weight: 600; }
           <div class="tv" id="tvTech" style="height:420px"></div>
         </div>
         <div class="card flush">
-          <div class="head"><h2><i>NEWS</i>종목 뉴스</h2></div>
+          <div class="head"><h2><i>NEWS</i>종목 뉴스</h2><span>영문 기사 · 요약은 위 AI 분석에서</span></div>
           <div class="tv" id="tvNews" style="height:520px"></div>
         </div>
         <div class="card">
@@ -1816,7 +1819,7 @@ function tv(id, name, cfg) {
   sc.onerror = () => { el.innerHTML = `<div class="tv-fallback">위젯을 불러오지 못했어요. 새로고침해 주세요.</div>`; };
   box.appendChild(sc); el.appendChild(box);
 }
-const TV_BASE = {colorTheme: "dark", isTransparent: true, locale: "kr", width: "100%", height: "100%"};
+const TV_BASE = {colorTheme: "dark", isTransparent: true, locale: "en", width: "100%", height: "100%"};
 function tvSym(t) {
   if (!t) return null;
   const d = DB.find(x => x[0] === t);
@@ -1833,7 +1836,7 @@ function mountTape() {
     {proName: "NASDAQ:NVDA", title: "NVDA"}, {proName: "NASDAQ:AAPL", title: "AAPL"}, {proName: "NASDAQ:TSLA", title: "TSLA"}
   ];
   const extra = (getRecentSafe() || []).slice(0, 4).filter(t => !base.some(b => b.title === t)).map(t => ({proName: tvSym(t), title: t}));
-  tv("tvTape", "ticker-tape", {symbols: [...base, ...extra], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "kr"});
+  tv("tvTape", "ticker-tape", {symbols: [...base, ...extra], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "en"});
   if (IN_CLAUDE) $("tvTape").innerHTML = `<div class="fallback">실시간 시세 띠는 GitHub 사이트에서 보여요</div>`;
 }
 function getRecentSafe() { try { return JSON.parse(localStorage.getItem("recent") || "[]"); } catch (e) { return []; } }
@@ -1842,9 +1845,9 @@ function mountMarket() {
   if (marketMounted) return; marketMounted = true;
   const q = [["FOREXCOM:SPXUSD", "S&P 500"], ["FOREXCOM:NSXUSD", "나스닥 100"], ["FX_IDC:USDKRW", "원/달러"], ["BITSTAMP:BTCUSD", "비트코인"]];
   $("tvQuotes").innerHTML = q.map((_, i) => `<div id="tvQ${i}"></div>`).join("");
-  q.forEach(([s], i) => tv("tvQ" + i, "single-quote", {symbol: s, width: "100%", colorTheme: "dark", isTransparent: true, locale: "kr"}));
+  q.forEach(([s], i) => tv("tvQ" + i, "single-quote", {symbol: s, width: "100%", colorTheme: "dark", isTransparent: true, locale: "en"}));
   tv("tvHeat", "stock-heatmap", {exchanges: [], dataSource: "SPX500", grouping: "sector", blockSize: "market_cap_basic", blockColor: "change",
-    locale: "kr", symbolUrl: "", colorTheme: "dark", hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true,
+    locale: "en", symbolUrl: "", colorTheme: "dark", hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true,
     isMonoSize: false, width: "100%", height: "100%"});
   renderCalendar();
   tv("tvWire", "timeline", {...TV_BASE, feedMode: "market", market: "stock", displayMode: "regular"});
@@ -1857,8 +1860,8 @@ function mountStock() {
     ["tvInfo", "tvChart", "tvTech", "tvNews"].forEach(id => { $(id).innerHTML = `<div class="tv-fallback">티커를 찾지 못해서 차트를 그릴 수 없어요. 티커(예: UBER)로 다시 검색해 보세요.</div>`; });
     return;
   }
-  tv("tvInfo", "symbol-info", {symbol: s, width: "100%", locale: "kr", colorTheme: "dark", isTransparent: true});
-  tv("tvChart", "advanced-chart", {autosize: true, symbol: s, interval: "D", timezone: "Asia/Seoul", theme: "dark", style: "1", locale: "kr",
+  tv("tvInfo", "symbol-info", {symbol: s, width: "100%", locale: "en", colorTheme: "dark", isTransparent: true});
+  tv("tvChart", "advanced-chart", {autosize: true, symbol: s, interval: "D", timezone: "Asia/Seoul", theme: "dark", style: "1", locale: "en",
     backgroundColor: "rgba(12,11,10,0)", gridColor: "rgba(58,52,45,0.35)", hide_side_toolbar: true, allow_symbol_change: false,
     calendar: false, range: "6M", support_host: "https://www.tradingview.com"});
   tv("tvTech", "technical-analysis", {...TV_BASE, locale: "en", interval: "1D", symbol: s, showIntervalTabs: true, displayMode: "single"});

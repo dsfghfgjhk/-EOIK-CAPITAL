@@ -458,6 +458,23 @@ sup { color: var(--brass); font-size: 10px; margin-left: 2px; font-family: var(-
 .cal-ev .why { font-size: 12.5px; color: var(--steel); line-height: 1.55; }
 .cal-ev.earn .nm b { font-family: var(--font-display); font-size: 12.5px; letter-spacing: .03em; margin-right: 6px; }
 .cal-ev.earn .tagE { font-size: 10.5px; font-weight: 700; color: var(--bg); background: var(--steel); border-radius: 5px; padding: 1px 6px; margin-right: 6px; }
+.kot { display: grid; gap: 12px; padding: 4px 18px 18px; }
+.kot-top { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.kot-word { font-size: 24px; font-weight: 800; letter-spacing: -.03em; }
+.kot-word.up { color: var(--up); } .kot-word.down { color: var(--down); } .kot-word.flat { color: var(--steel); }
+.kot-top small { font-size: 12.5px; color: var(--dim); }
+.kot-gauge { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.kot-gauge i { height: 8px; border-radius: 4px; background: var(--panel2); }
+.kot-gauge i.on.d2 { background: var(--down); } .kot-gauge i.on.d1 { background: rgba(77,141,255,.55); } .kot-gauge i.on.n { background: var(--steel); }
+.kot-gauge i.on.u1 { background: rgba(255,91,79,.55); } .kot-gauge i.on.u2 { background: var(--up); }
+.kot-glbl { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; font-size: 10.5px; color: var(--dim); text-align: center; }
+.kot-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 2px 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+.kot-row b { font-size: 13.5px; font-weight: 600; }
+.kot-row em { font-style: normal; font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+.kot-row em.up { color: var(--up); } .kot-row em.down { color: var(--down); } .kot-row em.flat { color: var(--dim); }
+.kot-row span { grid-column: 1 / -1; font-size: 12.5px; color: var(--dim); line-height: 1.55; }
+.kot-range { position: relative; height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--down), var(--panel2) 50%, var(--up)); margin: 6px 0 2px; grid-column: 1 / -1; }
+.kot-range i { position: absolute; top: -4px; width: 4px; height: 14px; border-radius: 2px; background: var(--fg); transform: translateX(-50%); }
 .toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 50; background: var(--fg); color: var(--bg); font-size: 13.5px; font-weight: 600; padding: 10px 16px; border-radius: 999px; box-shadow: 0 14px 40px rgba(0,0,0,.5); }
 footer { max-width: 1240px; margin: 0 auto; padding: 0 16px 40px; font-size: 12px; color: var(--dim); line-height: 1.7; }
 footer b { color: var(--steel); font-weight: 600; }
@@ -518,7 +535,6 @@ footer b { color: var(--steel); font-weight: 600; }
         </div>
         <div class="card flush">
           <div class="head"><h2><i>HEATMAP</i>S&amp;P 500 지도</h2><span>칸 크기 = 시가총액 · 색 = 오늘 등락</span></div>
-          <p class="ta-guide"><b>Electronic Technology</b> 반도체·하드웨어 · <b>Technology Services</b> 소프트웨어·인터넷 · <b>Finance</b> 금융 · <b>Health Technology</b> 제약·바이오 · <b>Retail Trade</b> 유통 · <b>Consumer Non-Durables</b> 생활소비재 · <b>Energy Minerals</b> 에너지 · <b>Producer Manufacturing</b> 산업재 · <b>Utilities</b> 유틸리티</p>
           <div class="tv" id="tvHeat" style="height:520px"></div>
         </div>
       </div>
@@ -528,7 +544,7 @@ footer b { color: var(--steel); font-weight: 600; }
           <div class="cal" id="cal"><div class="tv-fallback">이번 주 일정을 불러오는 중이에요</div></div>
         </div>
         <div class="card flush">
-          <div class="head"><h2><i>WIRE</i>시장 헤드라인</h2><span>영문 기사 · 제목을 누르면 원문이 열려요</span></div>
+          <div class="head"><h2><i>WIRE</i>시장 헤드라인</h2><span>기사는 원문(영어)으로 열려요</span></div>
           <div class="tv" id="tvWire" style="height:470px"></div>
         </div>
       </div>
@@ -563,12 +579,10 @@ footer b { color: var(--steel); font-weight: 600; }
           </div>
         </div>
         <div class="card flush">
-          <p class="ta-guide" style="padding-top:12px"><b>Market cap</b> 시가총액 · <b>Volume</b> 거래량 · <b>Day's range</b> 오늘 가격 범위 · <b>52 wk range</b> 1년 가격 범위 · <b>P/E</b> 주가수익비율 · <b>Div yield</b> 배당수익률</p>
           <div class="tv" id="tvInfo" style="min-height:150px"></div>
         </div>
         <div class="card flush">
           <div class="head"><h2><i>CHART</i>차트</h2><span>기간·지표는 차트 안에서 바꿀 수 있어요</span></div>
-          <p class="ta-guide"><b>1D</b> 일봉 · <b>1W</b> 주봉 · <b>1M</b> 월봉 · <b>Indicators</b> 보조지표 추가 · <b>Vol</b> 거래량 · <b>O H L C</b> 시가·고가·저가·종가</p>
           <div class="tv" id="tvChart" style="height:500px"></div>
         </div>
         <section class="card ai" id="ai">
@@ -587,12 +601,11 @@ footer b { color: var(--steel); font-weight: 600; }
       </div>
       <div>
         <div class="card flush">
-          <div class="head"><h2><i>TECHNICALS</i>기술적 신호</h2><span>이동평균·보조지표 요약</span></div>
-          <p class="ta-guide"><b>Strong buy</b> 강한 매수 · <b>Buy</b> 매수 · <b>Neutral</b> 중립 · <b>Sell</b> 매도 · <b>Strong sell</b> 강한 매도 &nbsp;|&nbsp; 탭: <b>1 day</b> 일봉 · <b>1 week</b> 주봉 · <b>1 hour</b> 1시간</p>
-          <div class="tv" id="tvTech" style="height:420px"></div>
+          <div class="head"><h2><i>TECHNICALS</i>가격 흐름 신호</h2><span>최근 1년 종가로 직접 계산</span></div>
+          <div class="kot" id="koTech"><div class="tv-fallback">종목을 고르면 계산해요</div></div>
         </div>
         <div class="card flush">
-          <div class="head"><h2><i>NEWS</i>종목 뉴스</h2><span>영문 기사 · 요약은 위 AI 분석에서</span></div>
+          <div class="head"><h2><i>NEWS</i>종목 뉴스</h2><span>기사는 원문(영어) · 한국어 요약은 AI 분석에서</span></div>
           <div class="tv" id="tvNews" style="height:520px"></div>
         </div>
         <div class="card">
@@ -1819,7 +1832,7 @@ function tv(id, name, cfg) {
   sc.onerror = () => { el.innerHTML = `<div class="tv-fallback">위젯을 불러오지 못했어요. 새로고침해 주세요.</div>`; };
   box.appendChild(sc); el.appendChild(box);
 }
-const TV_BASE = {colorTheme: "dark", isTransparent: true, locale: "en", width: "100%", height: "100%"};
+const TV_BASE = {colorTheme: "dark", isTransparent: true, locale: "kr", width: "100%", height: "100%"};
 function tvSym(t) {
   if (!t) return null;
   const d = DB.find(x => x[0] === t);
@@ -1836,7 +1849,7 @@ function mountTape() {
     {proName: "NASDAQ:NVDA", title: "NVDA"}, {proName: "NASDAQ:AAPL", title: "AAPL"}, {proName: "NASDAQ:TSLA", title: "TSLA"}
   ];
   const extra = (getRecentSafe() || []).slice(0, 4).filter(t => !base.some(b => b.title === t)).map(t => ({proName: tvSym(t), title: t}));
-  tv("tvTape", "ticker-tape", {symbols: [...base, ...extra], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "en"});
+  tv("tvTape", "ticker-tape", {symbols: [...base, ...extra], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "kr"});
   if (IN_CLAUDE) $("tvTape").innerHTML = `<div class="fallback">실시간 시세 띠는 GitHub 사이트에서 보여요</div>`;
 }
 function getRecentSafe() { try { return JSON.parse(localStorage.getItem("recent") || "[]"); } catch (e) { return []; } }
@@ -1845,9 +1858,9 @@ function mountMarket() {
   if (marketMounted) return; marketMounted = true;
   const q = [["FOREXCOM:SPXUSD", "S&P 500"], ["FOREXCOM:NSXUSD", "나스닥 100"], ["FX_IDC:USDKRW", "원/달러"], ["BITSTAMP:BTCUSD", "비트코인"]];
   $("tvQuotes").innerHTML = q.map((_, i) => `<div id="tvQ${i}"></div>`).join("");
-  q.forEach(([s], i) => tv("tvQ" + i, "single-quote", {symbol: s, width: "100%", colorTheme: "dark", isTransparent: true, locale: "en"}));
+  q.forEach(([s], i) => tv("tvQ" + i, "single-quote", {symbol: s, width: "100%", colorTheme: "dark", isTransparent: true, locale: "kr"}));
   tv("tvHeat", "stock-heatmap", {exchanges: [], dataSource: "SPX500", grouping: "sector", blockSize: "market_cap_basic", blockColor: "change",
-    locale: "en", symbolUrl: "", colorTheme: "dark", hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true,
+    locale: "kr", symbolUrl: "", colorTheme: "dark", hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true,
     isMonoSize: false, width: "100%", height: "100%"});
   renderCalendar();
   tv("tvWire", "timeline", {...TV_BASE, feedMode: "market", market: "stock", displayMode: "regular"});
@@ -1857,14 +1870,14 @@ function mountStock() {
   stockDirty = false;
   const s = tvSym(currentT);
   if (!s) {
-    ["tvInfo", "tvChart", "tvTech", "tvNews"].forEach(id => { $(id).innerHTML = `<div class="tv-fallback">티커를 찾지 못해서 차트를 그릴 수 없어요. 티커(예: UBER)로 다시 검색해 보세요.</div>`; });
+    ["tvInfo", "tvChart", "tvNews"].forEach(id => { if ($(id)) $(id).innerHTML = `<div class="tv-fallback">티커를 찾지 못해서 차트를 그릴 수 없어요. 티커(예: UBER)로 다시 검색해 보세요.</div>`; });
     return;
   }
-  tv("tvInfo", "symbol-info", {symbol: s, width: "100%", locale: "en", colorTheme: "dark", isTransparent: true});
-  tv("tvChart", "advanced-chart", {autosize: true, symbol: s, interval: "D", timezone: "Asia/Seoul", theme: "dark", style: "1", locale: "en",
+  tv("tvInfo", "symbol-info", {symbol: s, width: "100%", locale: "kr", colorTheme: "dark", isTransparent: true});
+  tv("tvChart", "advanced-chart", {autosize: true, symbol: s, interval: "D", timezone: "Asia/Seoul", theme: "dark", style: "1", locale: "kr",
     backgroundColor: "rgba(12,11,10,0)", gridColor: "rgba(58,52,45,0.35)", hide_side_toolbar: true, allow_symbol_change: false,
     calendar: false, range: "6M", support_host: "https://www.tradingview.com"});
-  tv("tvTech", "technical-analysis", {...TV_BASE, locale: "en", interval: "1D", symbol: s, showIntervalTabs: true, displayMode: "single"});
+  renderKoTech(currentT);
   tv("tvNews", "timeline", {...TV_BASE, feedMode: "symbol", symbol: s, displayMode: "regular"});
 }
 
@@ -2178,6 +2191,73 @@ function titleFrames() {
   });
 }
 new MutationObserver(titleFrames).observe(document.body, {childList: true, subtree: true});
+
+
+// ---- price-trend signals in plain Korean, computed from a year of daily closes ----
+async function dailyBars(t) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(t.replace(".", "-"))}?range=1y&interval=1d`;
+  let res = null;
+  try { if (window.puter && puter.net && puter.auth && puter.auth.isSignedIn()) res = await puter.net.fetch(url); } catch (e) { res = null; }
+  if (!res) { try { res = await fetch(url); } catch (e) { res = null; } }
+  if (!res || !res.ok) return null;
+  try {
+    const r = (await res.json()).chart.result[0], q = r.indicators.quote[0];
+    const rows = r.timestamp.map((_, i) => ({c: q.close[i], h: q.high[i], l: q.low[i], v: q.volume[i]})).filter(x => x.c > 0);
+    return rows.length > 30 ? rows : null;
+  } catch (e) { return null; }
+}
+const sma = (a, n) => a.length >= n ? a.slice(-n).reduce((x, y) => x + y, 0) / n : null;
+function emaSeries(a, n) { const k = 2 / (n + 1); const out = []; a.forEach((v, i) => out.push(i ? v * k + out[i - 1] * (1 - k) : v)); return out; }
+function rsi14(a) {
+  if (a.length < 15) return null;
+  let g = 0, l = 0;
+  for (let i = 1; i <= 14; i++) { const d = a[i] - a[i - 1]; d > 0 ? g += d : l -= d; }
+  g /= 14; l /= 14;
+  for (let i = 15; i < a.length; i++) { const d = a[i] - a[i - 1]; g = (g * 13 + Math.max(d, 0)) / 14; l = (l * 13 + Math.max(-d, 0)) / 14; }
+  return l === 0 ? 100 : 100 - 100 / (1 + g / l);
+}
+let koTechToken = 0;
+async function renderKoTech(t) {
+  const box = $("koTech"); if (!box) return;
+  const my = ++koTechToken;
+  if (!t) { box.innerHTML = `<div class="tv-fallback">티커를 찾지 못해서 계산할 수 없어요.</div>`; return; }
+  box.innerHTML = `<div class="tv-fallback">${esc(t)} 가격 흐름을 계산하는 중이에요</div>`;
+  const bars = await dailyBars(t);
+  if (my !== koTechToken) return;
+  if (!bars) {
+    box.innerHTML = `<div class="tv-fallback">가격 데이터를 불러오지 못했어요. 포트폴리오 탭에서 Puter로 로그인하면 계산할 수 있어요.</div>`; return;
+  }
+  const c = bars.map(b => b.c), last = c[c.length - 1];
+  const m20 = sma(c, 20), m50 = sma(c, 50), m200 = sma(c, 200);
+  const r = rsi14(c);
+  const e12 = emaSeries(c, 12), e26 = emaSeries(c, 26), macd = e12.map((v, i) => v - e26[i]), sig = emaSeries(macd, 9);
+  const macdUp = macd[macd.length - 1] > sig[sig.length - 1];
+  const hi = Math.max(...bars.map(b => b.h || b.c)), lo = Math.min(...bars.map(b => b.l || b.c));
+  const vol5 = sma(bars.map(b => b.v || 0), 5), vol20 = sma(bars.map(b => b.v || 0), 20);
+  const ch1m = c.length > 21 ? (last / c[c.length - 22] - 1) * 100 : null;
+  const rows = []; let score = 0;
+  const add = (name, ok, good, bad, note) => { if (ok == null) return; score += ok ? 1 : -1; rows.push({name, cls: ok ? "up" : "down", word: ok ? good : bad, note}); };
+  if (m20) add("최근 한 달 흐름", last > m20, "좋음", "약함", `지금 가격이 최근 20일 평균($${m20.toFixed(2)})보다 ${last > m20 ? "위" : "아래"}에 있어요.`);
+  if (m50) add("최근 석 달 흐름", last > m50, "좋음", "약함", `지금 가격이 최근 50일 평균($${m50.toFixed(2)})보다 ${last > m50 ? "위" : "아래"}에 있어요.`);
+  if (m200) add("1년 큰 흐름", last > m200, "상승 추세", "하락 추세", `지금 가격이 200일 평균($${m200.toFixed(2)})보다 ${last > m200 ? "위라서 길게 보면 오르는 흐름이에요" : "아래라서 길게 보면 내리는 흐름이에요"}.`);
+  if (m50 && m200) add("단기·장기 평균 비교", m50 > m200, "좋은 배열", "나쁜 배열", m50 > m200 ? "50일 평균이 200일 평균보다 위예요(골든크로스 쪽)." : "50일 평균이 200일 평균보다 아래예요(데드크로스 쪽).");
+  add("상승 힘(MACD)", macdUp, "강해지는 중", "약해지는 중", macdUp ? "단기 상승 힘이 평균보다 세지고 있어요." : "단기 상승 힘이 평균보다 약해지고 있어요.");
+  if (r != null) {
+    const st = r >= 70 ? ["과열", "flat", "최근에 너무 빨리 올라서 쉬어갈 수 있는 구간이에요."] : r <= 30 ? ["많이 빠짐", "flat", "최근에 많이 빠져서 반등이 나올 수도 있는 구간이에요."] : ["보통", "flat", "너무 오르지도, 너무 빠지지도 않은 구간이에요."];
+    rows.push({name: `과열 정도(RSI ${r.toFixed(0)})`, cls: st[1], word: st[0], note: st[2]});
+  }
+  const pos = hi > lo ? (last - lo) / (hi - lo) * 100 : 50;
+  const n = rows.filter(x => x.cls !== "flat").length || 1, ratio = score / n;
+  const lvl = ratio >= .6 ? 4 : ratio >= .2 ? 3 : ratio > -.2 ? 2 : ratio > -.6 ? 1 : 0;
+  const word = ["매도 신호 강함", "매도 신호 우세", "중립", "매수 신호 우세", "매수 신호 강함"][lvl], wc = lvl > 2 ? "up" : lvl < 2 ? "down" : "flat";
+  const cls = ["d2", "d1", "n", "u1", "u2"];
+  box.innerHTML = `<div class="kot-top"><span class="kot-word ${wc}">${word}</span><small>현재가 $${last.toFixed(2)}${ch1m != null ? ` · 한 달 ${ch1m > 0 ? "+" : ""}${ch1m.toFixed(1)}%` : ""}</small></div>
+    <div class="kot-gauge">${cls.map((k, i) => `<i class="${k}${i === lvl ? " on" : ""}"></i>`).join("")}</div>
+    <div class="kot-glbl"><span>매도 강함</span><span>매도</span><span>중립</span><span>매수</span><span>매수 강함</span></div>
+    ${rows.map(x => `<div class="kot-row"><b>${x.name}</b><em class="${x.cls}">${x.word}</em><span>${x.note}</span></div>`).join("")}
+    <div class="kot-row"><b>1년 가격 범위 중 위치</b><em class="flat">${pos.toFixed(0)}%</em><div class="kot-range"><i style="left:${pos}%"></i></div><span>1년 최저 $${lo.toFixed(2)} ~ 최고 $${hi.toFixed(2)}${vol5 && vol20 ? ` · 최근 거래량은 평소의 ${(vol5 / vol20 * 100).toFixed(0)}%` : ""}</span></div>
+    <div class="kot-row" style="border-top:0;padding-top:0"><span>가격 흐름만 본 신호예요. 뉴스·실적은 위 AI 분석에서 같이 보세요.</span></div>`;
+}
 
 // ---- boot ----
 $("navT").textContent = currentT ? "· " + currentT : "";

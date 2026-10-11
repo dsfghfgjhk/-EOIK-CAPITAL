@@ -441,6 +441,23 @@ sup { color: var(--brass); font-size: 10px; margin-left: 2px; font-family: var(-
 .scan-actions .run { flex: 1 1 200px; padding: 12px 16px; }
 /* sizing guide and basket are switched off on request (logic stays, nothing shown) */
 #size, #cart, #addCart { display: none !important; }
+.ta-guide { margin: 0; padding: 0 18px; font-size: 12px; color: var(--dim); line-height: 1.7; }
+.ta-guide b { color: var(--steel); font-weight: 600; font-family: var(--font-mono); font-size: 11.5px; }
+.cal { display: grid; padding: 4px 0 8px; max-height: 560px; overflow-y: auto; }
+.cal-day { position: sticky; top: 0; z-index: 1; padding: 10px 18px 6px; font-size: 12.5px; font-weight: 700; color: var(--brass); background: var(--panel); border-bottom: 1px solid var(--line); }
+.cal-day.today::after { content: "오늘"; margin-left: 8px; font-size: 10.5px; color: var(--bg); background: var(--brass); padding: 1px 7px; border-radius: 999px; }
+.cal-ev { display: grid; grid-template-columns: 50px minmax(0,1fr); gap: 4px 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+.cal-ev time { font-family: var(--font-mono); font-size: 12.5px; color: var(--steel); padding-top: 2px; }
+.cal-ev .t { min-width: 0; display: grid; gap: 4px; }
+.cal-ev .nm { font-size: 14px; font-weight: 600; line-height: 1.4; }
+.cal-ev .nm small { display: block; font-size: 11px; font-weight: 400; color: var(--dim); font-family: var(--font-mono); }
+.cal-ev .imp { color: var(--brass); letter-spacing: 1px; font-size: 10px; margin-right: 6px; }
+.cal-ev .vals { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.cal-ev .vals b { color: var(--fg); font-weight: 600; font-family: var(--font-mono); font-size: 12.5px; margin-left: 4px; }
+.cal-ev .vals .act b { color: var(--brass); }
+.cal-ev .why { font-size: 12.5px; color: var(--steel); line-height: 1.55; }
+.cal-ev.earn .nm b { font-family: var(--font-display); font-size: 12.5px; letter-spacing: .03em; margin-right: 6px; }
+.cal-ev.earn .tagE { font-size: 10.5px; font-weight: 700; color: var(--bg); background: var(--steel); border-radius: 5px; padding: 1px 6px; margin-right: 6px; }
 .toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 50; background: var(--fg); color: var(--bg); font-size: 13.5px; font-weight: 600; padding: 10px 16px; border-radius: 999px; box-shadow: 0 14px 40px rgba(0,0,0,.5); }
 footer { max-width: 1240px; margin: 0 auto; padding: 0 16px 40px; font-size: 12px; color: var(--dim); line-height: 1.7; }
 footer b { color: var(--steel); font-weight: 600; }
@@ -506,8 +523,8 @@ footer b { color: var(--steel); font-weight: 600; }
       </div>
       <div>
         <div class="card flush">
-          <div class="head"><h2><i>MACRO</i>이번 주 경제 일정</h2><span>미국 · 중요도 높음</span></div>
-          <div class="tv" id="tvCal" style="height:470px"></div>
+          <div class="head"><h2><i>MACRO</i>이번 주 경제 일정</h2><span id="calNote">미국 · 한국시간 기준</span></div>
+          <div class="cal" id="cal"><div class="tv-fallback">이번 주 일정을 불러오는 중이에요</div></div>
         </div>
         <div class="card flush">
           <div class="head"><h2><i>WIRE</i>시장 헤드라인</h2></div>
@@ -567,7 +584,8 @@ footer b { color: var(--steel); font-weight: 600; }
       </div>
       <div>
         <div class="card flush">
-          <div class="head"><h2><i>TECHNICALS</i>기술적 신호</h2><span>이동평균·오실레이터 요약</span></div>
+          <div class="head"><h2><i>TECHNICALS</i>기술적 신호</h2><span>이동평균·보조지표 요약</span></div>
+          <p class="ta-guide"><b>Strong buy</b> 강한 매수 · <b>Buy</b> 매수 · <b>Neutral</b> 중립 · <b>Sell</b> 매도 · <b>Strong sell</b> 강한 매도 &nbsp;|&nbsp; 탭: <b>1 day</b> 일봉 · <b>1 week</b> 주봉 · <b>1 hour</b> 1시간</p>
           <div class="tv" id="tvTech" style="height:420px"></div>
         </div>
         <div class="card flush">
@@ -1828,7 +1846,7 @@ function mountMarket() {
   tv("tvHeat", "stock-heatmap", {exchanges: [], dataSource: "SPX500", grouping: "sector", blockSize: "market_cap_basic", blockColor: "change",
     locale: "kr", symbolUrl: "", colorTheme: "dark", hasTopBar: false, isDataSetEnabled: false, isZoomEnabled: true, hasSymbolTooltip: true,
     isMonoSize: false, width: "100%", height: "100%"});
-  tv("tvCal", "events", {...TV_BASE, importanceFilter: "0,1", countryFilter: "us"});
+  renderCalendar();
   tv("tvWire", "timeline", {...TV_BASE, feedMode: "market", market: "stock", displayMode: "regular"});
 }
 
@@ -1843,7 +1861,7 @@ function mountStock() {
   tv("tvChart", "advanced-chart", {autosize: true, symbol: s, interval: "D", timezone: "Asia/Seoul", theme: "dark", style: "1", locale: "kr",
     backgroundColor: "rgba(12,11,10,0)", gridColor: "rgba(58,52,45,0.35)", hide_side_toolbar: true, allow_symbol_change: false,
     calendar: false, range: "6M", support_host: "https://www.tradingview.com"});
-  tv("tvTech", "technical-analysis", {...TV_BASE, interval: "1D", symbol: s, showIntervalTabs: true, displayMode: "single"});
+  tv("tvTech", "technical-analysis", {...TV_BASE, locale: "en", interval: "1D", symbol: s, showIntervalTabs: true, displayMode: "single"});
   tv("tvNews", "timeline", {...TV_BASE, feedMode: "symbol", symbol: s, displayMode: "regular"});
 }
 
@@ -2110,6 +2128,53 @@ $("scanList").addEventListener("click", async e => {
   scanMsg(saved ? `${saved}건을 기록했어요.${skipped ? ` ${skipped}건은 확인이 필요해요.` : ""}` : "기록하지 못했어요. 남은 항목을 확인해 주세요.", !saved);
   if (saved && typeof toast === "function") toast(`${saved}건 기록했어요`);
 });
+
+
+// ---- our own Korean economic calendar (TradingView's Korean labels read badly) ----
+async function renderCalendar() {
+  const box = $("cal");
+  let d = null;
+  try { const r = await fetch("calendar.json", {cache: "no-store"}); if (r.ok) d = await r.json(); } catch (e) {}
+  if (!d || !Array.isArray(d.events)) { box.innerHTML = `<div class="tv-fallback">이번 주 일정은 매일 아침 갱신 때 채워져요.</div>`; return; }
+  const items = [];
+  d.events.slice(0, 80).forEach(e => { if (e && /^\d{4}-\d{2}-\d{2}$/.test(e.date)) items.push({...e, kind: "ev"}); });
+  (Array.isArray(d.earnings) ? d.earnings : []).slice(0, 60).forEach(e => { if (e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && e.t) items.push({...e, kind: "earn"}); });
+  if (!items.length) { box.innerHTML = `<div class="tv-fallback">이번 주에는 큰 일정이 없어요.</div>`; return; }
+  items.sort((a, b) => (a.date + (a.timeKst || "99")).localeCompare(b.date + (b.timeKst || "99")));
+  const todayK = kstDate(), wd = "일월화수목금토";
+  let html = "", last = "";
+  items.forEach(e => {
+    if (e.date !== last) {
+      last = e.date; const dt = new Date(e.date + "T12:00:00Z");
+      html += `<div class="cal-day${e.date === todayK ? " today" : ""}">${dt.getUTCMonth() + 1}월 ${dt.getUTCDate()}일 (${wd[dt.getUTCDay()]})</div>`;
+    }
+    const v = (label, x, cls) => x == null || x === "" ? "" : `<span class="${cls || ""}">${label}<b>${esc(String(x))}</b></span>`;
+    if (e.kind === "earn") {
+      html += `<div class="cal-ev earn"><time>${esc(e.timeKst || "")}</time><div class="t"><div class="nm"><span class="tagE">실적</span><b>${esc(e.t)}</b>${esc(e.name || ((DB.find(z => z[0] === e.t) || [])[2] || ""))}${e.when ? ` <small>${esc(e.when)}</small>` : ""}</div>${e.why ? `<div class="why">${esc(e.why)}</div>` : ""}</div></div>`;
+    } else {
+      const imp = Math.max(1, Math.min(3, Number(e.importance) || 2));
+      html += `<div class="cal-ev"><time>${esc(e.timeKst || "")}</time><div class="t">
+        <div class="nm"><span class="imp" title="중요도">${"●".repeat(imp)}${"○".repeat(3 - imp)}</span>${esc(e.ko || e.en || "")}${e.en && e.ko ? `<small>${esc(e.en)}</small>` : ""}</div>
+        <div class="vals">${v("발표", e.actual, "act")}${v("예상", e.forecast)}${v("이전", e.previous)}</div>
+        ${e.why ? `<div class="why">${esc(e.why)}</div>` : ""}</div></div>`;
+    }
+  });
+  box.innerHTML = html;
+  const g = d.generatedAt ? new Date(d.generatedAt) : null;
+  if (g && !isNaN(g)) $("calNote").textContent = `미국 · 한국시간 · ${g.getMonth() + 1}/${g.getDate()} 갱신`;
+  const t = box.querySelector(".cal-day.today"); if (t) box.scrollTop = t.offsetTop - 4;
+}
+
+// ---- Korean hover titles on the widget frames (their default is "… TradingView widget") ----
+const TV_TITLES = {tvTape: "실시간 시세 띠", tvHeat: "S&P 500 히트맵", tvWire: "시장 헤드라인", tvInfo: "현재가", tvChart: "차트", tvTech: "기술적 신호", tvNews: "종목 뉴스"};
+function titleFrames() {
+  document.querySelectorAll(".tv iframe, .tape-wrap iframe, .quotes iframe").forEach(f => {
+    const host = f.closest("[id^='tv']"), id = host ? host.id : "";
+    const want = TV_TITLES[id] || (id.startsWith("tvQ") ? "지수 시세" : "시장 정보");
+    if (f.title !== want) f.title = want;
+  });
+}
+new MutationObserver(titleFrames).observe(document.body, {childList: true, subtree: true});
 
 // ---- boot ----
 $("navT").textContent = currentT ? "· " + currentT : "";

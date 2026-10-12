@@ -119,8 +119,6 @@ button { font-family: inherit; }
 /* nav */
 .nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; margin: 0 -4px; padding: 0 4px; }
 .nav::-webkit-scrollbar { display: none; }
-.nav a.navlink { flex-shrink: 0; padding: 10px 14px 12px; font-size: 14px; font-weight: 600; letter-spacing: -.01em; color: var(--brass); text-decoration: none; }
-.nav a.navlink small { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .14em; margin-right: 7px; color: var(--line2); font-weight: 500; }
 .nav button {
   position: relative; flex-shrink: 0; border: 0; background: transparent; color: var(--dim); cursor: pointer;
   padding: 10px 14px 12px; font-size: 14px; font-weight: 600; letter-spacing: -.01em;
@@ -503,7 +501,6 @@ footer b { color: var(--steel); font-weight: 600; }
       <button type="button" role="tab" data-view="explore" aria-selected="false"><small>02</small>탐색</button>
       <button type="button" role="tab" data-view="stock" aria-selected="false"><small>03</small>종목 <span id="navT" style="color:var(--brass);font-family:var(--font-mono);font-size:12px"></span></button>
       <button type="button" role="tab" data-view="portfolio" aria-selected="false"><small>04</small>포트폴리오</button>
-      <a class="navlink" href="./mock.html"><small>05</small>모의투자 ↗</a>
     </nav>
   </div>
 </header>

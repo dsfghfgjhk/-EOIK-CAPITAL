@@ -1,39 +1,17 @@
 {
- "weekOf": "2026-10-12",
- "generatedAt": "2026-10-11T15:55:23Z",
+ "weekOf": "2026-10-13",
+ "generatedAt": "2026-10-12T21:57:58Z",
  "events": [
   {
    "date": "2026-10-13",
-   "timeKst": "16:45",
+   "timeKst": "17:30",
    "importance": 2,
-   "ko": "월러 연준 이사 연설",
-   "en": "Fed Waller speaks",
+   "ko": "월러 연준 이사 발언",
+   "en": "Fed Governor Waller Speaks",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "금리 경로에 대한 힌트가 나오면 금리와 기술주가 함께 움직일 수 있어요."
-  },
-  {
-   "date": "2026-10-13",
-   "timeKst": "23:00",
-   "importance": 2,
-   "ko": "기존주택판매(9월)",
-   "en": "Existing Home Sales",
-   "actual": null,
-   "forecast": "397만 건",
-   "previous": "398만 건",
-   "why": "높은 금리가 주택 수요를 얼마나 누르는지 보여줘요."
-  },
-  {
-   "date": "2026-10-14",
-   "timeKst": "18:40",
-   "importance": 2,
-   "ko": "보우먼 연준 부의장 연설",
-   "en": "Fed Bowman speaks",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "금융 규제와 금리에 대한 발언이 은행주와 금리에 영향을 줄 수 있어요."
+   "why": "금리 인상 국면이라 추가 인상 힌트가 나오면 금리와 성장주가 흔들릴 수 있어요."
   },
   {
    "date": "2026-10-14",
@@ -42,9 +20,9 @@
    "ko": "소비자물가지수(CPI) 전월 대비",
    "en": "CPI m/m",
    "actual": null,
-   "forecast": "0.6%",
-   "previous": "0.4%",
-   "why": "물가가 예상보다 높으면 추가 금리 인상 우려로 주가가 흔들릴 수 있어요."
+   "forecast": "0.5%",
+   "previous": null,
+   "why": "물가가 예상보다 높으면 추가 금리 인상 우려로 주가가 약해질 수 있어요."
   },
   {
    "date": "2026-10-14",
@@ -53,9 +31,9 @@
    "ko": "소비자물가지수(CPI) 전년 대비",
    "en": "CPI y/y",
    "actual": null,
-   "forecast": "3.6%",
+   "forecast": null,
    "previous": "3.4%",
-   "why": "연준이 9월에 금리를 올린 만큼 물가 흐름이 다음 결정의 핵심이에요."
+   "why": "연준이 가장 중요하게 보는 물가 흐름이라 금리 전망을 크게 바꿀 수 있어요."
   },
   {
    "date": "2026-10-14",
@@ -64,9 +42,9 @@
    "ko": "근원 CPI 전월 대비",
    "en": "Core CPI m/m",
    "actual": null,
-   "forecast": "0.2%",
-   "previous": "0.3%",
-   "why": "에너지·식품을 뺀 기조 물가라 연준이 특히 주목해요."
+   "forecast": null,
+   "previous": null,
+   "why": "식품·에너지를 뺀 기조 물가라 연준의 판단에 직접 영향을 줘요."
   },
   {
    "date": "2026-10-14",
@@ -76,8 +54,8 @@
    "en": "Core CPI y/y",
    "actual": null,
    "forecast": "2.5%",
-   "previous": "2.4%",
-   "why": "기조 물가가 다시 오르는지 확인하는 지표예요."
+   "previous": null,
+   "why": "근원 물가가 꺾이는지 여부가 금리 인상 지속 여부를 가를 수 있어요."
   },
   {
    "date": "2026-10-15",
@@ -88,73 +66,29 @@
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "연준 지역별 경기 진단이라 경기 둔화 신호를 읽을 수 있어요."
+   "why": "지역별 고용·물가·소비 분위기를 보여줘 경기 판단에 참고가 돼요."
   },
   {
    "date": "2026-10-15",
    "timeKst": "21:30",
-   "importance": 3,
+   "importance": 2,
    "ko": "생산자물가지수(PPI) 전월 대비",
    "en": "PPI m/m",
    "actual": null,
-   "forecast": "0.5%",
-   "previous": "0.4%",
-   "why": "기업 비용 부담이 소비자 물가로 번질지 가늠하게 해줘요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "PPI 전년 대비",
-   "en": "PPI y/y",
-   "actual": null,
-   "forecast": "5.3%",
-   "previous": "5.4%",
-   "why": "생산 단계 물가가 높으면 기업 이익률에 부담이 돼요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "근원 PPI 전월 대비",
-   "en": "Core PPI m/m",
-   "actual": null,
-   "forecast": "0.3%",
-   "previous": "0.2%",
-   "why": "에너지·식품을 뺀 생산자 물가 흐름이에요."
+   "forecast": null,
+   "previous": null,
+   "why": "기업 원가 부담이 소비자 물가로 번질지 가늠하는 지표예요."
   },
   {
    "date": "2026-10-15",
    "timeKst": "21:30",
    "importance": 3,
-   "ko": "소매판매 전월 대비(9월)",
+   "ko": "소매판매 전월 대비",
    "en": "Retail Sales m/m",
    "actual": null,
-   "forecast": "0.3%",
+   "forecast": null,
    "previous": "1.2%",
-   "why": "소비가 경제의 중심이라 소매·소비재 주식에 바로 영향을 줘요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "자동차 제외 소매판매 전월 대비",
-   "en": "Retail Sales ex Autos m/m",
-   "actual": null,
-   "forecast": "0.5%",
-   "previous": "1.4%",
-   "why": "변동이 큰 자동차를 뺀 기본 소비 흐름이에요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "소매판매 통제그룹 전월 대비",
-   "en": "Retail Control Group m/m",
-   "actual": null,
-   "forecast": "0.3%",
-   "previous": "1.4%",
-   "why": "GDP 계산에 쓰이는 핵심 소비 지표예요."
+   "why": "미국 소비가 버티는지 보여줘 소비주와 경기 전망에 큰 영향을 줘요."
   },
   {
    "date": "2026-10-15",
@@ -163,85 +97,71 @@
    "ko": "신규 실업수당 청구건수",
    "en": "Initial Jobless Claims",
    "actual": null,
-   "forecast": "19.7만 건",
+   "forecast": null,
    "previous": "19.7만 건",
-   "why": "고용이 식는지 매주 확인할 수 있는 지표예요."
+   "why": "고용 시장이 식는지 매주 확인할 수 있는 지표예요."
   },
   {
    "date": "2026-10-15",
    "timeKst": "21:30",
    "importance": 2,
-   "ko": "뉴욕 엠파이어스테이트 제조업지수(10월)",
-   "en": "NY Empire State Mfg",
-   "actual": null,
-   "forecast": "3.2",
-   "previous": "7.6",
-   "why": "10월 제조업 경기를 가장 먼저 보여줘요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "필라델피아 연준 제조업지수(10월)",
-   "en": "Philly Fed Mfg",
-   "actual": null,
-   "forecast": "26.5",
-   "previous": "37.8",
-   "why": "제조업 체감 경기와 가격 압력을 함께 보여줘요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "12:30",
-   "importance": 3,
-   "ko": "워시 연준 의장 대담(IMF 총재와)",
-   "en": "Fed Chair Warsh fireside chat",
+   "ko": "뉴욕 엠파이어스테이트 제조업지수",
+   "en": "Empire State Manufacturing Index",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "CPI 발표 직후 의장 발언이라 금리 전망이 크게 바뀔 수 있어요."
+   "why": "제조업 경기가 살아나는지 가장 먼저 보여주는 지역 지표예요."
   },
   {
-   "date": "2026-10-16",
+   "date": "2026-10-15",
    "timeKst": "21:30",
    "importance": 2,
-   "ko": "수입물가 전월 대비(9월)",
-   "en": "Import Prices m/m",
+   "ko": "필라델피아 연은 제조업지수",
+   "en": "Philadelphia Fed Manufacturing Index",
    "actual": null,
-   "forecast": "0.6%",
-   "previous": "0.7%",
-   "why": "유가 상승이 수입 물가를 통해 물가에 번지는지 보여줘요."
+   "forecast": null,
+   "previous": null,
+   "why": "제조업 경기와 가격 압력을 함께 보여줘요."
+  },
+  {
+   "date": "2026-10-16",
+   "timeKst": "11:55",
+   "importance": 3,
+   "ko": "워시 연준 의장 대담(IMF 총재와)",
+   "en": "Fed Chair Warsh Fireside Chat",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "의장의 금리 발언 한마디에 시장 금리와 주가가 크게 움직일 수 있어요."
   },
   {
    "date": "2026-10-16",
    "timeKst": "22:15",
    "importance": 2,
-   "ko": "산업생산 전월 대비(9월)",
+   "ko": "산업생산 전월 대비",
    "en": "Industrial Production m/m",
    "actual": null,
-   "forecast": "0.3%",
-   "previous": "0.0%",
-   "why": "공장·광업·전력 생산으로 실물 경기를 확인해요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "22:15",
-   "importance": 2,
-   "ko": "설비가동률(9월)",
-   "en": "Capacity Utilization",
-   "actual": null,
-   "forecast": "76.5%",
-   "previous": "76.3%",
-   "why": "가동률이 높으면 물가 압력이 커질 수 있어요."
+   "forecast": null,
+   "previous": null,
+   "why": "제조·광업·유틸리티 생산을 보여줘 경기 흐름을 확인할 수 있어요."
   }
  ],
  "earnings": [
   {
    "date": "2026-10-13",
-   "timeKst": "20:00",
+   "timeKst": "",
    "t": "JPM",
    "name": "JP모건체이스",
    "when": "장 시작 전",
-   "why": "투자은행·트레이딩 수익과 대손충당금, 순이자이익 전망을 봐요."
+   "why": "순이자이익과 투자은행 수수료, 연간 가이던스를 봐요."
+  },
+  {
+   "date": "2026-10-13",
+   "timeKst": "",
+   "t": "UNH",
+   "name": "유나이티드헬스",
+   "when": "장 시작 전",
+   "why": "의료비 비율과 메디케어 별점 하락 영향, 연간 전망을 봐요."
   },
   {
    "date": "2026-10-13",
@@ -257,7 +177,7 @@
    "t": "C",
    "name": "씨티그룹",
    "when": "장 시작 전",
-   "why": "구조조정 진행 상황과 비용 절감을 봐요."
+   "why": "구조조정 성과와 수수료 수익을 봐요."
   },
   {
    "date": "2026-10-13",
@@ -265,15 +185,7 @@
    "t": "GS",
    "name": "골드만삭스",
    "when": "장 시작 전",
-   "why": "IPO 취소 여파와 투자은행 수수료를 봐요."
-  },
-  {
-   "date": "2026-10-13",
-   "timeKst": "",
-   "t": "UNH",
-   "name": "유나이티드헬스",
-   "when": "장 시작 전",
-   "why": "의료비 비율과 메디케어 별점 하락 영향, 연간 가이던스를 봐요."
+   "why": "인수합병 자문과 트레이딩 수익을 봐요."
   },
   {
    "date": "2026-10-13",
@@ -281,23 +193,23 @@
    "t": "JNJ",
    "name": "존슨앤드존슨",
    "when": "장 시작 전",
-   "why": "제약 매출과 연간 가이던스를 봐요."
+   "why": "제약 부문 성장과 연간 가이던스를 봐요."
   },
   {
    "date": "2026-10-14",
-   "timeKst": "14:00",
+   "timeKst": "",
    "t": "ASML",
    "name": "ASML",
    "when": "장 시작 전",
-   "why": "신규 수주와 2027년 전망, 중국 매출 비중을 봐요."
+   "why": "신규 수주와 내년 반도체 장비 수요 전망을 봐요."
   },
   {
    "date": "2026-10-14",
-   "timeKst": "19:45",
+   "timeKst": "",
    "t": "BAC",
    "name": "뱅크오브아메리카",
    "when": "장 시작 전",
-   "why": "순이자이익과 예금 비용을 봐요."
+   "why": "순이자이익 전망과 신용 품질을 봐요."
   },
   {
    "date": "2026-10-14",
@@ -308,36 +220,12 @@
    "why": "자산관리와 트레이딩 수익을 봐요."
   },
   {
-   "date": "2026-10-14",
-   "timeKst": "",
-   "t": "BLK",
-   "name": "블랙록",
-   "when": "장 시작 전",
-   "why": "자금 유입과 운용자산 규모를 봐요."
-  },
-  {
    "date": "2026-10-15",
    "timeKst": "15:00",
    "t": "TSM",
    "name": "TSMC",
    "when": "장 시작 전",
-   "why": "AI 수요 전망과 4분기 가이던스, 마진을 봐요."
-  },
-  {
-   "date": "2026-10-15",
-   "timeKst": "",
-   "t": "SCHW",
-   "name": "찰스슈왑",
-   "when": "장 시작 전",
-   "why": "고객 자산 유입과 이자 수익을 봐요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "",
-   "t": "TRV",
-   "name": "트래블러스",
-   "when": "장 시작 전",
-   "why": "허리케인 손실과 보험료 인상 흐름을 봐요."
+   "why": "AI 칩 수요와 4분기 매출·마진 가이던스를 봐요."
   }
  ]
 }

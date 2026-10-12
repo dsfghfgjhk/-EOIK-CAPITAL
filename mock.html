@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>$EOIK 모의투자</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;800&family=JetBrains+Mono:wght@400;500;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* Layout: account strip on top, then a two-column desk (order ticket left, holdings + history right) that stacks on phones. */
+:root {
+  --bg: #0c0b0a; --panel: #141311; --panel2: #1b1916; --line: #2a2622; --line2: #3a342d;
+  --fg: #efe9dd; --dim: #8f877a; --steel: #c9c1b3;
+  --brass: #d8b15a; --brass-dim: #4b3d1d; --glow: rgba(216,177,90,.25);
+  --up: #ff5b4f; --down: #4d8dff;
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-kr: "Pretendard Variable", "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+[hidden] { display: none !important; }
+* { box-sizing: border-box; }
+html, body { overflow-x: hidden; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-kr); font-size: 15px; line-height: 1.55;
+  background-image: radial-gradient(900px 420px at 90% -10%, rgba(216,177,90,.10), transparent 60%); background-attachment: fixed; }
+button, input { font: inherit; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.up { color: var(--up); } .down { color: var(--down); } .flat { color: var(--steel); }
+
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 16px 60px; display: grid; gap: 16px; grid-template-columns: minmax(0,1fr); }
+.wrap > * { min-width: 0; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.logo { display: flex; align-items: center; gap: 10px; color: var(--fg); text-decoration: none; }
+.mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; color: var(--bg); background: linear-gradient(145deg, #f1d58e, var(--brass) 55%, #9c7a2c); }
+.word { font-family: var(--font-display); font-weight: 700; font-size: 15px; letter-spacing: .04em; line-height: 1.1; }
+.word small { display: block; font-family: var(--font-kr); font-size: 11.5px; font-weight: 600; letter-spacing: .02em; color: var(--brass); margin-top: 2px; }
+.topr { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); white-space: nowrap; }
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dim); }
+.pill.open { color: var(--brass); border-color: var(--brass-dim); } .pill.open .dot { background: var(--brass); box-shadow: 0 0 8px var(--brass); }
+.pill.live .dot { background: #49c27a; box-shadow: 0 0 8px #49c27a; }
+.link { color: var(--steel); font-size: 13px; text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 6px 11px; }
+.link:hover { color: var(--fg); }
+
+.card { background: linear-gradient(180deg, var(--panel), rgba(20,19,17,.85)); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.card h2 { margin: 0; font-size: 16px; font-weight: 700; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.card h2 small { font-size: 12.5px; font-weight: 500; color: var(--dim); }
+
+/* account strip */
+.acct { display: grid; gap: 14px; grid-template-columns: minmax(0,1fr); }
+@media (min-width: 900px) { .acct { grid-template-columns: minmax(0,1.2fr) minmax(0,2fr); align-items: stretch; } }
+.total { display: grid; gap: 6px; align-content: center; }
+.total small { font-size: 13px; color: var(--dim); }
+.total b { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 6vw, 40px); line-height: 1.05; letter-spacing: -.01em; }
+.total .chg { font-size: 15px; font-weight: 700; }
+.kpis { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+@media (min-width: 640px) { .kpis { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+.kpi { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 12px 14px; display: grid; gap: 3px; min-width: 0; }
+.kpi small { font-size: 12px; color: var(--dim); }
+.kpi b { font-size: 17px; font-weight: 700; overflow-wrap: anywhere; }
+.kpi span { font-size: 12px; color: var(--dim); }
+
+.desk { display: grid; gap: 16px; grid-template-columns: minmax(0,1fr); align-items: start; }
+.desk > *, .desk > * > * { min-width: 0; }
+.desk > div, .card { grid-template-columns: minmax(0,1fr); }
+@media (min-width: 980px) { .desk { grid-template-columns: minmax(0,1fr) minmax(0,1.15fr); } }
+.desk > div { display: grid; gap: 16px; min-width: 0; }
+
+/* search */
+.search { position: relative; }
+.search input { width: 100%; height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line2); background: var(--bg); color: var(--fg); font-size: 16px; outline: 0; }
+.search input:focus { border-color: var(--brass); }
+.sugg { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 20; max-height: 320px; overflow-y: auto; background: var(--panel); border: 1px solid var(--line2); border-radius: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.55); }
+.sg { display: grid; grid-template-columns: 80px minmax(0,1fr); gap: 10px; width: 100%; padding: 11px 14px; border: 0; border-top: 1px solid var(--line); background: transparent; color: var(--fg); text-align: left; cursor: pointer; }
+.sg:first-child { border-top: 0; }
+.sg b { font-family: var(--font-display); font-size: 13px; }
+.sg span { font-size: 14px; color: var(--steel); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sg:hover, .sg.hl { background: var(--panel2); }
+.watch { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+.wchip { flex-shrink: 0; display: grid; gap: 1px; text-align: left; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--fg); cursor: pointer; min-width: 92px; }
+.wchip b { font-family: var(--font-display); font-size: 12px; }
+.wchip span { font-size: 12px; }
+.wchip[aria-pressed="true"] { border-color: var(--brass); box-shadow: 0 0 0 1px var(--brass) inset; }
+
+/* quote */
+.quote { display: grid; gap: 6px; }
+.qhead { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.qsym { font-family: var(--font-display); font-weight: 800; font-size: 32px; line-height: 1; }
+.qname { color: var(--steel); font-size: 15px; }
+.qpx { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.qpx b { font-size: 34px; font-weight: 700; letter-spacing: -.02em; }
+.qpx span { font-size: 15px; font-weight: 600; }
+.qpx small { font-size: 13px; color: var(--dim); }
+.qnote { font-size: 12.5px; color: var(--dim); }
+@media (prefers-reduced-motion: no-preference) {
+  .tick-up { animation: tu .7s ease-out; } .tick-down { animation: td .7s ease-out; }
+  @keyframes tu { from { background: rgba(255,91,79,.25); } } @keyframes td { from { background: rgba(77,141,255,.25); } }
+}
+.spark { width: 100%; height: 90px; display: block; }
+
+/* ticket */
+.seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line2); border-radius: 12px; overflow: hidden; }
+.seg button { border: 0; background: var(--bg); color: var(--dim); padding: 11px 0; font-weight: 700; font-size: 15px; cursor: pointer; }
+.seg.side button[aria-pressed="true"][data-v="buy"] { background: var(--up); color: #fff; }
+.seg.side button[aria-pressed="true"][data-v="sell"] { background: var(--down); color: #fff; }
+.seg.mode button { font-size: 13.5px; padding: 9px 0; }
+.seg.mode button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.field { display: grid; gap: 6px; }
+.field label { font-size: 13px; color: var(--dim); }
+.inrow { display: flex; gap: 8px; }
+.inrow input { flex: 1; min-width: 0; height: 48px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line2); background: var(--bg); color: var(--fg); font-size: 18px; font-family: var(--font-mono); outline: 0; }
+.inrow input:focus { border-color: var(--brass); }
+.quick { display: flex; gap: 6px; flex-wrap: wrap; }
+.quick button { border: 1px solid var(--line2); background: transparent; color: var(--steel); border-radius: 999px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+.quick button:hover { color: var(--fg); border-color: var(--dim); }
+.preview { display: grid; gap: 6px; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); padding: 12px 14px; font-size: 14px; }
+.preview div { display: flex; justify-content: space-between; gap: 10px; }
+.preview span { color: var(--dim); }
+.check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--steel); }
+.check input { accent-color: var(--brass); width: 18px; height: 18px; }
+.run { border: 0; border-radius: 12px; padding: 15px 18px; font-weight: 800; font-size: 16px; cursor: pointer; color: #fff; }
+.run.buy { background: var(--up); } .run.sell { background: var(--down); }
+.run.brass { color: var(--bg); background: linear-gradient(180deg, #e7c677, var(--brass)); }
+.run:disabled { opacity: .45; cursor: not-allowed; }
+.msg { font-size: 13.5px; min-height: 1.2em; }
+.msg.err { color: var(--up); } .msg.ok { color: #49c27a; }
+
+/* fx */
+.fxrate { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.fxrate b { font-size: 22px; font-weight: 700; }
+.fxrate small { font-size: 12.5px; color: var(--dim); }
+
+/* holdings */
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px; }
+th { text-align: right; font-size: 12px; font-weight: 600; color: var(--dim); padding: 10px 12px; background: var(--panel2); white-space: nowrap; }
+td { text-align: right; padding: 11px 12px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+td:first-child { font-family: var(--font-kr); }
+td:first-child b { font-family: var(--font-display); font-size: 12.5px; display: block; }
+td:first-child span { font-size: 12px; color: var(--dim); }
+tbody tr { cursor: pointer; } tbody tr:hover td { background: var(--panel2); }
+td small { display: block; font-size: 11.5px; color: var(--dim); }
+.empty { padding: 22px 14px; text-align: center; color: var(--dim); font-size: 14px; }
+.hist { display: grid; gap: 6px; max-height: 420px; overflow-y: auto; }
+.hrow { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); }
+.tag { font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 6px; color: #fff; white-space: nowrap; }
+.tag.buy { background: var(--up); } .tag.sell { background: var(--down); } .tag.fx { background: var(--brass); color: var(--bg); }
+.hrow .m { min-width: 0; display: grid; gap: 1px; }
+.hrow .m b { font-size: 13.5px; font-weight: 600; }
+.hrow .m span { font-size: 12px; color: var(--dim); }
+.hrow > span:last-child { font-size: 12px; color: var(--dim); text-align: right; }
+.hrow .m { text-align: left; }
+@media (max-width: 560px) { .hrow { grid-template-columns: auto minmax(0,1fr); } .hrow > span:last-child { grid-column: 2; text-align: left; } }
+
+/* gate + reset */
+.gate { max-width: 560px; margin: 8vh auto 0; text-align: center; display: grid; gap: 16px; justify-items: center; }
+.gate h1 { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 6vw, 40px); line-height: 1.1; }
+.gate h1 em { font-style: normal; color: var(--brass); }
+.gate p { margin: 0; color: var(--steel); font-size: 15px; line-height: 1.7; }
+.gate ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--dim); font-size: 14px; }
+.gate .run { padding: 16px 28px; }
+.ghost { border: 1px solid var(--line2); background: transparent; color: var(--steel); border-radius: 10px; padding: 8px 14px; font-size: 13px; cursor: pointer; }
+.ghost.danger { color: var(--up); border-color: rgba(255,91,79,.5); }
+.reset-box { display: grid; gap: 10px; border: 1px dashed rgba(255,91,79,.5); border-radius: 12px; padding: 12px 14px; }
+.reset-box .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.reset-box input { width: 160px; height: 40px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line2); background: var(--bg); color: var(--fg); font-family: var(--font-mono); }
+footer { font-size: 12px; color: var(--dim); line-height: 1.7; }
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 50; background: var(--fg); color: var(--bg); font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 999px; max-width: calc(100% - 32px); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="logo" href="./"><span class="mark">$</span><span class="word">EOIK<small>모의투자</small></span></a>
+    <div class="topr">
+      <span class="pill" id="mkt"><span class="dot"></span><span id="mktText">—</span></span>
+      <span class="pill" id="feed"><span class="dot"></span><span id="feedText">연결 전</span></span>
+      <a class="link" href="./">← 종목 탐색기</a>
+    </div>
+  </div>
+
+  <!-- before sign-in -->
+  <section class="gate" id="gate">
+    <h1>가상의 <em>100만 원</em>으로<br>미국 주식을 사 보세요</h1>
+    <p>진짜 돈은 하나도 안 들어요. 주가와 환율은 실제 시장 가격을 그대로 따라가요.</p>
+    <ul>
+      <li>원화 → 달러 환전은 지금 환율로</li>
+      <li>0.001주 같은 소수점 매수·매도 가능</li>
+      <li>가격은 몇 초마다 실시간으로 바뀌어요</li>
+    </ul>
+    <button class="run brass" id="start" type="button">Puter로 로그인하고 시작하기</button>
+    <p style="font-size:13px;color:var(--dim)">실시간 가격을 불러오고 내 계좌를 저장하는 데 무료 Puter 계정을 써요. 종목 탐색기에서 쓰던 계정 그대로 쓰면 돼요.</p>
+    <div class="msg err" id="gateMsg"></div>
+  </section>
+
+  <!-- the desk -->
+  <div id="app" hidden style="display:grid;gap:16px">
+    <section class="card acct">
+      <div class="total">
+        <small>총 자산 (원화로 환산)</small>
+        <b class="num" id="tTotal">—</b>
+        <div class="chg num" id="tChg">—</div>
+        <small id="tStart"></small>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><small>원화 예수금</small><b class="num" id="kKrw">—</b><span>환전 전 남은 돈</span></div>
+        <div class="kpi"><small>달러 예수금</small><b class="num" id="kUsd">—</b><span id="kUsdK"></span></div>
+        <div class="kpi"><small>주식 평가금액</small><b class="num" id="kStk">—</b><span id="kStkK"></span></div>
+        <div class="kpi"><small>평가 손익</small><b class="num" id="kPl">—</b><span id="kPlP"></span></div>
+      </div>
+    </section>
+
+    <div class="desk">
+      <div>
+        <section class="card">
+          <h2>종목 고르기 <small>이름이나 티커로 검색</small></h2>
+          <div class="search">
+            <label for="q" hidden>종목 검색</label>
+            <input id="q" type="search" placeholder="예: 엔비디아, 애플, SPCX" autocomplete="off" spellcheck="false" enterkeyhint="search">
+            <div class="sugg" id="sugg" hidden></div>
+          </div>
+          <div class="watch" id="watch"></div>
+        </section>
+
+        <section class="card" id="ticket">
+          <div class="quote">
+            <div class="qhead"><span class="qsym" id="qSym">—</span><span class="qname" id="qName"></span></div>
+            <div class="qpx"><b class="num" id="qPx">—</b><span class="num" id="qChg"></span><small class="num" id="qKrw"></small></div>
+            <div class="qnote" id="qNote"></div>
+            <svg class="spark" id="spark" viewBox="0 0 300 90" preserveAspectRatio="none" aria-label="오늘 가격 흐름"></svg>
+          </div>
+          <div class="seg side" id="side"><button type="button" data-v="buy" aria-pressed="true">사기</button><button type="button" data-v="sell" aria-pressed="false">팔기</button></div>
+          <div class="seg mode" id="mode"><button type="button" data-v="amt" aria-pressed="true">금액으로 ($)</button><button type="button" data-v="qty" aria-pressed="false">수량으로 (주)</button></div>
+          <div class="field">
+            <label for="amt" id="amtLbl">얼마어치 살까요? (달러)</label>
+            <div class="inrow"><input id="amt" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></div>
+            <div class="quick" id="quick"></div>
+          </div>
+          <label class="check" id="autoRow"><input type="checkbox" id="autoFx" checked> 달러가 모자라면 원화에서 자동으로 환전해서 사기</label>
+          <div class="preview" id="preview"></div>
+          <button class="run buy" id="go" type="button" disabled>사기</button>
+          <div class="msg" id="tMsg"></div>
+        </section>
+
+        <section class="card">
+          <h2>환전 <small id="fxSrc"></small></h2>
+          <div class="fxrate"><b class="num" id="fxRate">—</b><small id="fxTime"></small></div>
+          <div class="seg mode" id="fxDir"><button type="button" data-v="k2u" aria-pressed="true">원화 → 달러</button><button type="button" data-v="u2k" aria-pressed="false">달러 → 원화</button></div>
+          <div class="field">
+            <label for="fxAmt" id="fxLbl">바꿀 원화 금액 (원)</label>
+            <div class="inrow"><input id="fxAmt" type="number" inputmode="decimal" step="any" min="0" placeholder="0"></div>
+            <div class="quick" id="fxQuick"></div>
+          </div>
+          <div class="preview" id="fxPrev"></div>
+          <button class="run brass" id="fxGo" type="button" disabled>환전하기</button>
+          <div class="msg" id="fxMsg"></div>
+        </section>
+      </div>
+
+      <div>
+        <section class="card">
+          <h2>내 보유 종목 <small>줄을 누르면 그 종목을 사고팔 수 있어요</small></h2>
+          <div id="hold"></div>
+        </section>
+        <section class="card">
+          <h2>거래 내역 <small id="hCount"></small></h2>
+          <div class="hist" id="hist"></div>
+        </section>
+        <section class="card">
+          <h2>계좌 설정</h2>
+          <div class="reset-box">
+            <div class="row"><span style="font-size:14px">처음부터 다시 하기 · 시작 자본</span><input id="rsAmt" type="number" inputmode="numeric" min="10000" step="10000" value="1000000"><span style="font-size:13px;color:var(--dim)">원</span></div>
+            <div class="row"><button class="ghost danger" id="rsGo" type="button">모의 계좌 초기화</button><span class="msg" id="rsMsg"></span></div>
+          </div>
+          <div class="row" style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><span style="font-size:13px;color:var(--dim)" id="who"></span><button class="ghost" id="logout" type="button">로그아웃</button></div>
+        </section>
+      </div>
+    </div>
+
+    <footer>모의투자는 실제 돈이 오가지 않는 연습용이에요. 주가와 환율은 Yahoo Finance 시세를 불러오며 몇 초~몇 분 늦을 수 있어요. 수수료와 세금, 환전 우대는 계산하지 않아요. 정규장이 아닐 때는 프리마켓·애프터마켓 가격이나 마지막 체결가로 거래돼요.</footer>
+  </div>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script src="https://js.puter.com/v2/"></script>
+<script>
+const DB = [["GOOGL","NASDAQ","알파벳(구글)",["구글","알파벳","google","alphabet","goog"],0,"BIGTECH"],["SPCX","NASDAQ","스페이스X",["스페이스x","스페이스엑스","스엑","spacex"],0,"SPACE"],["AAPL","NASDAQ","애플",["애플","apple"],0,"BIGTECH"],["NVDA","NASDAQ","엔비디아",["엔비디아","엔비","nvidia"],0,"SEMI"],["TSLA","NASDAQ","테슬라",["테슬라","tesla"],0,"BIGTECH"],["MSFT","NASDAQ","마이크로소프트",["마이크로소프트","마소","microsoft"],0,"BIGTECH"],["AMZN","NASDAQ","아마존",["아마존","amazon"],0,"BIGTECH"],["META","NASDAQ","메타",["메타","페이스북","meta","facebook"],0,"BIGTECH"],["NFLX","NASDAQ","넷플릭스",["넷플릭스","netflix"],0,"BIGTECH"],["PLTR","NASDAQ","팔란티어",["팔란티어","팔란","palantir"],0,"AI"],["AMD","NASDAQ","AMD",["에이엠디","amd"],0,"SEMI"],["INTC","NASDAQ","인텔",["인텔","intel"],0,"SEMI"],["AVGO","NASDAQ","브로드컴",["브로드컴","broadcom"],0,"SEMI"],["QCOM","NASDAQ","퀄컴",["퀄컴","qualcomm"],0,"SEMI"],["ASML","NASDAQ","ASML",["에이에스엠엘","asml"],0,"SEMI"],["MU","NASDAQ","마이크론",["마이크론","micron"],0,"SEMI"],["ARM","NASDAQ","ARM",["암홀딩스","arm"],0,"SEMI"],["TXN","NASDAQ","텍사스인스트루먼트",["텍사스인스트루먼트","텍사스","ti"],0,"SEMI"],["AMAT","NASDAQ","어플라이드머티리얼즈",["어플라이드머티리얼즈","어플라이드","applied","materials"],0,"SEMI"],["LRCX","NASDAQ","램리서치",["램리서치","lam","research"],0,"SEMI"],["KLAC","NASDAQ","KLA",["kla","케이엘에이"],0,"SEMI"],["MRVL","NASDAQ","마벨테크놀로지",["마벨","마벨테크놀로지","marvell"],0,"SEMI"],["ON","NASDAQ","온세미",["온세미","onsemi"],0,"SEMI"],["ADI","NASDAQ","아날로그디바이스",["아날로그디바이스","analog","devices"],0,"SEMI"],["NXPI","NASDAQ","NXP반도체",["nxp","엔엑스피"],0,"SEMI"],["MCHP","NASDAQ","마이크로칩",["마이크로칩","microchip"],0,"SEMI"],["SMCI","NASDAQ","슈퍼마이크로",["슈퍼마이크로","슈마컴","supermicro"],0,"SEMI"],["TSM","NYSE","TSMC",["tsmc","티에스엠씨","대만반도체"],0,"SEMI"],["DELL","NYSE","델",["델","dell"],0,"BIGTECH"],["HPQ","NYSE","HP",["hp","에이치피"],0,"BIGTECH"],["IBM","NYSE","IBM",["ibm","아이비엠"],0,"BIGTECH"],["ORCL","NYSE","오라클",["오라클","oracle"],0,"BIGTECH"],["CRM","NYSE","세일즈포스",["세일즈포스","salesforce"],0,"SOFT"],["ADBE","NASDAQ","어도비",["어도비","adobe"],0,"SOFT"],["NOW","NYSE","서비스나우",["서비스나우","servicenow"],0,"SOFT"],["SNOW","NYSE","스노우플레이크",["스노우플레이크","snowflake"],0,"SOFT"],["CRWD","NASDAQ","크라우드스트라이크",["크라우드스트라이크","crowdstrike"],0,"SOFT"],["PANW","NASDAQ","팔로알토",["팔로알토","팔로알토네트웍스","palo","alto"],0,"SOFT"],["NET","NYSE","클라우드플레어",["클라우드플레어","cloudflare"],0,"SOFT"],["DDOG","NASDAQ","데이터독",["데이터독","datadog"],0,"SOFT"],["ZS","NASDAQ","지스케일러",["지스케일러","zscaler"],0,"SOFT"],["SHOP","NASDAQ","쇼피파이",["쇼피파이","shopify"],0,"SOFT"],["UBER","NYSE","우버",["우버","uber"],0,"CONSUMER"],["ABNB","NASDAQ","에어비앤비",["에어비앤비","airbnb"],0,"CONSUMER"],["SPOT","NYSE","스포티파이",["스포티파이","spotify"],0,"MEDIA"],["RBLX","NYSE","로블록스",["로블록스","roblox"],0,"MEDIA"],["U","NYSE","유니티",["유니티","unity"],0,"MEDIA"],["SNAP","NYSE","스냅",["스냅","스냅챗","snap"],0,"MEDIA"],["PINS","NYSE","핀터레스트",["핀터레스트","pinterest"],0,"MEDIA"],["RDDT","NYSE","레딧",["레딧","reddit"],0,"MEDIA"],["DUOL","NASDAQ","듀오링고",["듀오링고","duolingo"],0,"MEDIA"],["APP","NASDAQ","앱러빈",["앱러빈","applovin"],0,"SOFT"],["TTD","NASDAQ","트레이드데스크",["트레이드데스크","trade","desk"],0,"SOFT"],["INTU","NASDAQ","인튜이트",["인튜이트","intuit"],0,"SOFT"],["CSCO","NASDAQ","시스코",["시스코","cisco"],0,"BIGTECH"],["ANET","NYSE","아리스타",["아리스타","arista"],0,"SEMI"],["PYPL","NASDAQ","페이팔",["페이팔","paypal"],0,"FIN"],["XYZ","NYSE","블록",["블록","스퀘어","block","square"],0,"FIN"],["HOOD","NASDAQ","로빈후드",["로빈후드","robinhood"],0,"FIN"],["SOFI","NASDAQ","소파이",["소파이","sofi"],0,"FIN"],["COIN","NASDAQ","코인베이스",["코인베이스","coinbase"],0,"FIN"],["MSTR","NASDAQ","스트래티지",["스트래티지","마이크로스트래티지","strategy"],0,"FIN"],["IONQ","NYSE","아이온큐",["아이온큐","ionq"],0,"AI"],["RGTI","NASDAQ","리게티",["리게티","rigetti"],0,"AI"],["QBTS","NYSE","디웨이브",["디웨이브","d-wave","dwave"],0,"AI"],["QUBT","NASDAQ","퀀텀컴퓨팅",["퀀텀컴퓨팅","quantum","computing"],0,"AI"],["RKLB","NASDAQ","로켓랩",["로켓랩","rocket","lab"],0,"SPACE"],["ASTS","NASDAQ","AST스페이스모바일",["ast스페이스모바일","asts"],0,"SPACE"],["LUNR","NASDAQ","인튜이티브머신스",["인튜이티브머신스","lunr"],0,"SPACE"],["SOUN","NASDAQ","사운드하운드",["사운드하운드","soundhound"],0,"AI"],["BBAI","NYSE","빅베어AI",["빅베어","bigbear"],0,"AI"],["AI","NYSE","C3.ai",["c3ai","씨쓰리"],0,"AI"],["PATH","NYSE","유아이패스",["유아이패스","uipath"],0,"SOFT"],["CRWV","NASDAQ","코어위브",["코어위브","coreweave"],0,"AI"],["NBIS","NASDAQ","네비우스",["네비우스","nebius"],0,"AI"],["VRT","NYSE","버티브",["버티브","vertiv"],0,"AI"],["OKLO","NYSE","오클로",["오클로","oklo"],0,"ENERGY"],["SMR","NYSE","뉴스케일",["뉴스케일","뉴스케일파워","nuscale"],0,"ENERGY"],["CEG","NASDAQ","컨스텔레이션에너지",["컨스텔레이션","constellation"],0,"ENERGY"],["VST","NYSE","비스트라",["비스트라","vistra"],0,"ENERGY"],["RIVN","NASDAQ","리비안",["리비안","rivian"],0,"EV"],["LCID","NASDAQ","루시드",["루시드","lucid"],0,"EV"],["NIO","NYSE","니오",["니오","nio"],0,"EV"],["XPEV","NYSE","샤오펑",["샤오펑","xpeng"],0,"EV"],["LI","NASDAQ","리오토",["리오토","li","auto"],0,"EV"],["F","NYSE","포드",["포드","ford"],0,"EV"],["GM","NYSE","GM",["지엠","제너럴모터스","gm"],0,"EV"],["TM","NYSE","토요타",["토요타","도요타","toyota"],0,"EV"],["KO","NYSE","코카콜라",["코카콜라","coca","cola","cocacola"],0,"CONSUMER"],["PEP","NASDAQ","펩시코",["펩시","펩시코","pepsi"],0,"CONSUMER"],["DIS","NYSE","디즈니",["디즈니","disney"],0,"MEDIA"],["NKE","NYSE","나이키",["나이키","nike"],0,"CONSUMER"],["MCD","NYSE","맥도날드",["맥도날드","mcdonalds"],0,"CONSUMER"],["SBUX","NASDAQ","스타벅스",["스타벅스","starbucks"],0,"CONSUMER"],["CMG","NYSE","치폴레",["치폴레","chipotle"],0,"CONSUMER"],["WMT","NASDAQ","월마트",["월마트","walmart"],0,"CONSUMER"],["COST","NASDAQ","코스트코",["코스트코","costco"],0,"CONSUMER"],["TGT","NYSE","타겟",["타겟","target"],0,"CONSUMER"],["HD","NYSE","홈디포",["홈디포","home","depot"],0,"CONSUMER"],["LOW","NYSE","로우스",["로우스","lowes"],0,"CONSUMER"],["PG","NYSE","P&G",["피앤지","프록터앤갬블","p&g"],0,"CONSUMER"],["PM","NYSE","필립모리스",["필립모리스","philip","morris"],0,"CONSUMER"],["MO","NYSE","알트리아",["알트리아","altria"],0,"CONSUMER"],["EL","NYSE","에스티로더",["에스티로더","estee","lauder"],0,"CONSUMER"],["LULU","NASDAQ","룰루레몬",["룰루레몬","lululemon"],0,"CONSUMER"],["CELH","NASDAQ","셀시어스",["셀시어스","celsius"],0,"CONSUMER"],["MNST","NASDAQ","몬스터베버리지",["몬스터","몬스터베버리지","monster"],0,"CONSUMER"],["BKNG","NASDAQ","부킹홀딩스",["부킹","부킹닷컴","booking"],0,"CONSUMER"],["MAR","NASDAQ","메리어트",["메리어트","marriott"],0,"CONSUMER"],["BABA","NYSE","알리바바",["알리바바","alibaba"],0,"ASIA"],["PDD","NASDAQ","PDD(테무)",["테무","핀둬둬","pdd","temu"],0,"ASIA"],["JD","NASDAQ","징둥",["징둥","jd"],0,"ASIA"],["BIDU","NASDAQ","바이두",["바이두","baidu"],0,"ASIA"],["SONY","NYSE","소니",["소니","sony"],0,"MEDIA"],["CPNG","NYSE","쿠팡",["쿠팡","coupang"],0,"ASIA"],["SE","NYSE","씨리미티드",["씨리미티드","sea"],0,"ASIA"],["MELI","NASDAQ","메르카도리브레",["메르카도리브레","mercadolibre"],0,"ASIA"],["CVNA","NYSE","카바나",["카바나","carvana"],0,"CONSUMER"],["GME","NYSE","게임스탑",["게임스탑","gamestop"],0,"MEDIA"],["AMC","NYSE","AMC엔터",["amc"],0,"MEDIA"],["EA","NASDAQ","일렉트로닉아츠",["ea","일렉트로닉아츠"],0,"MEDIA"],["TTWO","NASDAQ","테이크투",["테이크투","take-two"],0,"MEDIA"],["NTDOY","NYSE","닌텐도(ADR)",["닌텐도","nintendo"],0,"MEDIA"],["BRK.B","NYSE","버크셔해서웨이",["버크셔","버크셔해서웨이","berkshire","brk"],0,"FIN"],["JPM","NYSE","JP모건",["jp모건","제이피모건","jpmorgan"],0,"FIN"],["BAC","NYSE","뱅크오브아메리카",["뱅크오브아메리카","뱅오아","bofa"],0,"FIN"],["WFC","NYSE","웰스파고",["웰스파고","wells","fargo"],0,"FIN"],["C","NYSE","씨티그룹",["씨티","씨티그룹","citi"],0,"FIN"],["GS","NYSE","골드만삭스",["골드만삭스","goldman"],0,"FIN"],["MS","NYSE","모건스탠리",["모건스탠리","morgan","stanley"],0,"FIN"],["BLK","NYSE","블랙록",["블랙록","blackrock"],0,"FIN"],["SCHW","NYSE","찰스슈왑",["찰스슈왑","schwab"],0,"FIN"],["V","NYSE","비자",["비자","visa"],0,"FIN"],["MA","NYSE","마스터카드",["마스터카드","mastercard"],0,"FIN"],["AXP","NYSE","아메리칸익스프레스",["아멕스","아메리칸익스프레스","amex"],0,"FIN"],["O","NYSE","리얼티인컴",["리얼티인컴","realty","income"],0,"FIN"],["SCHD","NYSEARCA","SCHD 배당ETF",["schd","슈드"],1,"E_DIV"],["LLY","NYSE","일라이릴리",["일라이릴리","릴리","eli","lilly"],0,"HEALTH"],["NVO","NYSE","노보노디스크",["노보노디스크","노보","novo"],0,"HEALTH"],["UNH","NYSE","유나이티드헬스",["유나이티드헬스","unitedhealth"],0,"HEALTH"],["JNJ","NYSE","존슨앤존슨",["존슨앤존슨","존슨","jnj"],0,"HEALTH"],["PFE","NYSE","화이자",["화이자","pfizer"],0,"HEALTH"],["MRK","NYSE","머크",["머크","merck"],0,"HEALTH"],["ABBV","NYSE","애브비",["애브비","abbvie"],0,"HEALTH"],["MRNA","NASDAQ","모더나",["모더나","moderna"],0,"HEALTH"],["ISRG","NASDAQ","인튜이티브서지컬",["인튜이티브서지컬","intuitive","surgical"],0,"HEALTH"],["HIMS","NYSE","힘스앤허스",["힘스","힘스앤허스","hims"],0,"HEALTH"],["TMO","NYSE","써모피셔",["써모피셔","thermo","fisher"],0,"HEALTH"],["BA","NYSE","보잉",["보잉","boeing"],0,"SPACE"],["LMT","NYSE","록히드마틴",["록히드마틴","록히드","lockheed"],0,"SPACE"],["RTX","NYSE","RTX(레이시온)",["레이시온","rtx"],0,"SPACE"],["GE","NYSE","GE에어로스페이스",["ge","지이","ge에어로스페이스"],0,"SPACE"],["GEV","NYSE","GE버노바",["ge버노바","버노바","vernova"],0,"ENERGY"],["CAT","NYSE","캐터필러",["캐터필러","caterpillar"],0,"IND"],["DE","NYSE","디어",["디어","존디어","deere"],0,"IND"],["HON","NASDAQ","하니웰",["하니웰","honeywell"],0,"IND"],["UPS","NYSE","UPS",["ups","유피에스"],0,"IND"],["FDX","NYSE","페덱스",["페덱스","fedex"],0,"IND"],["DAL","NYSE","델타항공",["델타","델타항공","delta"],0,"SPACE"],["XOM","NYSE","엑슨모빌",["엑슨모빌","엑슨","exxon"],0,"ENERGY"],["CVX","NYSE","셰브론",["셰브론","chevron"],0,"ENERGY"],["OXY","NYSE","옥시덴탈",["옥시덴탈","occidental"],0,"ENERGY"],["ENPH","NASDAQ","엔페이즈",["엔페이즈","enphase"],0,"ENERGY"],["FSLR","NASDAQ","퍼스트솔라",["퍼스트솔라","first","solar"],0,"ENERGY"],["NEE","NYSE","넥스트에라",["넥스트에라","nextera"],0,"ENERGY"],["T","NYSE","AT&T",["at&t","에이티앤티"],0,"IND"],["VZ","NYSE","버라이즌",["버라이즌","verizon"],0,"IND"],["TMUS","NASDAQ","T모바일",["t모바일","티모바일","t-mobile"],0,"IND"],["CMCSA","NASDAQ","컴캐스트",["컴캐스트","comcast"],0,"MEDIA"],["SPY","NYSEARCA","SPDR S&P 500",["s&p500","에스앤피","spy"],1,"E_IDX"],["VOO","NYSEARCA","뱅가드 S&P 500",["voo","뱅가드"],1,"E_IDX"],["QQQ","NASDAQ","인베스코 QQQ",["나스닥100","큐큐큐","qqq"],1,"E_IDX"],["QQQM","NASDAQ","QQQM",["qqqm"],1,"E_IDX"],["VTI","NYSEARCA","뱅가드 토탈마켓",["vti","토탈마켓"],1,"E_IDX"],["DIA","NYSEARCA","다우존스 ETF",["다우","다우존스","dia"],1,"E_IDX"],["IWM","NYSEARCA","러셀2000 ETF",["러셀","러셀2000","iwm"],1,"E_IDX"],["TQQQ","NASDAQ","TQQQ(나스닥 3배)",["티큐큐큐","나스닥3배","tqqq"],1,"E_LEV"],["SQQQ","NASDAQ","SQQQ(나스닥 -3배)",["에스큐큐큐","sqqq"],1,"E_LEV"],["SOXL","NYSEARCA","SOXL(반도체 3배)",["속슬","soxl","반도체3배"],1,"E_LEV"],["SOXX","NASDAQ","SOXX 반도체ETF",["soxx","반도체etf"],1,"E_SEC"],["SMH","NASDAQ","SMH 반도체ETF",["smh"],1,"E_SEC"],["TLT","NASDAQ","TLT(미국 장기채)",["tlt","장기채","미국채"],1,"E_BOND"],["GLD","NYSEARCA","GLD(금)",["금","gld","골드"],1,"E_BOND"],["SLV","NYSEARCA","SLV(은)",["은","slv","실버"],1,"E_BOND"],["IBIT","NASDAQ","IBIT(비트코인)",["ibit","비트코인","bitcoin"],1,"E_BOND"],["ARKK","NYSEARCA","ARKK(아크)",["아크","arkk","캐시우드"],1,"E_THEME"],["JEPI","NYSEARCA","JEPI",["jepi","제피"],1,"E_DIV"],["JEPQ","NASDAQ","JEPQ",["jepq","젭큐"],1,"E_DIV"],["TSLL","NASDAQ","TSLL(테슬라 2배)",["tsll","테슬라2배"],1,"E_LEV"],["NVDL","NASDAQ","NVDL(엔비디아 2배)",["nvdl","엔비디아2배"],1,"E_LEV"],["IVV","NYSEARCA","iShares S&P 500",["ivv"],1,"E_IDX"],["SPLG","NYSEARCA","SPLG(저렴한 S&P500)",["splg"],1,"E_IDX"],["RSP","NYSEARCA","S&P500 동일가중",["rsp","동일가중"],1,"E_IDX"],["VT","NYSEARCA","뱅가드 전세계주식",["vt","전세계"],1,"E_IDX"],["VUG","NYSEARCA","뱅가드 성장주",["vug","성장주"],1,"E_IDX"],["VTV","NYSEARCA","뱅가드 가치주",["vtv","가치주"],1,"E_IDX"],["SCHG","NYSEARCA","슈왑 대형성장주",["schg","슈지"],1,"E_IDX"],["MGK","NYSEARCA","뱅가드 메가캡성장",["mgk"],1,"E_IDX"],["VYM","NYSEARCA","뱅가드 고배당",["vym","고배당"],1,"E_DIV"],["VIG","NYSEARCA","뱅가드 배당성장",["vig","배당성장"],1,"E_DIV"],["DGRO","BATS","iShares 배당성장",["dgro"],1,"E_DIV"],["SPYD","NYSEARCA","S&P500 고배당",["spyd"],1,"E_DIV"],["DIVO","NYSEARCA","DIVO 배당+커버드콜",["divo"],1,"E_DIV"],["QYLD","NASDAQ","QYLD(나스닥 커버드콜)",["qyld","큐일드"],1,"E_DIV"],["XYLD","NYSEARCA","XYLD(S&P 커버드콜)",["xyld"],1,"E_DIV"],["TLTW","BATS","TLTW(장기채 커버드콜)",["tltw"],1,"E_DIV"],["XLK","NYSEARCA","기술 섹터 XLK",["xlk","기술주"],1,"E_SEC"],["VGT","NYSEARCA","뱅가드 IT",["vgt"],1,"E_SEC"],["XLF","NYSEARCA","금융 섹터 XLF",["xlf","금융주"],1,"E_SEC"],["XLE","NYSEARCA","에너지 섹터 XLE",["xle","에너지"],1,"E_SEC"],["XLV","NYSEARCA","헬스케어 섹터 XLV",["xlv","헬스케어"],1,"E_SEC"],["XLY","NYSEARCA","경기소비재 XLY",["xly","소비재"],1,"E_SEC"],["XLP","NYSEARCA","필수소비재 XLP",["xlp"],1,"E_SEC"],["XLI","NYSEARCA","산업재 XLI",["xli","산업재"],1,"E_SEC"],["XLU","NYSEARCA","유틸리티 XLU",["xlu","유틸리티"],1,"E_SEC"],["XLC","NYSEARCA","커뮤니케이션 XLC",["xlc"],1,"E_SEC"],["VNQ","NYSEARCA","뱅가드 리츠",["vnq","리츠","부동산"],1,"E_SEC"],["BOTZ","NASDAQ","로봇·AI ETF",["botz","로봇"],1,"E_THEME"],["AIQ","NASDAQ","AI·빅데이터 ETF",["aiq","ai","etf"],1,"E_THEME"],["QTUM","NASDAQ","양자컴퓨팅 ETF",["qtum","양자"],1,"E_THEME"],["CIBR","NASDAQ","사이버보안 ETF",["cibr","사이버보안"],1,"E_THEME"],["IGV","BATS","소프트웨어 ETF",["igv","소프트웨어"],1,"E_THEME"],["SKYY","NASDAQ","클라우드 ETF",["skyy","클라우드"],1,"E_THEME"],["URA","NYSEARCA","우라늄 ETF",["ura","우라늄"],1,"E_THEME"],["NLR","NYSEARCA","원자력 ETF",["nlr","원자력","원전"],1,"E_THEME"],["ICLN","NASDAQ","클린에너지 ETF",["icln","클린에너지"],1,"E_THEME"],["TAN","NYSEARCA","태양광 ETF",["tan","태양광"],1,"E_THEME"],["LIT","NYSEARCA","리튬·배터리 ETF",["lit","리튬","2차전지"],1,"E_THEME"],["ITA","BATS","방산 ETF",["ita","방산"],1,"E_THEME"],["XAR","NYSEARCA","항공우주·방산 ETF",["xar"],1,"E_THEME"],["UFO","NYSEARCA","우주 ETF",["ufo","우주"],1,"E_THEME"],["IBB","NASDAQ","바이오 ETF",["ibb","바이오"],1,"E_THEME"],["XBI","NYSEARCA","바이오(중소형) ETF",["xbi"],1,"E_THEME"],["ARKG","BATS","아크 유전체",["arkg"],1,"E_THEME"],["SPXL","NYSEARCA","SPXL(S&P 3배)",["spxl","s&p3배"],1,"E_LEV"],["UPRO","NYSEARCA","UPRO(S&P 3배)",["upro"],1,"E_LEV"],["SPXS","NYSEARCA","SPXS(S&P -3배)",["spxs"],1,"E_LEV"],["SOXS","NYSEARCA","SOXS(반도체 -3배)",["soxs","반도체인버스"],1,"E_LEV"],["TECL","NYSEARCA","TECL(기술주 3배)",["tecl"],1,"E_LEV"],["TMF","NYSEARCA","TMF(장기채 3배)",["tmf"],1,"E_LEV"],["LABU","NYSEARCA","LABU(바이오 3배)",["labu"],1,"E_LEV"],["FNGU","NYSEARCA","FNGU(빅테크 3배)",["fngu"],1,"E_LEV"],["VEA","NYSEARCA","뱅가드 선진국",["vea","선진국"],1,"E_CTRY"],["VWO","NYSEARCA","뱅가드 신흥국",["vwo","신흥국"],1,"E_CTRY"],["VXUS","NASDAQ","뱅가드 미국외 전세계",["vxus"],1,"E_CTRY"],["EFA","NYSEARCA","iShares 선진국",["efa"],1,"E_CTRY"],["EEM","NYSEARCA","iShares 신흥국",["eem"],1,"E_CTRY"],["EWJ","NYSEARCA","일본 ETF",["ewj","일본"],1,"E_CTRY"],["EWY","NYSEARCA","한국 ETF",["ewy","한국"],1,"E_CTRY"],["EWT","NYSEARCA","대만 ETF",["ewt","대만"],1,"E_CTRY"],["INDA","BATS","인도 ETF",["inda","인도"],1,"E_CTRY"],["FXI","NYSEARCA","중국 대형주 ETF",["fxi","중국"],1,"E_CTRY"],["MCHI","NASDAQ","MSCI 중국 ETF",["mchi"],1,"E_CTRY"],["KWEB","NYSEARCA","중국 인터넷 ETF",["kweb","중국인터넷"],1,"E_CTRY"],["BND","NASDAQ","뱅가드 종합채권",["bnd","채권"],1,"E_BOND"],["AGG","NYSEARCA","iShares 종합채권",["agg"],1,"E_BOND"],["IEF","NASDAQ","미국 중기채",["ief","중기채"],1,"E_BOND"],["SHY","NASDAQ","미국 단기채",["shy","단기채"],1,"E_BOND"],["SGOV","NYSEARCA","초단기 국채(현금성)",["sgov","파킹"],1,"E_BOND"],["BIL","NYSEARCA","초단기 국채 BIL",["bil"],1,"E_BOND"],["HYG","NYSEARCA","하이일드 채권",["hyg","하이일드"],1,"E_BOND"],["LQD","NYSEARCA","투자등급 회사채",["lqd","회사채"],1,"E_BOND"],["IAU","NYSEARCA","iShares 금",["iau"],1,"E_BOND"],["GDX","NYSEARCA","금광주 ETF",["gdx","금광"],1,"E_BOND"],["USO","NYSEARCA","원유 ETF",["uso","원유","석유"],1,"E_BOND"],["UNG","NYSEARCA","천연가스 ETF",["ung","천연가스"],1,"E_BOND"],["FBTC","BATS","피델리티 비트코인",["fbtc"],1,"E_BOND"],["ETHA","NASDAQ","이더리움 ETF",["etha","이더리움","ethereum"],1,"E_BOND"],["BITO","NYSEARCA","비트코인 선물 ETF",["bito"],1,"E_BOND"]];
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const won = n => (n < 0 ? "-" : "") + Math.round(Math.abs(n)).toLocaleString("ko-KR") + "원";
+const usd = (n, d = 2) => (n < 0 ? "-$" : "$") + Math.abs(n).toLocaleString("en-US", {minimumFractionDigits: d, maximumFractionDigits: d});
+const qtyF = n => (+n.toFixed(6)).toLocaleString("en-US", {maximumFractionDigits: 6});
+const sign = n => n > 0 ? "+" : "";
+const cls = n => n > 1e-9 ? "up" : n < -1e-9 ? "down" : "flat";
+const nameOf = t => (DB.find(d => d[0] === t) || [])[2] || t;
+function toast(m) { const t = $("toast"); t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => t.hidden = true, 2200); }
+
+// ---------------- state ----------------
+const KEY = "eoik_mock_v1";
+const START = 1000000, MIN_ORDER = 1;
+const DEFAULT_WATCH = ["NVDA", "AAPL", "TSLA", "GOOGL", "MSFT", "SPCX", "VOO", "QQQ"];
+let S = null;          // account
+let sel = "NVDA";      // selected ticker
+let side = "buy", mode = "amt", fxDir = "k2u";
+const px = {};         // t -> {p, prev, at, series:[], src}
+let fx = null;         // {rate, at, src}
+
+function fresh(start) { return {v: 1, start, krw: start, usd: 0, pos: {}, hist: [], watch: DEFAULT_WATCH.slice(), createdAt: new Date().toISOString()}; }
+async function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {}
+  try { if (puter.auth.isSignedIn()) await puter.kv.set(KEY, JSON.stringify(S)); } catch (e) {}
+}
+async function load() {
+  let v = null;
+  try { v = await puter.kv.get(KEY); } catch (e) {}
+  if (!v) { try { v = localStorage.getItem(KEY); } catch (e) {} }
+  try { const o = typeof v === "string" ? JSON.parse(v) : v; if (o && o.v === 1 && typeof o.krw === "number") return o; } catch (e) {}
+  return null;
+}
+
+// ---------------- market data ----------------
+async function get(url) {
+  let res = null;
+  try { if (puter.auth.isSignedIn()) res = await puter.net.fetch(url); } catch (e) { res = null; }
+  if (!res) { try { res = await fetch(url); } catch (e) { res = null; } }
+  if (!res || !res.ok) throw new Error("fetch");
+  return res.json();
+}
+async function quote(t) {
+  const sym = t === "USDKRW" ? "KRW=X" : t.replace(".", "-");
+  const j = await get(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=1m&includePrePost=true`);
+  const r = j.chart.result[0], m = r.meta, closes = (r.indicators.quote[0].close || []).filter(x => x > 0);
+  const last = closes.length ? closes[closes.length - 1] : m.regularMarketPrice;
+  return {p: last, reg: m.regularMarketPrice, prev: m.chartPreviousClose || m.previousClose, series: closes.slice(-390), at: Date.now()};
+}
+async function refreshFx() {
+  try {
+    const q = await quote("USDKRW");
+    if (q.p > 500) { fx = {rate: q.p, at: Date.now(), src: "실시간 환율"}; }
+  } catch (e) {
+    try {
+      const j = await (await fetch("https://api.frankfurter.app/latest?from=USD&to=KRW")).json();
+      if (j && j.rates && j.rates.KRW) fx = {rate: j.rates.KRW, at: Date.now(), src: `기준환율 (${j.date})`};
+    } catch (e2) {}
+  }
+  renderFx(); renderAccount();
+}
+function tracked() { return [...new Set([sel, ...S.watch, ...Object.keys(S.pos)])].filter(Boolean).slice(0, 14); }
+let busy = false, lastOk = 0;
+async function refreshPrices() {
+  if (busy || !S) return; busy = true;
+  const list = tracked();
+  const out = await Promise.allSettled(list.map(t => quote(t)));
+  out.forEach((o, i) => {
+    if (o.status !== "fulfilled" || !(o.value.p > 0)) return;
+    const t = list[i], old = px[t];
+    px[t] = o.value;
+    if (old && old.p !== o.value.p && t === sel) flash(o.value.p > old.p ? "tick-up" : "tick-down");
+  });
+  if (out.some(o => o.status === "fulfilled")) lastOk = Date.now();
+  busy = false;
+  renderFeed(); renderQuote(); renderWatch(); renderHold(); renderAccount(); renderPreview();
+}
+function flash(c) { const el = $("qPx").parentElement; el.classList.remove("tick-up", "tick-down"); void el.offsetWidth; el.classList.add(c); }
+
+// ---------------- market session ----------------
+function nyParts() {
+  const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: "America/New_York", hour12: false, weekday: "short", hour: "2-digit", minute: "2-digit"}).formatToParts(new Date()).forEach(x => p[x.type] = x.value);
+  return p;
+}
+function session() {
+  const n = nyParts(), m = (+n.hour % 24) * 60 + +n.minute;
+  if (n.weekday === "Sat" || n.weekday === "Sun") return ["closed", "주말 휴장"];
+  if (m >= 570 && m < 960) return ["open", "정규장 거래 중"];
+  if (m >= 240 && m < 570) return ["pre", "프리마켓"];
+  if (m >= 960 && m < 1200) return ["after", "애프터마켓"];
+  return ["closed", "장 마감"];
+}
+function renderMkt() { const [s, l] = session(); $("mkt").className = "pill" + (s === "open" ? " open" : ""); $("mktText").textContent = l; }
+function renderFeed() {
+  const ok = Date.now() - lastOk < 60000;
+  $("feed").className = "pill" + (ok ? " live" : "");
+  $("feedText").textContent = ok ? "실시간 가격 연결됨" : lastOk ? "가격 연결 끊김 · 재시도 중" : "가격 불러오는 중";
+}
+
+// ---------------- rendering ----------------
+function totals() {
+  const r = fx ? fx.rate : null;
+  let stk = 0, cost = 0, known = true;
+  for (const [t, p] of Object.entries(S.pos)) {
+    const q = px[t]; if (!q) { known = false; stk += p.cost; } else stk += p.qty * q.p;
+    cost += p.cost;
+  }
+  return {r, stk, cost, known, total: r ? S.krw + (S.usd + stk) * r : null};
+}
+function renderAccount() {
+  if (!S) return;
+  const T = totals();
+  $("tTotal").textContent = T.total != null ? won(T.total) : "환율 불러오는 중";
+  if (T.total != null) {
+    const d = T.total - S.start, pct = d / S.start * 100;
+    $("tChg").className = "chg num " + cls(d);
+    $("tChg").textContent = `${sign(d)}${won(d)} (${sign(pct)}${pct.toFixed(2)}%)`;
+  }
+  $("tStart").textContent = `시작 자본 ${won(S.start)}`;
+  $("kKrw").textContent = won(S.krw);
+  $("kUsd").textContent = usd(S.usd);
+  $("kUsdK").textContent = T.r ? `≈ ${won(S.usd * T.r)}` : "";
+  $("kStk").textContent = usd(T.stk);
+  $("kStkK").textContent = T.r ? `≈ ${won(T.stk * T.r)}` : "";
+  const pl = T.stk - T.cost, plp = T.cost ? pl / T.cost * 100 : 0;
+  $("kPl").className = "num " + cls(pl);
+  $("kPl").textContent = T.cost ? `${sign(pl)}${usd(pl)}` : "—";
+  $("kPlP").textContent = T.cost ? `${sign(plp)}${plp.toFixed(2)}%${T.r ? ` · ${sign(pl)}${won(pl * T.r)}` : ""}` : "아직 산 종목이 없어요";
+}
+function renderFx() {
+  $("fxRate").textContent = fx ? `1달러 = ${fx.rate.toLocaleString("ko-KR", {minimumFractionDigits: 2, maximumFractionDigits: 2})}원` : "환율 불러오는 중";
+  $("fxSrc").textContent = fx ? fx.src : "";
+  $("fxTime").textContent = fx ? new Date(fx.at).toLocaleTimeString("ko-KR", {hour: "2-digit", minute: "2-digit"}) + " 기준" : "";
+  renderFxPrev();
+}
+function renderQuote() {
+  const q = px[sel];
+  $("qSym").textContent = sel; $("qName").textContent = nameOf(sel);
+  if (!q) { $("qPx").textContent = "불러오는 중"; $("qChg").textContent = ""; $("qKrw").textContent = ""; $("spark").innerHTML = ""; $("qNote").textContent = ""; return; }
+  const d = q.prev ? q.p - q.prev : 0, pct = q.prev ? d / q.prev * 100 : 0;
+  $("qPx").textContent = usd(q.p);
+  $("qChg").className = "num " + cls(d);
+  $("qChg").textContent = q.prev ? `${sign(d)}${d.toFixed(2)} (${sign(pct)}${pct.toFixed(2)}%)` : "";
+  $("qKrw").textContent = fx ? `≈ 1주 ${won(q.p * fx.rate)}` : "";
+  const [s] = session();
+  $("qNote").textContent = (s === "open" ? "정규장 실시간 가격" : s === "closed" ? "장 마감 · 마지막 체결가로 거래돼요" : "정규장 밖 가격(프리·애프터)으로 거래돼요") + ` · 전일 종가 ${q.prev ? usd(q.prev) : "—"}`;
+  const pts = q.series.length > 1 ? q.series : [q.prev || q.p, q.p];
+  const lo = Math.min(...pts, q.prev || Infinity), hi = Math.max(...pts, q.prev || -Infinity), span = hi - lo || 1;
+  const X = i => i / (pts.length - 1) * 300, Y = v => 84 - (v - lo) / span * 78;
+  const line = pts.map((v, i) => `${i ? "L" : "M"}${X(i).toFixed(1)},${Y(v).toFixed(1)}`).join("");
+  const col = d >= 0 ? "#ff5b4f" : "#4d8dff";
+  $("spark").innerHTML = (q.prev ? `<line x1="0" x2="300" y1="${Y(q.prev).toFixed(1)}" y2="${Y(q.prev).toFixed(1)}" stroke="#3a342d" stroke-dasharray="3 4"/>` : "") +
+    `<path d="${line} L300,90 L0,90 Z" fill="${col}" opacity=".10"/><path d="${line}" fill="none" stroke="${col}" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`;
+}
+function renderWatch() {
+  $("watch").innerHTML = tracked().slice(0, 12).map(t => {
+    const q = px[t], pct = q && q.prev ? (q.p / q.prev - 1) * 100 : null;
+    return `<button class="wchip" type="button" data-t="${esc(t)}" aria-pressed="${t === sel}"><b>${esc(t)}</b><span class="num ${pct == null ? "flat" : cls(pct)}">${q ? usd(q.p) : "…"}${pct != null ? ` ${sign(pct)}${pct.toFixed(1)}%` : ""}</span></button>`;
+  }).join("");
+}
+function renderHold() {
+  const rows = Object.entries(S.pos).filter(([, p]) => p.qty > 1e-9);
+  if (!rows.length) { $("hold").innerHTML = `<div class="empty">아직 산 종목이 없어요. 왼쪽에서 종목을 고르고 사 보세요.</div>`; return; }
+  const r = fx ? fx.rate : null;
+  $("hold").innerHTML = `<div class="tbl"><table><thead><tr><th>종목</th><th>수량</th><th>평균 단가</th><th>현재가</th><th>평가금액</th><th>손익</th></tr></thead><tbody>${rows.map(([t, p]) => {
+    const q = px[t], cur = q ? q.p : null, val = cur ? p.qty * cur : null, pl = val != null ? val - p.cost : null, plp = pl != null ? pl / p.cost * 100 : null;
+    return `<tr data-t="${esc(t)}"><td><b>${esc(t)}</b><span>${esc(nameOf(t))}</span></td><td>${qtyF(p.qty)}</td><td>${usd(p.cost / p.qty)}</td><td>${cur ? usd(cur) : "…"}</td><td>${val != null ? usd(val) : "…"}${val != null && r ? `<small>${won(val * r)}</small>` : ""}</td><td class="${pl == null ? "flat" : cls(pl)}">${pl != null ? `${sign(pl)}${usd(pl)}<small class="${cls(pl)}">${sign(plp)}${plp.toFixed(2)}%</small>` : "…"}</td></tr>`;
+  }).join("")}</tbody></table></div>`;
+}
+function renderHist() {
+  $("hCount").textContent = S.hist.length ? `${S.hist.length}건` : "";
+  if (!S.hist.length) { $("hist").innerHTML = `<div class="empty">거래하면 여기에 쌓여요.</div>`; return; }
+  $("hist").innerHTML = S.hist.slice().reverse().slice(0, 200).map(h => {
+    const when = new Date(h.at).toLocaleString("ko-KR", {month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"});
+    if (h.type === "fx") return `<div class="hrow"><span class="tag fx">환전</span><span class="m"><b>${h.dir === "k2u" ? `${won(h.krw)} → ${usd(h.usd)}` : `${usd(h.usd)} → ${won(h.krw)}`}</b><span>환율 ${h.rate.toFixed(2)}원</span></span><span>${when}</span></div>`;
+    return `<div class="hrow"><span class="tag ${h.type}">${h.type === "buy" ? "매수" : "매도"}</span><span class="m"><b>${esc(h.t)} ${qtyF(h.qty)}주 · ${usd(h.price)}</b><span>${usd(h.qty * h.price)}${h.autoKrw ? ` · 원화 ${won(h.autoKrw)} 자동 환전` : ""}${h.pl != null ? ` · 실현 손익 <span class="${cls(h.pl)}">${sign(h.pl)}${usd(h.pl)}</span>` : ""}</span></span><span>${when}</span></div>`;
+  }).join("");
+}
+
+// ---------------- order ticket ----------------
+function order() {
+  const q = px[sel], v = parseFloat($("amt").value), p = S.pos[sel];
+  if (!q || !(v > 0)) return null;
+  let qty = mode === "qty" ? v : v / q.p;
+  qty = Math.floor(qty * 1e6) / 1e6;
+  if (side === "sell" && p) { qty = Math.min(qty, p.qty); if ((p.qty - qty) * q.p < 0.01) qty = p.qty; }  // don't leave crumbs behind
+  const cost = qty * q.p;
+  return {q, qty, cost};
+}
+function renderPreview() {
+  if (!S) return;
+  const o = order(), r = fx ? fx.rate : null, p = S.pos[sel], held = p ? p.qty : 0;
+  $("go").className = "run " + side;
+  let txt = "", err = "", ok = !!o && o.qty > 0;
+  if (side === "buy") {
+    $("go").textContent = "사기";
+    if (o) {
+      const need = Math.max(0, o.cost - S.usd), needKrw = r ? Math.ceil(need * r) : null;
+      txt = `<div><span>예상 수량</span><b class="num">${qtyF(o.qty)}주</b></div><div><span>예상 금액</span><b class="num">${usd(o.cost)}${r ? ` ≈ ${won(o.cost * r)}` : ""}</b></div>`;
+      if (need > 1e-9) {
+        if ($("autoFx").checked && needKrw != null) {
+          txt += `<div><span>자동 환전</span><b class="num">${won(needKrw)} → ${usd(need)}</b></div>`;
+          if (needKrw > S.krw) err = "원화 예수금이 모자라요.";
+        } else err = "달러 예수금이 모자라요. 아래 환전에서 먼저 달러로 바꾸거나 자동 환전을 켜 주세요.";
+      }
+      if (o.cost < MIN_ORDER) err = `한 번에 최소 ${usd(MIN_ORDER)} 이상 주문할 수 있어요.`;
+    }
+    txt += `<div><span>쓸 수 있는 돈</span><b class="num">${usd(S.usd)} · ${won(S.krw)}</b></div>`;
+  } else {
+    $("go").textContent = "팔기";
+    if (o) {
+      txt = `<div><span>팔 수량</span><b class="num">${qtyF(o.qty)}주</b></div><div><span>받을 금액</span><b class="num">${usd(o.cost)}${r ? ` ≈ ${won(o.cost * r)}` : ""}</b></div>`;
+      if (p && o.qty > 0) { const pl = o.qty * (o.q.p - p.cost / p.qty); txt += `<div><span>예상 실현 손익</span><b class="num ${cls(pl)}">${sign(pl)}${usd(pl)}</b></div>`; }
+    }
+    txt += `<div><span>보유 수량</span><b class="num">${qtyF(held)}주</b></div>`;
+    if (!held) err = "이 종목을 갖고 있지 않아요.";
+  }
+  if (!px[sel]) err = "가격을 불러오는 중이에요.";
+  $("preview").innerHTML = txt;
+  $("go").disabled = !ok || !!err;
+  if (err && $("amt").value) { $("tMsg").className = "msg err"; $("tMsg").textContent = err; }
+  else if ($("tMsg").className.includes("err")) $("tMsg").textContent = "";
+}
+function renderTicket() {
+  document.querySelectorAll("#side button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === side)));
+  document.querySelectorAll("#mode button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === mode)));
+  $("autoRow").hidden = side !== "buy";
+  $("amtLbl").textContent = mode === "amt" ? (side === "buy" ? "얼마어치 살까요? (달러)" : "얼마어치 팔까요? (달러)") : (side === "buy" ? "몇 주 살까요? (소수점 가능)" : "몇 주 팔까요? (소수점 가능)");
+  $("amt").placeholder = mode === "amt" ? "예: 20" : "예: 0.05";
+  const quick = side === "buy"
+    ? (mode === "amt" ? [["$10", 10], ["$50", 50], ["$100", 100], ["달러 전부", "allusd"]] : [["0.01주", .01], ["0.1주", .1], ["1주", 1]])
+    : [["25%", .25], ["50%", .5], ["전부", 1]];
+  $("quick").innerHTML = quick.map(([l, v]) => `<button type="button" data-v="${v}">${l}</button>`).join("");
+  renderPreview();
+}
+$("side").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; side = b.dataset.v; $("amt").value = ""; $("tMsg").textContent = ""; renderTicket(); });
+$("mode").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; mode = b.dataset.v; $("amt").value = ""; renderTicket(); });
+$("quick").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  const v = b.dataset.v, q = px[sel];
+  if (side === "sell") {
+    const held = (S.pos[sel] || {}).qty || 0, part = held * +v;
+    $("amt").value = mode === "qty" ? +(Math.floor(part * 1e6) / 1e6) : q ? +(part * q.p).toFixed(2) : "";
+  } else if (v === "allusd") $("amt").value = Math.floor(S.usd * 100) / 100;
+  else $("amt").value = v;
+  renderPreview();
+});
+$("amt").addEventListener("input", renderPreview);
+$("autoFx").addEventListener("change", renderPreview);
+$("go").addEventListener("click", async () => {
+  const o = order(); if (!o || !(o.qty > 0)) return;
+  const r = fx ? fx.rate : null, t = sel, price = o.q.p;
+  if (side === "buy") {
+    const need = Math.max(0, o.cost - S.usd);
+    let autoKrw = 0;
+    if (need > 1e-9) {
+      if (!$("autoFx").checked || !r) return;
+      autoKrw = Math.ceil(need * r);
+      if (autoKrw > S.krw) return;
+      S.krw -= autoKrw; S.usd += autoKrw / r;
+      S.hist.push({type: "fx", dir: "k2u", krw: autoKrw, usd: autoKrw / r, rate: r, at: new Date().toISOString(), auto: true});
+    }
+    S.usd = Math.max(0, S.usd - o.cost);
+    const p = S.pos[t] || (S.pos[t] = {qty: 0, cost: 0});
+    p.qty = +(p.qty + o.qty).toFixed(6); p.cost += o.cost;
+    S.hist.push({type: "buy", t, qty: o.qty, price, at: new Date().toISOString(), autoKrw: autoKrw || undefined});
+    toast(`${t} ${qtyF(o.qty)}주를 샀어요`);
+  } else {
+    const p = S.pos[t]; if (!p) return;
+    const avg = p.cost / p.qty, pl = o.qty * (price - avg);
+    p.cost -= avg * o.qty; p.qty = +(p.qty - o.qty).toFixed(6);
+    if (p.qty <= 1e-9) delete S.pos[t];
+    S.usd += o.cost;
+    S.hist.push({type: "sell", t, qty: o.qty, price, pl, at: new Date().toISOString()});
+    toast(`${t} ${qtyF(o.qty)}주를 팔았어요`);
+  }
+  $("amt").value = ""; $("tMsg").className = "msg ok"; $("tMsg").textContent = "체결됐어요.";
+  await save(); renderAll();
+});
+
+// ---------------- exchange ----------------
+function renderFxTicket() {
+  document.querySelectorAll("#fxDir button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === fxDir)));
+  $("fxLbl").textContent = fxDir === "k2u" ? "바꿀 원화 금액 (원)" : "바꿀 달러 금액 ($)";
+  $("fxAmt").placeholder = fxDir === "k2u" ? "예: 100000" : "예: 50";
+  $("fxQuick").innerHTML = (fxDir === "k2u" ? [["10만 원", 100000], ["50만 원", 500000], ["원화 전부", "all"]] : [["$10", 10], ["$50", 50], ["달러 전부", "all"]]).map(([l, v]) => `<button type="button" data-v="${v}">${l}</button>`).join("");
+  renderFxPrev();
+}
+function renderFxPrev() {
+  if (!S) return;
+  const v = parseFloat($("fxAmt").value), r = fx ? fx.rate : null;
+  let txt = "", err = "";
+  if (r && v > 0) {
+    if (fxDir === "k2u") { txt = `<div><span>받을 달러</span><b class="num">${usd(v / r)}</b></div>`; if (v > S.krw) err = "원화 예수금보다 많아요."; }
+    else { txt = `<div><span>받을 원화</span><b class="num">${won(v * r)}</b></div>`; if (v > S.usd + 1e-9) err = "달러 예수금보다 많아요."; }
+  }
+  txt += `<div><span>지금 가진 돈</span><b class="num">${won(S.krw)} · ${usd(S.usd)}</b></div>`;
+  $("fxPrev").innerHTML = txt;
+  $("fxGo").disabled = !(r && v > 0) || !!err;
+  $("fxMsg").className = "msg" + (err ? " err" : ""); $("fxMsg").textContent = err || (r ? "" : "환율을 불러오는 중이에요.");
+}
+$("fxDir").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; fxDir = b.dataset.v; $("fxAmt").value = ""; renderFxTicket(); });
+$("fxQuick").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  $("fxAmt").value = b.dataset.v === "all" ? (fxDir === "k2u" ? Math.floor(S.krw) : Math.floor(S.usd * 100) / 100) : b.dataset.v;
+  renderFxPrev();
+});
+$("fxAmt").addEventListener("input", renderFxPrev);
+$("fxGo").addEventListener("click", async () => {
+  const v = parseFloat($("fxAmt").value), r = fx && fx.rate; if (!(v > 0) || !r) return;
+  if (fxDir === "k2u") { if (v > S.krw) return; S.krw -= v; S.usd += v / r; S.hist.push({type: "fx", dir: "k2u", krw: v, usd: v / r, rate: r, at: new Date().toISOString()}); toast(`${won(v)}을 ${usd(v / r)}로 바꿨어요`); }
+  else { if (v > S.usd + 1e-9) return; const k = Math.floor(v * r); S.usd = Math.max(0, S.usd - v); S.krw += k; S.hist.push({type: "fx", dir: "u2k", krw: k, usd: v, rate: r, at: new Date().toISOString()}); toast(`${usd(v)}를 ${won(k)}으로 바꿨어요`); }
+  $("fxAmt").value = ""; await save(); renderAll();
+});
+
+// ---------------- picking tickers ----------------
+function norm(s) { return String(s).toLowerCase().replace(/\s+/g, ""); }
+function suggest(v) {
+  const n = norm(v); if (!n) return [];
+  const sc = [];
+  DB.forEach(d => {
+    const [t, , name, al] = d, tl = t.toLowerCase(); let s = 0;
+    if (tl === n) s = 100; else if (tl.startsWith(n)) s = 80; else if (norm(name).startsWith(n)) s = 70;
+    else if ((al || []).some(a => norm(a).startsWith(n))) s = 60; else if (norm(name).includes(n)) s = 40;
+    if (s) sc.push([s, d]);
+  });
+  const out = sc.sort((a, b) => b[0] - a[0]).slice(0, 8).map(x => x[1]);
+  if (!out.length && /^[a-z][a-z.\-]{0,5}$/i.test(v.trim())) out.push([v.trim().toUpperCase(), "", v.trim().toUpperCase(), []]);
+  return out;
+}
+function pick(t) {
+  sel = t; $("q").value = ""; $("sugg").hidden = true;
+  if (!S.watch.includes(t)) { S.watch.unshift(t); S.watch = S.watch.slice(0, 12); save(); }
+  $("amt").value = ""; $("tMsg").textContent = "";
+  renderQuote(); renderWatch(); renderTicket(); refreshPrices();
+  if (innerWidth < 980) $("ticket").scrollIntoView({behavior: "smooth", block: "start"});
+}
+$("q").addEventListener("input", () => {
+  const list = suggest($("q").value);
+  $("sugg").hidden = !list.length;
+  $("sugg").innerHTML = list.map(([t, , name]) => `<button class="sg" type="button" data-t="${esc(t)}"><b>${esc(t)}</b><span>${esc(name)}</span></button>`).join("");
+});
+$("q").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); const f = $("sugg").querySelector(".sg"); if (f) pick(f.dataset.t); } });
+$("q").addEventListener("blur", () => setTimeout(() => $("sugg").hidden = true, 150));
+$("sugg").addEventListener("pointerdown", e => e.preventDefault());
+$("sugg").addEventListener("click", e => { const b = e.target.closest(".sg"); if (b) pick(b.dataset.t); });
+$("watch").addEventListener("click", e => { const b = e.target.closest(".wchip"); if (b) pick(b.dataset.t); });
+$("hold").addEventListener("click", e => { const tr = e.target.closest("tr[data-t]"); if (tr) { side = "sell"; pick(tr.dataset.t); } });
+
+// ---------------- reset / session ----------------
+let rsArmed = false;
+$("rsGo").addEventListener("click", async () => {
+  const v = Math.round(parseFloat($("rsAmt").value));
+  if (!(v >= 10000)) { $("rsMsg").className = "msg err"; $("rsMsg").textContent = "시작 자본은 1만 원 이상으로 정해 주세요."; return; }
+  if (!rsArmed) { rsArmed = true; $("rsGo").textContent = "정말 초기화할까요? 한 번 더 누르세요"; setTimeout(() => { rsArmed = false; $("rsGo").textContent = "모의 계좌 초기화"; }, 4000); return; }
+  rsArmed = false; $("rsGo").textContent = "모의 계좌 초기화";
+  const w = S.watch; S = fresh(v); S.watch = w; await save(); renderAll();
+  $("rsMsg").className = "msg ok"; $("rsMsg").textContent = `${won(v)}으로 새로 시작했어요.`;
+});
+$("logout").addEventListener("click", () => { try { puter.auth.signOut(); } catch (e) {} location.reload(); });
+
+function renderAll() { renderAccount(); renderFx(); renderQuote(); renderWatch(); renderHold(); renderHist(); renderTicket(); renderFxTicket(); }
+
+let timers = [];
+async function enter() {
+  S = (await load()) || fresh(START);
+  if (!S.watch || !S.watch.length) S.watch = DEFAULT_WATCH.slice();
+  sel = S.watch[0] || "NVDA";
+  try { const u = await puter.auth.getUser(); $("who").textContent = `${u && u.username ? u.username : "Puter"} 계정에 저장돼요`; } catch (e) {}
+  $("gate").hidden = true; $("app").hidden = false;
+  renderAll();
+  await save();
+  refreshFx(); refreshPrices();
+  timers.push(setInterval(() => { if (!document.hidden) refreshPrices(); }, 10000));
+  timers.push(setInterval(() => { if (!document.hidden) refreshFx(); }, 60000));
+  timers.push(setInterval(() => { renderMkt(); renderFeed(); }, 5000));
+}
+$("start").addEventListener("click", async () => {
+  $("gateMsg").textContent = "";
+  try { if (!puter.auth.isSignedIn()) await puter.auth.signIn(); await enter(); }
+  catch (e) { $("gateMsg").textContent = "로그인하지 못했어요. 팝업 차단을 끄고 다시 눌러 주세요."; }
+});
+renderMkt();
+try { if (window.puter && puter.auth.isSignedIn()) enter(); } catch (e) {}
+</script>
+</body>
+</html>

@@ -1,230 +1,203 @@
 {
- "weekOf": "2026-10-16",
- "generatedAt": "2026-10-15T21:59:25Z",
+ "weekOf": "2026-10-17",
+ "generatedAt": "2026-10-16T22:00:17Z",
  "events": [
   {
-   "date": "2026-10-16",
-   "timeKst": "12:30",
-   "importance": 3,
-   "ko": "워시 연준 의장 대담(IMF 총재와)",
-   "en": "Fed Chair Warsh speaks",
+   "date": "2026-10-17",
+   "timeKst": "03:00",
+   "importance": 1,
+   "ko": "9월 연방 재정수지",
+   "en": "Monthly Budget Statement (Sep)",
+   "actual": "-269억 달러",
+   "forecast": "-290억 달러",
+   "previous": "-1,668억 달러",
+   "why": "재정적자 규모는 국채 발행량과 장기금리에 영향을 줘 주식 밸류에이션에도 간접적으로 영향을 줘요."
+  },
+  {
+   "date": "2026-10-17",
+   "timeKst": "07:00",
+   "importance": 2,
+   "ko": "굴스비 시카고 연은 총재 연설",
+   "en": "Fed Goolsbee Speech",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "FOMC 전 마지막 발언 기회라 금리 인상 가능성에 대한 힌트가 주가 방향을 흔들 수 있어요."
+   "why": "10월 FOMC를 앞두고 블랙아웃 직전에 나오는 마지막 연준 발언이라 금리 방향의 힌트가 될 수 있어요."
   },
   {
-   "date": "2026-10-16",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "수입물가지수 전월 대비",
-   "en": "Import Prices MoM",
-   "actual": null,
-   "forecast": "0.8%",
-   "previous": "0.7%",
-   "why": "물가 지표가 이틀 연속 뜨겁게 나온 뒤라 수입 물가가 더 오르면 금리 부담이 커질 수 있어요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "21:30",
+   "date": "2026-10-17",
+   "timeKst": "",
    "importance": 1,
-   "ko": "수출물가지수 전월 대비",
-   "en": "Export Prices MoM",
+   "ko": "FOMC 블랙아웃 시작 (10/27~28 회의)",
+   "en": "Fed blackout period begins",
    "actual": null,
-   "forecast": "1.0%",
-   "previous": "0.6%",
-   "why": "수출 물가는 기업 가격 결정력과 물가 흐름을 함께 보여줘요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "22:15",
-   "importance": 2,
-   "ko": "산업생산 전월 대비",
-   "en": "Industrial Production MoM",
-   "actual": null,
-   "forecast": "0.4%",
-   "previous": "0.0%",
-   "why": "제조업 경기의 실제 생산량을 보여줘 경기 둔화 여부를 가늠하게 해요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "22:15",
-   "importance": 2,
-   "ko": "제조업 생산 전월 대비",
-   "en": "Manufacturing Output MoM",
-   "actual": null,
-   "forecast": "0.3%",
-   "previous": "-0.3%",
-   "why": "공장 생산이 반등하는지 보여줘 산업재 주가에 영향을 줘요."
-  },
-  {
-   "date": "2026-10-16",
-   "timeKst": "22:15",
-   "importance": 1,
-   "ko": "설비가동률",
-   "en": "Capacity Utilization",
-   "actual": null,
-   "forecast": "76.5%",
-   "previous": "76.3%",
-   "why": "가동률이 높아지면 물가 압력이 커질 수 있다는 신호예요."
+   "forecast": null,
+   "previous": null,
+   "why": "이번 주에는 연준 인사들의 발언이 없어서 시장이 경제지표와 실적에 더 민감하게 반응할 수 있어요."
   },
   {
    "date": "2026-10-19",
    "timeKst": "23:00",
-   "importance": 2,
-   "ko": "NAHB 주택시장지수",
-   "en": "NAHB Housing Market Index",
+   "importance": 1,
+   "ko": "NAHB 주택시장지수 (10월)",
+   "en": "NAHB Housing Market Index (Oct)",
    "actual": null,
-   "forecast": "31(TE 자체 전망)",
+   "forecast": "31",
    "previous": "32",
-   "why": "고금리 속 건설사 체감 경기를 보여줘 주택·건설주에 영향을 줘요."
+   "why": "주택 건설업체 심리를 보여줘서 고금리가 주택 경기를 얼마나 누르고 있는지 가늠할 수 있어요."
   },
   {
    "date": "2026-10-20",
    "timeKst": "21:30",
    "importance": 2,
-   "ko": "주택착공건수",
-   "en": "Housing Starts",
+   "ko": "주택 착공 건수 (9월)",
+   "en": "Housing Starts (Sep)",
    "actual": null,
-   "forecast": "130만 건(TE 자체 전망)",
+   "forecast": "130.5만 건",
    "previous": "127.5만 건",
-   "why": "10년물 금리 5%대에서 주택 건설이 버티는지 보여줘요."
+   "why": "주택 착공은 건설·자재·가전 수요로 이어지는 선행지표라 경기 흐름을 판단하는 데 중요해요."
   },
   {
    "date": "2026-10-20",
    "timeKst": "21:30",
    "importance": 2,
-   "ko": "건축허가건수",
-   "en": "Building Permits",
+   "ko": "건축 허가 건수 (9월)",
+   "en": "Building Permits (Sep)",
    "actual": null,
-   "forecast": "139만 건(TE 자체 전망)",
-   "previous": "140.3만 건",
-   "why": "앞으로의 주택 건설 흐름을 미리 보여주는 지표예요."
+   "forecast": "139만 건",
+   "previous": "139.4만 건",
+   "why": "앞으로의 주택 공급을 미리 보여주는 지표라 건설 경기 전망에 영향을 줘요."
   },
   {
    "date": "2026-10-20",
    "timeKst": "23:00",
    "importance": 1,
-   "ko": "잠정 주택판매 전월 대비",
-   "en": "Pending Home Sales MoM",
+   "ko": "잠정 주택 판매 (9월, 전월 대비)",
+   "en": "Pending Home Sales (Sep)",
    "actual": null,
-   "forecast": "0.2%(TE 자체 전망)",
+   "forecast": "0.1%",
    "previous": "0.3%",
-   "why": "주택 거래 계약 흐름으로 금리 부담이 소비에 미치는 영향을 보여줘요."
+   "why": "계약 기준 주택 판매라 높은 모기지 금리 속에서 주택 수요가 버티는지 보여줘요."
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "23:30",
+   "importance": 1,
+   "ko": "EIA 원유 재고",
+   "en": "EIA Crude Oil Inventories",
+   "actual": null,
+   "forecast": null,
+   "previous": "-855.7만 배럴",
+   "why": "원유 재고 변화는 유가를 움직여 에너지주와 인플레이션 기대에 영향을 줘요."
   },
   {
    "date": "2026-10-22",
    "timeKst": "21:30",
-   "importance": 3,
+   "importance": 2,
    "ko": "신규 실업수당 청구건수",
    "en": "Initial Jobless Claims",
    "actual": null,
-   "forecast": "20만 건(TE 자체 전망)",
+   "forecast": "20만 건",
    "previous": "19.9만 건",
-   "why": "고용이 여전히 탄탄하면 연준이 금리를 더 올릴 여지가 커져요."
+   "why": "고용시장의 가장 빠른 체온계라서 경기 둔화 여부와 연준 금리 경로를 가늠하게 해줘요."
   },
   {
    "date": "2026-10-22",
    "timeKst": "21:30",
-   "importance": 2,
+   "importance": 1,
    "ko": "연속 실업수당 청구건수",
    "en": "Continuing Jobless Claims",
    "actual": null,
-   "forecast": "171.2만 건(TE 자체 전망)",
+   "forecast": null,
    "previous": "171만 건",
-   "why": "실직자가 재취업에 걸리는 시간을 보여줘 고용 열기를 가늠하게 해요."
+   "why": "실직자가 새 일자리를 얼마나 빨리 찾는지 보여줘서 고용시장의 숨은 약세를 확인할 수 있어요."
   },
   {
    "date": "2026-10-22",
    "timeKst": "23:00",
    "importance": 1,
-   "ko": "경기선행지수 전월 대비",
-   "en": "CB Leading Index MoM",
+   "ko": "경기선행지수 (9월)",
+   "en": "Conference Board LEI (Sep)",
    "actual": null,
-   "forecast": "-0.2%(TE 자체 전망)",
+   "forecast": "-0.2%",
    "previous": "-0.1%",
-   "why": "몇 달 뒤 경기 방향을 미리 보여주는 지표예요."
+   "why": "향후 경기 방향을 종합적으로 보여주는 지표라 경기침체 우려를 판단하는 데 참고돼요."
   },
   {
    "date": "2026-10-23",
    "timeKst": "22:45",
    "importance": 2,
-   "ko": "S&P 글로벌 제조업 PMI 속보치",
-   "en": "S&P Global Manufacturing PMI Flash",
+   "ko": "S&P 글로벌 제조업 PMI 예비치 (10월)",
+   "en": "S&P Global Manufacturing PMI Flash (Oct)",
    "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "10월 경기 흐름을 가장 먼저 보여주는 설문 지표예요."
+   "forecast": "55.6",
+   "previous": "55.9",
+   "why": "이번 달 제조업 경기를 가장 먼저 보여주는 지표라 경기 모멘텀 판단에 바로 반영돼요."
   },
   {
    "date": "2026-10-23",
    "timeKst": "22:45",
    "importance": 2,
-   "ko": "S&P 글로벌 서비스업 PMI 속보치",
-   "en": "S&P Global Services PMI Flash",
+   "ko": "S&P 글로벌 서비스업 PMI 예비치 (10월)",
+   "en": "S&P Global Services PMI Flash (Oct)",
    "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "미국 경제의 대부분인 서비스업 경기를 빠르게 보여줘요."
+   "forecast": "57.9",
+   "previous": "58.8",
+   "why": "미국 경제의 대부분을 차지하는 서비스업 경기를 보여줘서 성장과 물가 전망에 모두 영향을 줘요."
   },
   {
    "date": "2026-10-23",
-   "timeKst": "23:00",
+   "timeKst": "22:45",
+   "importance": 1,
+   "ko": "S&P 글로벌 종합 PMI 예비치 (10월)",
+   "en": "S&P Global Composite PMI Flash (Oct)",
+   "actual": null,
+   "forecast": null,
+   "previous": "58.4",
+   "why": "제조업과 서비스업을 합친 전체 경기 체감도를 한눈에 보여줘요."
+  },
+  {
+   "date": "2026-10-24",
+   "timeKst": "00:00",
    "importance": 2,
-   "ko": "미시간대 소비자심리지수 확정치",
-   "en": "UMich Consumer Sentiment Final",
+   "ko": "미시간대 소비자심리지수 확정치 (10월)",
+   "en": "UMich Consumer Sentiment Final (Oct)",
    "actual": null,
    "forecast": "46.3",
-   "previous": "48.1",
-   "why": "소비 심리가 낮을수록 소비 관련주 실적 우려가 커져요."
+   "previous": "46.3 (10월 예비치)",
+   "why": "소비자 심리는 미국 경제의 약 70%를 차지하는 소비의 향방을 가늠하게 해줘요."
   },
   {
-   "date": "2026-10-23",
-   "timeKst": "23:00",
+   "date": "2026-10-24",
+   "timeKst": "00:00",
    "importance": 2,
-   "ko": "미시간대 1년 기대인플레이션",
-   "en": "UMich 1-yr Inflation Expectations",
+   "ko": "미시간대 1년 기대인플레이션 확정치 (10월)",
+   "en": "UMich 1-yr Inflation Expectations Final (Oct)",
    "actual": null,
    "forecast": "4.7%",
-   "previous": "4.6%",
-   "why": "기대 물가가 오르면 연준이 금리 인상에 더 기울 수 있어요."
+   "previous": "4.6% (9월)",
+   "why": "소비자가 예상하는 물가가 높으면 연준이 금리 인하를 미룰 수 있어 주식시장에 부담이 돼요."
   },
   {
-   "date": "2026-10-23",
-   "timeKst": "23:00",
+   "date": "2026-10-24",
+   "timeKst": "00:00",
    "importance": 1,
-   "ko": "미시간대 5년 기대인플레이션",
-   "en": "UMich 5-yr Inflation Expectations",
+   "ko": "캔자스시티 연은 제조업지수 (10월)",
+   "en": "Kansas City Fed Manufacturing Index (Oct)",
    "actual": null,
-   "forecast": "3.5%",
-   "previous": "3.4%",
-   "why": "장기 물가 기대가 흔들리는지 보여줘 장기 금리에 영향을 줘요."
+   "forecast": null,
+   "previous": "20",
+   "why": "지역 제조업 경기를 보여주는 지표로 전체 제조업 흐름을 보완적으로 확인할 수 있어요."
   }
  ],
  "earnings": [
   {
-   "date": "2026-10-16",
+   "date": "2026-10-19",
    "timeKst": "",
-   "t": "TRV",
-   "name": "트래블러스",
+   "t": "FITB",
+   "name": "피프스서드 뱅코프",
    "when": "장 시작 전",
-   "why": "보험료 인상 효과와 재해 손실 규모를 봐요."
-  },
-  {
-   "date": "2026-10-20",
-   "timeKst": "",
-   "t": "GE",
-   "name": "GE 에어로스페이스",
-   "when": "장 시작 전",
-   "why": "항공기 엔진 수요와 연간 전망 상향 여부를 봐요."
-  },
-  {
-   "date": "2026-10-20",
-   "timeKst": "",
-   "t": "RTX",
-   "name": "RTX",
-   "when": "장 시작 전",
-   "why": "방산·항공 수주 잔고와 공급망 차질을 봐요."
+   "why": "지역은행 대출·건전성 흐름을 보여줘요"
   },
   {
    "date": "2026-10-20",
@@ -232,7 +205,30 @@
    "t": "GM",
    "name": "제너럴모터스",
    "when": "장 시작 전",
-   "why": "관세 비용과 전기차 손실 규모를 봐요."
+   "why": "연간 가이던스(EPS 12~14달러) 유지 여부가 관심이에요"
+  },
+  {
+   "date": "2026-10-20",
+   "timeKst": "",
+   "t": "GE",
+   "name": "GE 에어로스페이스",
+   "when": "장 시작 전",
+   "why": "항공기 엔진·애프터마켓 수요를 보여줘요"
+  },
+  {
+   "date": "2026-10-20",
+   "timeKst": "",
+   "t": "RTX",
+   "name": "RTX",
+   "when": "장 시작 전",
+   "why": "방산·항공 부품 수요의 바로미터예요"
+  },
+  {
+   "date": "2026-10-20",
+   "timeKst": "",
+   "t": "NOC",
+   "name": "노스롭그루먼",
+   "when": "장 시작 전"
   },
   {
    "date": "2026-10-20",
@@ -242,28 +238,41 @@
    "when": "장 시작 전"
   },
   {
+   "date": "2026-10-20",
+   "timeKst": "",
+   "t": "HAL",
+   "name": "핼리버튼",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-20",
+   "timeKst": "",
+   "t": "STLD",
+   "name": "스틸 다이내믹스",
+   "when": "장 마감 후",
+   "why": "철강 가격과 제조업 수요를 가늠할 수 있어요"
+  },
+  {
    "date": "2026-10-21",
    "timeKst": "05:01",
    "t": "NFLX",
    "name": "넷플릭스",
    "when": "장 마감 후",
-   "why": "감원 뒤 가입자 이탈과 광고 매출 성장 속도를 봐요."
-  },
-  {
-   "date": "2026-10-21",
-   "timeKst": "",
-   "t": "ISRG",
-   "name": "인튜이티브서지컬",
-   "when": "장 마감 후",
-   "why": "수술 로봇 시술 건수 증가율을 봐요."
+   "why": "회사 가이던스 EPS 0.82달러·매출 128.6억 달러 달성 여부가 핵심이에요"
   },
   {
    "date": "2026-10-21",
    "timeKst": "",
    "t": "T",
    "name": "AT&T",
-   "when": "장 시작 전",
-   "why": "무선 가입자 순증과 현금흐름을 봐요."
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
+   "t": "ABT",
+   "name": "애보트",
+   "when": "장 시작 전"
   },
   {
    "date": "2026-10-21",
@@ -275,17 +284,52 @@
   {
    "date": "2026-10-21",
    "timeKst": "",
+   "t": "PM",
+   "name": "필립모리스",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
+   "t": "NEE",
+   "name": "넥스트에라 에너지",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
    "t": "DHR",
    "name": "다나허",
    "when": "장 시작 전"
   },
   {
-   "date": "2026-10-22",
+   "date": "2026-10-21",
    "timeKst": "",
-   "t": "TSLA",
-   "name": "테슬라",
+   "t": "ELV",
+   "name": "엘레반스 헬스",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
+   "t": "ISRG",
+   "name": "인튜이티브 서지컬",
+   "when": "장 마감 후"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
+   "t": "COF",
+   "name": "캐피털원",
    "when": "장 마감 후",
-   "why": "마진과 투자비 계획, 로보택시 일정을 봐요."
+   "why": "카드 연체율로 소비자 신용 상태를 보여줘요"
+  },
+  {
+   "date": "2026-10-21",
+   "timeKst": "",
+   "t": "UAL",
+   "name": "유나이티드항공",
+   "when": "장 마감 후"
   },
   {
    "date": "2026-10-22",
@@ -293,23 +337,30 @@
    "t": "META",
    "name": "메타",
    "when": "장 마감 후",
-   "why": "AI 투자비 전망이 이익을 얼마나 깎을지 봐요."
+   "why": "3분기 매출 가이던스 610~640억 달러와 설비투자 계획 변화가 핵심이에요"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "TSLA",
+   "name": "테슬라",
+   "when": "장 마감 후",
+   "why": "3분기 48.7만 대 인도 후 마진과 수익성이 관심이에요 (컨퍼런스콜 06:30 KST)"
   },
   {
    "date": "2026-10-22",
    "timeKst": "",
    "t": "IBM",
    "name": "IBM",
-   "when": "장 마감 후",
-   "why": "소프트웨어·컨설팅의 AI 수요를 봐요."
+   "when": "장 마감 후"
   },
   {
    "date": "2026-10-22",
    "timeKst": "",
    "t": "TXN",
-   "name": "텍사스인스트루먼트",
+   "name": "텍사스 인스트루먼트",
    "when": "장 마감 후",
-   "why": "아날로그 반도체 수요 회복 여부를 봐요."
+   "why": "아날로그 반도체 수요 회복 여부를 보여줘요"
   },
   {
    "date": "2026-10-22",
@@ -317,7 +368,21 @@
    "t": "LRCX",
    "name": "램리서치",
    "when": "장 마감 후",
-   "why": "반도체 장비 주문과 중국 매출 비중을 봐요."
+   "why": "반도체 장비 투자 흐름을 가늠할 수 있어요"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "SAP",
+   "name": "SAP",
+   "when": "장 마감 후"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "CSX",
+   "name": "CSX",
+   "when": "장 마감 후"
   },
   {
    "date": "2026-10-22",
@@ -325,7 +390,14 @@
    "t": "PG",
    "name": "P&G",
    "when": "장 시작 전",
-   "why": "가격 인상 뒤 판매량 흐름을 봐요."
+   "why": "생필품 소비와 가격 인상 여력을 보여줘요"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "UNP",
+   "name": "유니온퍼시픽",
+   "when": "장 시작 전"
   },
   {
    "date": "2026-10-22",
@@ -337,31 +409,60 @@
   {
    "date": "2026-10-22",
    "timeKst": "",
-   "t": "HON",
-   "name": "하니웰",
-   "when": "장 시작 전"
-  },
-  {
-   "date": "2026-10-22",
-   "timeKst": "",
-   "t": "UNP",
-   "name": "유니언퍼시픽",
-   "when": "장 시작 전"
-  },
-  {
-   "date": "2026-10-22",
-   "timeKst": "",
    "t": "CMCSA",
    "name": "컴캐스트",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "HON",
+   "name": "허니웰",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "BX",
+   "name": "블랙스톤",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-22",
+   "timeKst": "",
+   "t": "VLO",
+   "name": "발레로 에너지",
    "when": "장 시작 전"
   },
   {
    "date": "2026-10-23",
    "timeKst": "20:00",
    "t": "AXP",
-   "name": "아메리칸익스프레스",
+   "name": "아메리칸 익스프레스",
    "when": "장 시작 전",
-   "why": "카드 사용액과 연체율로 소비 체력을 봐요."
+   "why": "고소득층 카드 소비 흐름을 보여줘요"
+  },
+  {
+   "date": "2026-10-23",
+   "timeKst": "",
+   "t": "SLB",
+   "name": "SLB",
+   "when": "장 시작 전"
+  },
+  {
+   "date": "2026-10-23",
+   "timeKst": "",
+   "t": "WDC",
+   "name": "웨스턴디지털",
+   "when": "장 마감 후",
+   "why": "AI 데이터센터 저장장치 수요를 보여줘요"
+  },
+  {
+   "date": "2026-10-23",
+   "timeKst": "",
+   "t": "NEM",
+   "name": "뉴몬트",
+   "when": "장 마감 후"
   }
  ]
 }

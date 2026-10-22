@@ -3117,6 +3117,236 @@
      "t": "UNH"
     }
    ]
+  },
+  "graded": {
+   "gradedAt": "2026-10-22T22:00:00Z",
+   "horizonDays": 5,
+   "results": [
+    {
+     "excess": -8.27,
+     "ret": -9.29,
+     "score": -55,
+     "spyRet": -1.01,
+     "t": "IONQ"
+    },
+    {
+     "excess": -5.63,
+     "ret": -6.64,
+     "score": -50,
+     "spyRet": -1.01,
+     "t": "ORCL"
+    },
+    {
+     "excess": -9.35,
+     "ret": -10.36,
+     "score": -40,
+     "spyRet": -1.01,
+     "t": "INTC"
+    },
+    {
+     "excess": 4.19,
+     "ret": 3.18,
+     "score": -40,
+     "spyRet": -1.01,
+     "t": "NKE"
+    },
+    {
+     "excess": -7.01,
+     "ret": -8.03,
+     "score": -35,
+     "spyRet": -1.01,
+     "t": "MU"
+    },
+    {
+     "excess": -8.64,
+     "ret": -9.66,
+     "score": -30,
+     "spyRet": -1.01,
+     "t": "AMD"
+    },
+    {
+     "excess": -5.11,
+     "ret": -6.12,
+     "score": -30,
+     "spyRet": -1.01,
+     "t": "AVGO"
+    },
+    {
+     "excess": -1.59,
+     "ret": -2.6,
+     "score": -30,
+     "spyRet": -1.01,
+     "t": "SPCX"
+    },
+    {
+     "excess": -1.3,
+     "ret": -2.31,
+     "score": -25,
+     "spyRet": -1.01,
+     "t": "NVDA"
+    },
+    {
+     "excess": 5.19,
+     "ret": 4.18,
+     "score": -20,
+     "spyRet": -1.01,
+     "t": "MCD"
+    },
+    {
+     "excess": -6.64,
+     "ret": -7.66,
+     "score": -20,
+     "spyRet": -1.01,
+     "t": "NFLX"
+    },
+    {
+     "excess": 4.36,
+     "ret": 3.35,
+     "score": -20,
+     "spyRet": -1.01,
+     "t": "TSLA"
+    },
+    {
+     "excess": -6.99,
+     "ret": -8.01,
+     "score": -20,
+     "spyRet": -1.01,
+     "t": "COIN"
+    },
+    {
+     "excess": 0.39,
+     "ret": -0.63,
+     "score": -20,
+     "spyRet": -1.01,
+     "t": "BA"
+    },
+    {
+     "excess": -1.14,
+     "ret": -2.15,
+     "score": -15,
+     "spyRet": -1.01,
+     "t": "PLTR"
+    },
+    {
+     "excess": -0.7,
+     "ret": -1.72,
+     "score": -10,
+     "spyRet": -1.01,
+     "t": "AMZN"
+    },
+    {
+     "excess": 1.32,
+     "ret": 0.3,
+     "score": -10,
+     "spyRet": -1.01,
+     "t": "JPM"
+    },
+    {
+     "excess": -1.33,
+     "ret": -2.34,
+     "score": -5,
+     "spyRet": -1.01,
+     "t": "TSM"
+    },
+    {
+     "excess": -4.83,
+     "ret": -5.85,
+     "score": -5,
+     "spyRet": -1.01,
+     "t": "ASML"
+    },
+    {
+     "excess": -10.91,
+     "ret": -11.93,
+     "score": -5,
+     "spyRet": -1.01,
+     "t": "META"
+    },
+    {
+     "excess": -2.07,
+     "ret": -3.09,
+     "score": -5,
+     "spyRet": -1.01,
+     "t": "UBER"
+    },
+    {
+     "excess": -2.39,
+     "ret": -3.4,
+     "score": 5,
+     "spyRet": -1.01,
+     "t": "MSFT"
+    },
+    {
+     "excess": -6.14,
+     "ret": -7.16,
+     "score": 5,
+     "spyRet": -1.01,
+     "t": "GOOGL"
+    },
+    {
+     "excess": 4.66,
+     "ret": 3.65,
+     "score": 5,
+     "spyRet": -1.01,
+     "t": "V"
+    },
+    {
+     "excess": 2.83,
+     "ret": 1.82,
+     "score": 10,
+     "spyRet": -1.01,
+     "t": "AAPL"
+    },
+    {
+     "excess": 3.23,
+     "ret": 2.21,
+     "score": 10,
+     "spyRet": -1.01,
+     "t": "DIS"
+    },
+    {
+     "excess": 4.64,
+     "ret": 3.63,
+     "score": 20,
+     "spyRet": -1.01,
+     "t": "KO"
+    },
+    {
+     "excess": 3.05,
+     "ret": 2.03,
+     "score": 20,
+     "spyRet": -1.01,
+     "t": "XOM"
+    },
+    {
+     "excess": 3.77,
+     "ret": 2.76,
+     "score": 25,
+     "spyRet": -1.01,
+     "t": "WMT"
+    },
+    {
+     "excess": 5.42,
+     "ret": 4.4,
+     "score": 25,
+     "spyRet": -1.01,
+     "t": "LLY"
+    },
+    {
+     "excess": 5.12,
+     "ret": 4.11,
+     "score": 30,
+     "spyRet": -1.01,
+     "t": "COST"
+    },
+    {
+     "excess": 5.52,
+     "ret": 4.5,
+     "score": 30,
+     "spyRet": -1.01,
+     "t": "UNH"
+    }
+   ]
   }
  },
  {
@@ -4993,7 +5223,237 @@
     "score": 30,
     "t": "UNH"
    }
-  ]
+  ],
+  "graded1": {
+   "gradedAt": "2026-10-22T22:00:00Z",
+   "horizonDays": 1,
+   "results": [
+    {
+     "excess": 4.27,
+     "ret": 3.09,
+     "score": -40,
+     "spyRet": -1.18,
+     "t": "NFLX"
+    },
+    {
+     "excess": -1.6,
+     "ret": -2.78,
+     "score": -40,
+     "spyRet": -1.18,
+     "t": "ORCL"
+    },
+    {
+     "excess": -2.29,
+     "ret": -3.47,
+     "score": -40,
+     "spyRet": -1.18,
+     "t": "IONQ"
+    },
+    {
+     "excess": -6.85,
+     "ret": -8.04,
+     "score": -35,
+     "spyRet": -1.18,
+     "t": "INTC"
+    },
+    {
+     "excess": -3.33,
+     "ret": -4.51,
+     "score": -25,
+     "spyRet": -1.18,
+     "t": "COIN"
+    },
+    {
+     "excess": -5.08,
+     "ret": -6.26,
+     "score": -25,
+     "spyRet": -1.18,
+     "t": "MU"
+    },
+    {
+     "excess": 2.41,
+     "ret": 1.23,
+     "score": -20,
+     "spyRet": -1.18,
+     "t": "AAPL"
+    },
+    {
+     "excess": -5.8,
+     "ret": -6.98,
+     "score": -20,
+     "spyRet": -1.18,
+     "t": "META"
+    },
+    {
+     "excess": -6.92,
+     "ret": -8.1,
+     "score": -20,
+     "spyRet": -1.18,
+     "t": "AMD"
+    },
+    {
+     "excess": -3.13,
+     "ret": -4.31,
+     "score": -20,
+     "spyRet": -1.18,
+     "t": "AVGO"
+    },
+    {
+     "excess": 1.58,
+     "ret": 0.4,
+     "score": -15,
+     "spyRet": -1.18,
+     "t": "JPM"
+    },
+    {
+     "excess": 3.33,
+     "ret": 2.14,
+     "score": -15,
+     "spyRet": -1.18,
+     "t": "UBER"
+    },
+    {
+     "excess": -1.56,
+     "ret": -2.74,
+     "score": -15,
+     "spyRet": -1.18,
+     "t": "PLTR"
+    },
+    {
+     "excess": 3.29,
+     "ret": 2.1,
+     "score": -10,
+     "spyRet": -1.18,
+     "t": "NKE"
+    },
+    {
+     "excess": -1.9,
+     "ret": -3.08,
+     "score": -10,
+     "spyRet": -1.18,
+     "t": "TSLA"
+    },
+    {
+     "excess": -1.97,
+     "ret": -3.15,
+     "score": -10,
+     "spyRet": -1.18,
+     "t": "GOOGL"
+    },
+    {
+     "excess": -5.75,
+     "ret": -6.93,
+     "score": -10,
+     "spyRet": -1.18,
+     "t": "ASML"
+    },
+    {
+     "excess": -3.22,
+     "ret": -4.4,
+     "score": -10,
+     "spyRet": -1.18,
+     "t": "NVDA"
+    },
+    {
+     "excess": -3.34,
+     "ret": -4.52,
+     "score": -5,
+     "spyRet": -1.18,
+     "t": "TSM"
+    },
+    {
+     "excess": -1.05,
+     "ret": -2.23,
+     "score": -5,
+     "spyRet": -1.18,
+     "t": "MSFT"
+    },
+    {
+     "excess": 3.77,
+     "ret": 2.59,
+     "score": -5,
+     "spyRet": -1.18,
+     "t": "MCD"
+    },
+    {
+     "excess": -1.28,
+     "ret": -2.46,
+     "score": -5,
+     "spyRet": -1.18,
+     "t": "BA"
+    },
+    {
+     "excess": -7.96,
+     "ret": -9.14,
+     "score": 0,
+     "spyRet": -1.18,
+     "t": "SPCX"
+    },
+    {
+     "excess": 1.26,
+     "ret": 0.08,
+     "score": 0,
+     "spyRet": -1.18,
+     "t": "XOM"
+    },
+    {
+     "excess": -3.39,
+     "ret": -4.57,
+     "score": 5,
+     "spyRet": -1.18,
+     "t": "AMZN"
+    },
+    {
+     "excess": 2.34,
+     "ret": 1.16,
+     "score": 10,
+     "spyRet": -1.18,
+     "t": "DIS"
+    },
+    {
+     "excess": 4,
+     "ret": 2.82,
+     "score": 15,
+     "spyRet": -1.18,
+     "t": "WMT"
+    },
+    {
+     "excess": 4.05,
+     "ret": 2.87,
+     "score": 20,
+     "spyRet": -1.18,
+     "t": "KO"
+    },
+    {
+     "excess": 2.77,
+     "ret": 1.59,
+     "score": 20,
+     "spyRet": -1.18,
+     "t": "V"
+    },
+    {
+     "excess": 3.17,
+     "ret": 1.99,
+     "score": 25,
+     "spyRet": -1.18,
+     "t": "COST"
+    },
+    {
+     "excess": 4.01,
+     "ret": 2.83,
+     "score": 25,
+     "spyRet": -1.18,
+     "t": "LLY"
+    },
+    {
+     "excess": 3.09,
+     "ret": 1.91,
+     "score": 30,
+     "spyRet": -1.18,
+     "t": "UNH"
+    }
+   ]
+  }
  },
  {
   "date": "2026-10-22",
@@ -5274,6 +5734,315 @@
    },
    {
     "close": 417,
+    "score": 30,
+    "t": "UNH"
+   }
+  ]
+ },
+ {
+  "date": "2026-10-23",
+  "up": [
+   {
+    "reason": "3분기 실적 서프라이즈와 연간 전망 상향 뒤 한 달 새 약 12% 올랐고 기술주 급락일에도 1.9% 더 올랐어요.",
+    "score": 30,
+    "t": "UNH"
+   },
+   {
+    "reason": "한 달 내내 오르며 사상 최고가 1,018달러를 찍었지만 높은 가치평가는 부담이에요.",
+    "score": 25,
+    "t": "COST"
+   },
+   {
+    "reason": "골드만삭스 목표가 상향 속에 사상 최고가를 새로 썼고 29일 실적 발표를 앞두고 있어요.",
+    "score": 25,
+    "t": "LLY"
+   },
+   {
+    "reason": "기술주에서 빠진 자금이 몰리며 하루 2.9% 올라 최고 수준에 있고 27일 실적을 앞두고 있어요.",
+    "score": 20,
+    "t": "KO"
+   },
+   {
+    "reason": "2주 새 약 9% 오르며 방어주 강세를 이끌었고 22일에도 2.8% 올랐어요.",
+    "score": 20,
+    "t": "WMT"
+   },
+   {
+    "reason": "보름 새 약 7% 꾸준히 올랐고 27일 실적에서 결제액 증가를 확인할 차례예요.",
+    "score": 20,
+    "t": "V"
+   },
+   {
+    "reason": "새 악재 없이 한 달 새 약 7% 반등했고, 묵은 악재로 하락을 점친 과거 신호가 모두 빗나가 하락 근거를 낮게 봤어요.",
+    "score": 15,
+    "t": "MCD"
+   },
+   {
+    "reason": "기술주가 크게 빠진 22일에도 1.2% 올라 강했지만 29일 실적 전이라 확신은 크지 않아요.",
+    "score": 10,
+    "t": "AAPL"
+   },
+   {
+    "reason": "보름 새 약 5% 오르며 꾸준한 흐름이지만 뚜렷한 새 재료는 적어요.",
+    "score": 10,
+    "t": "DIS"
+   },
+   {
+    "reason": "유가가 배럴당 99달러 안팎으로 높게 유지되지만 주가는 옆걸음이고 30일 실적을 앞두고 있어요.",
+    "score": 10,
+    "t": "XOM"
+   }
+  ],
+  "down": [
+   {
+    "reason": "3분기 매출은 예상을 넘었지만 설비투자 349억 달러로 잉여현금흐름이 적자로 돌아섰고, 자금 조달용 새 주식 발표에 하루 7% 급락했어요.",
+    "score": -35,
+    "t": "META"
+   },
+   {
+    "reason": "20억 달러 증자에 따른 희석 우려 속 한 달 새 약 24% 빠졌어요.",
+    "score": -35,
+    "t": "IONQ"
+   },
+   {
+    "reason": "AI 투자 자금 조달 우려 속 22일 2.8% 더 내려 52주 최저가 부근에 있어요.",
+    "score": -35,
+    "t": "ORCL"
+   },
+   {
+    "reason": "공급 제약 우려에 22일 8% 급락했고 2주 새 약 20% 빠진 채 29일 실적을 맞아요.",
+    "score": -35,
+    "t": "INTC"
+   },
+   {
+    "reason": "4분기 매출·광고 전망을 낮춘 뒤 울프리서치 하향과 목표가 하향이 이어졌지만, 22일 3.1% 반등해 하락 점수를 줄였어요.",
+    "score": -30,
+    "t": "NFLX"
+   },
+   {
+    "reason": "22일 6.3% 급락하며 2주 새 고점 대비 약 17% 빠졌어요.",
+    "score": -30,
+    "t": "MU"
+   },
+   {
+    "reason": "램리서치 공급 경고에 22일 8.1% 급락했고 한 달 고점 대비 약 16% 낮아요.",
+    "score": -30,
+    "t": "AMD"
+   },
+   {
+    "reason": "28일 실적을 앞두고 22일 3.2% 내렸고 집단소송과 시티즌스 목표가 하향이 겹쳤어요.",
+    "score": -25,
+    "t": "GOOGL"
+   },
+   {
+    "reason": "22일 4.3% 내리며 2주 새 약 11% 빠져 AI 반도체 매도세가 이어지고 있어요.",
+    "score": -25,
+    "t": "AVGO"
+   },
+   {
+    "reason": "램리서치가 2027년까지 공급 제약을 경고하자 장비주가 흔들리며 하루 6.9% 급락했어요.",
+    "score": -25,
+    "t": "ASML"
+   },
+   {
+    "reason": "램리서치의 공급 제약 경고에 22일 4.4% 내렸고 한 달 흐름도 약해요.",
+    "score": -20,
+    "t": "NVDA"
+   },
+   {
+    "reason": "반도체 장비 공급 제약 우려에 22일 4.5% 내렸고 2주 전 고점보다 약 9% 낮아요.",
+    "score": -20,
+    "t": "TSM"
+   },
+   {
+    "reason": "실적 발표를 앞두고 설비투자 우려에 22일 4.6% 급락했어요.",
+    "score": -20,
+    "t": "AMZN"
+   },
+   {
+    "reason": "비트코인이 하루 4% 빠진 8.1만 달러대로 밀리며 22일 4.5% 내렸어요.",
+    "score": -20,
+    "t": "COIN"
+   },
+   {
+    "reason": "13억 주 보호예수 해제일에 9.1% 급락했고 24일 3.3억 주가 더 풀리지만, 3분기 실적은 강했어요.",
+    "score": -20,
+    "t": "SPCX"
+   },
+   {
+    "reason": "AI 설비투자 우려 속 22일 2.2% 내렸고 28일 실적에서 애저 성장 확인이 필요해요.",
+    "score": -15,
+    "t": "MSFT"
+   },
+   {
+    "reason": "22일 2.7% 내렸고 보름 새 고점 대비 약 6% 낮아 AI 소프트웨어 매도세를 벗어나지 못했어요.",
+    "score": -15,
+    "t": "PLTR"
+   },
+   {
+    "reason": "3분기 조정 EPS는 예상을 넘었지만 영업이익이 56% 줄고 설비투자 축소 뒤 22일 3.1% 내렸어요.",
+    "score": -10,
+    "t": "TSLA"
+   }
+  ],
+  "all": [
+   {
+    "close": 648.85,
+    "score": -35,
+    "t": "META"
+   },
+   {
+    "close": 31.16,
+    "score": -35,
+    "t": "IONQ"
+   },
+   {
+    "close": 125.54,
+    "score": -35,
+    "t": "ORCL"
+   },
+   {
+    "close": 85.49,
+    "score": -35,
+    "t": "INTC"
+   },
+   {
+    "close": 67.05,
+    "score": -30,
+    "t": "NFLX"
+   },
+   {
+    "close": 856.49,
+    "score": -30,
+    "t": "MU"
+   },
+   {
+    "close": 507.93,
+    "score": -30,
+    "t": "AMD"
+   },
+   {
+    "close": 324.22,
+    "score": -25,
+    "t": "GOOGL"
+   },
+   {
+    "close": 323.24,
+    "score": -25,
+    "t": "AVGO"
+   },
+   {
+    "close": 1560.54,
+    "score": -25,
+    "t": "ASML"
+   },
+   {
+    "close": 212.21,
+    "score": -20,
+    "t": "NVDA"
+   },
+   {
+    "close": 412.35,
+    "score": -20,
+    "t": "TSM"
+   },
+   {
+    "close": 250.38,
+    "score": -20,
+    "t": "AMZN"
+   },
+   {
+    "close": 169.09,
+    "score": -20,
+    "t": "COIN"
+   },
+   {
+    "close": 144.75,
+    "score": -20,
+    "t": "SPCX"
+   },
+   {
+    "close": 521.08,
+    "score": -15,
+    "t": "MSFT"
+   },
+   {
+    "close": 196.19,
+    "score": -15,
+    "t": "PLTR"
+   },
+   {
+    "close": 374.58,
+    "score": -10,
+    "t": "TSLA"
+   },
+   {
+    "close": 69.07,
+    "score": -5,
+    "t": "UBER"
+   },
+   {
+    "close": 187.55,
+    "score": -5,
+    "t": "BA"
+   },
+   {
+    "close": 38.32,
+    "score": 5,
+    "t": "NKE"
+   },
+   {
+    "close": 336.54,
+    "score": 5,
+    "t": "JPM"
+   },
+   {
+    "close": 348.22,
+    "score": 10,
+    "t": "AAPL"
+   },
+   {
+    "close": 113.13,
+    "score": 10,
+    "t": "DIS"
+   },
+   {
+    "close": 178.23,
+    "score": 10,
+    "t": "XOM"
+   },
+   {
+    "close": 252.63,
+    "score": 15,
+    "t": "MCD"
+   },
+   {
+    "close": 95.34,
+    "score": 20,
+    "t": "KO"
+   },
+   {
+    "close": 121.12,
+    "score": 20,
+    "t": "WMT"
+   },
+   {
+    "close": 414.34,
+    "score": 20,
+    "t": "V"
+   },
+   {
+    "close": 1018.21,
+    "score": 25,
+    "t": "COST"
+   },
+   {
+    "close": 1306.69,
+    "score": 25,
+    "t": "LLY"
+   },
+   {
+    "close": 424.98,
     "score": 30,
     "t": "UNH"
    }

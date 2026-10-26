@@ -1,260 +1,350 @@
 {
-  "weekOf": "2026-10-24",
-  "generatedAt": "2026-10-23T22:05:00Z",
-  "events": [
-    {
-      "date": "2026-10-27",
-      "timeKst": "21:30",
-      "importance": 2,
-      "ko": "내구재 주문(9월) 전월 대비",
-      "en": "Durable Goods Orders MoM (Sep)",
-      "actual": null,
-      "forecast": "0.6%",
-      "previous": null,
-      "why": "기업 설비투자 흐름을 가늠하는 지표라 제조·산업재 주가에 영향을 줘요."
-    },
-    {
-      "date": "2026-10-27",
-      "timeKst": "23:00",
-      "importance": 2,
-      "ko": "컨퍼런스보드 소비자신뢰지수(10월)",
-      "en": "CB Consumer Confidence (Oct)",
-      "actual": null,
-      "forecast": "80.3",
-      "previous": "81.9",
-      "why": "소비 심리가 꺾이면 소비 관련주와 경기 기대가 약해질 수 있어요."
-    },
-    {
-      "date": "2026-10-27",
-      "timeKst": "23:00",
-      "importance": 2,
-      "ko": "신규 주택판매(9월)",
-      "en": "New Home Sales (Sep)",
-      "actual": null,
-      "forecast": "65.2만 건(연율)",
-      "previous": "68.4만 건(연율)",
-      "why": "높은 금리가 주택 수요를 얼마나 누르는지 보여줘요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "03:00",
-      "importance": 3,
-      "ko": "FOMC 기준금리 결정",
-      "en": "FOMC Rate Decision",
-      "actual": null,
-      "forecast": "3.75~4.00%",
-      "previous": "3.75~4.00%",
-      "why": "시장은 동결을 예상하지만 12월 인상 가능성을 80% 넘게 보고 있어 성명 문구에 따라 주가가 크게 흔들릴 수 있어요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "03:30",
-      "importance": 3,
-      "ko": "연준 의장 기자회견",
-      "en": "Fed Chair Press Conference",
-      "actual": null,
-      "forecast": null,
-      "previous": null,
-      "why": "유가 급등 속 추가 인상 신호가 나오는지에 따라 금리와 기술주가 민감하게 움직여요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 3,
-      "ko": "3분기 GDP 속보치(연율)",
-      "en": "GDP Growth Rate QoQ Adv (Q3)",
-      "actual": null,
-      "forecast": "연율 3.0%",
-      "previous": "연율 2.2%",
-      "why": "AI 투자와 소비가 성장률을 얼마나 끌어올렸는지 확인하는 지표예요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 3,
-      "ko": "PCE 물가지수(9월) 전월 대비",
-      "en": "PCE Price Index MoM (Sep)",
-      "actual": null,
-      "forecast": "0.5%",
-      "previous": null,
-      "why": "연준이 가장 중시하는 물가 지표로, 3월 이후 가장 큰 상승이 예상돼 금리 인상 우려를 키울 수 있어요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 3,
-      "ko": "PCE 물가지수(9월) 전년 대비",
-      "en": "PCE Price Index YoY (Sep)",
-      "actual": null,
-      "forecast": null,
-      "previous": "3.4%",
-      "why": "물가가 다시 오르면 금리 인상 기대가 커져 주가에 부담이 돼요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 3,
-      "ko": "근원 PCE 물가지수 전월 대비",
-      "en": "Core PCE Price Index MoM (Sep)",
-      "actual": null,
-      "forecast": "0.3%",
-      "previous": null,
-      "why": "에너지·식품을 뺀 기조 물가라 연준 판단에 직접 영향을 줘요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 2,
-      "ko": "근원 PCE 물가지수 전년 대비",
-      "en": "Core PCE Price Index YoY (Sep)",
-      "actual": null,
-      "forecast": null,
-      "previous": "3.0%",
-      "why": "기조 물가가 3%대에서 내려오지 않으면 긴축이 길어질 수 있어요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "21:30",
-      "importance": 2,
-      "ko": "신규 실업수당 청구건수",
-      "en": "Initial Jobless Claims",
-      "actual": null,
-      "forecast": null,
-      "previous": "19.4만 건",
-      "why": "해고가 적게 유지되는지 보여주는 주간 고용 지표예요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "21:30",
-      "importance": 2,
-      "ko": "3분기 고용비용지수(ECI) 전분기 대비",
-      "en": "Employment Cost Index QoQ (Q3)",
-      "actual": null,
-      "forecast": null,
-      "previous": null,
-      "why": "임금 상승 압력이 물가로 이어지는지 연준이 주목하는 지표예요."
-    }
-  ],
-  "earnings": [
-    {
-      "date": "2026-10-26",
-      "timeKst": "",
-      "t": "VZ",
-      "name": "버라이즌",
-      "when": "장 시작 전",
-      "why": "무선 가입자 증감과 배당 여력을 봐요."
-    },
-    {
-      "date": "2026-10-27",
-      "timeKst": "",
-      "t": "KO",
-      "name": "코카콜라",
-      "when": "장 시작 전",
-      "why": "10월 급등 뒤 판매량 증가율과 원가 부담을 봐요."
-    },
-    {
-      "date": "2026-10-27",
-      "timeKst": "",
-      "t": "BA",
-      "name": "보잉",
-      "when": "장 시작 전",
-      "why": "항공기 인도량과 현금흐름 개선 여부를 봐요."
-    },
-    {
-      "date": "2026-10-28",
-      "timeKst": "",
-      "t": "V",
-      "name": "비자",
-      "when": "장 마감 후",
-      "why": "결제 금액 증가율로 본 미국·해외 소비 흐름을 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "MSFT",
-      "name": "마이크로소프트",
-      "when": "장 마감 후",
-      "why": "애저 클라우드 성장률과 AI 설비투자 규모를 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "GOOGL",
-      "name": "알파벳(구글)",
-      "when": "장 마감 후",
-      "why": "구글 클라우드 성장과 검색 광고, 설비투자 전망을 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "LLY",
-      "name": "일라이 릴리",
-      "when": "장 시작 전",
-      "why": "비만 치료제 매출 성장과 이익 감소 폭, 연간 가이던스를 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "MA",
-      "name": "마스터카드",
-      "when": "장 시작 전",
-      "why": "국경 간 결제 증가율로 본 글로벌 소비를 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "CAT",
-      "name": "캐터필러",
-      "when": "장 시작 전",
-      "why": "건설·광산 장비 수요와 데이터센터 발전기 매출을 봐요."
-    },
-    {
-      "date": "2026-10-29",
-      "timeKst": "",
-      "t": "MRK",
-      "name": "머크",
-      "when": "장 시작 전",
-      "why": "키트루다 매출과 신약 파이프라인 진척을 봐요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "",
-      "t": "AMZN",
-      "name": "아마존",
-      "when": "장 마감 후",
-      "why": "AWS 성장률과 늘어나는 AI 설비투자를 봐요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "",
-      "t": "INTC",
-      "name": "인텔",
-      "when": "장 마감 후",
-      "why": "공급 제약 속 4분기 가이던스와 파운드리 진척을 봐요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "",
-      "t": "COIN",
-      "name": "코인베이스",
-      "when": "장 마감 후",
-      "why": "비트코인 약세 속 거래 수익 감소 폭과 적자 여부를 봐요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "19:30",
-      "t": "XOM",
-      "name": "엑슨모빌",
-      "when": "장 시작 전",
-      "why": "높은 유가가 이익과 자사주 매입에 얼마나 반영됐는지 봐요."
-    },
-    {
-      "date": "2026-10-30",
-      "timeKst": "",
-      "t": "CVX",
-      "name": "셰브런",
-      "when": "장 시작 전",
-      "why": "유가 급등이 생산 이익과 현금흐름에 미친 영향을 봐요."
-    }
-  ]
+ "weekOf": "2026-10-27",
+ "generatedAt": "2026-10-26T21:51:32Z",
+ "events": [
+  {
+   "date": "2026-10-27",
+   "timeKst": "21:30",
+   "importance": 2,
+   "ko": "내구재 주문(9월) 전월 대비",
+   "en": "Durable Goods Orders MoM (Sep)",
+   "actual": null,
+   "forecast": "0.6%",
+   "previous": null,
+   "why": "기업 설비투자 흐름을 가늠하는 지표라 제조·산업재 주가에 영향을 줘요."
+  },
+  {
+   "date": "2026-10-27",
+   "timeKst": "23:00",
+   "importance": 2,
+   "ko": "컨퍼런스보드 소비자신뢰지수(10월)",
+   "en": "CB Consumer Confidence (Oct)",
+   "actual": null,
+   "forecast": "81.0",
+   "previous": "81.9",
+   "why": "소비 심리가 꺾이면 소비 관련주와 경기 기대가 약해질 수 있어요."
+  },
+  {
+   "date": "2026-10-27",
+   "timeKst": "23:00",
+   "importance": 2,
+   "ko": "신규 주택판매(9월)",
+   "en": "New Home Sales (Sep)",
+   "actual": null,
+   "forecast": "65.0만 건(연율)",
+   "previous": "68.4만 건(연율)",
+   "why": "높은 금리가 주택 수요를 얼마나 누르는지 보여줘요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "03:00",
+   "importance": 3,
+   "ko": "FOMC 기준금리 결정",
+   "en": "FOMC Rate Decision",
+   "actual": null,
+   "forecast": "3.75~4.00%",
+   "previous": "3.75~4.00%",
+   "why": "시장은 동결을 90% 넘게 예상하지만 12월 인상 가능성이 약 80%라 성명 문구에 따라 주가가 크게 흔들릴 수 있어요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "03:30",
+   "importance": 3,
+   "ko": "워시 연준 의장 기자회견",
+   "en": "Fed Chair Warsh Press Conference",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "12월 추가 인상 신호가 나오는지에 따라 금리와 기술주가 민감하게 움직여요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 3,
+   "ko": "3분기 GDP 속보치(연율)",
+   "en": "GDP Growth Rate QoQ Adv (Q3)",
+   "actual": null,
+   "forecast": "3.0%",
+   "previous": "2.2%",
+   "why": "AI 투자와 소비가 성장률을 얼마나 끌어올렸는지 확인하는 지표예요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 3,
+   "ko": "PCE 물가지수(9월) 전월 대비",
+   "en": "PCE Price Index MoM (Sep)",
+   "actual": null,
+   "forecast": "0.5%",
+   "previous": "0.3%",
+   "why": "연준이 가장 중시하는 물가 지표로, 3월 이후 가장 큰 상승이 예상돼 금리 인상 우려를 키울 수 있어요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 3,
+   "ko": "PCE 물가지수(9월) 전년 대비",
+   "en": "PCE Price Index YoY (Sep)",
+   "actual": null,
+   "forecast": "3.7%",
+   "previous": "3.4%",
+   "why": "물가가 다시 오르면 금리 인상 기대가 커져 주가에 부담이 돼요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 3,
+   "ko": "근원 PCE 물가지수(9월) 전월 대비",
+   "en": "Core PCE Price Index MoM (Sep)",
+   "actual": null,
+   "forecast": "0.3%",
+   "previous": "0.2%",
+   "why": "에너지·식품을 뺀 기조 물가라 연준 판단에 직접 영향을 줘요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 2,
+   "ko": "근원 PCE 물가지수(9월) 전년 대비",
+   "en": "Core PCE Price Index YoY (Sep)",
+   "actual": null,
+   "forecast": "3.1%",
+   "previous": "3.0%",
+   "why": "기조 물가가 3%대에서 내려오지 않으면 긴축이 길어질 수 있어요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 2,
+   "ko": "개인소비지출(9월) 전월 대비",
+   "en": "Personal Spending MoM (Sep)",
+   "actual": null,
+   "forecast": "0.6%",
+   "previous": "0.9%",
+   "why": "미국 경제의 70%를 차지하는 소비가 버티는지 보여줘 소비주 흐름에 영향을 줘요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 1,
+   "ko": "개인소득(9월) 전월 대비",
+   "en": "Personal Income MoM (Sep)",
+   "actual": null,
+   "forecast": "0.3%",
+   "previous": "0.2%",
+   "why": "소득이 늘어야 소비 여력이 유지돼요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "21:30",
+   "importance": 2,
+   "ko": "신규 실업수당 청구건수",
+   "en": "Initial Jobless Claims",
+   "actual": null,
+   "forecast": "20.0만 건",
+   "previous": "19.4만 건",
+   "why": "해고가 적게 유지되는지 보여주는 주간 고용 지표예요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "21:30",
+   "importance": 2,
+   "ko": "3분기 고용비용지수(ECI) 전분기 대비",
+   "en": "Employment Cost Index QoQ (Q3)",
+   "actual": null,
+   "forecast": "0.8%",
+   "previous": "0.9%",
+   "why": "임금 상승 압력이 물가로 이어지는지 연준이 주목하는 지표예요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "22:45",
+   "importance": 1,
+   "ko": "시카고 PMI(10월)",
+   "en": "Chicago PMI (Oct)",
+   "actual": null,
+   "forecast": "55.5",
+   "previous": "58.8",
+   "why": "중서부 제조업 경기를 보여줘 다음 주 ISM 지수를 미리 가늠할 수 있어요."
+  },
+  {
+   "date": "2026-10-31",
+   "timeKst": "01:00",
+   "importance": 1,
+   "ko": "데일리 샌프란시스코 연은 총재 연설",
+   "en": "Fed Daly Speech",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "FOMC 직후 위원 발언으로 12월 인상 의지를 확인할 수 있어요."
+  },
+  {
+   "date": "2026-10-31",
+   "timeKst": "01:30",
+   "importance": 1,
+   "ko": "무살렘 세인트루이스 연은 총재 연설",
+   "en": "Fed Musalem Speech",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "매파 성향 위원의 발언이라 금리 인상 기대에 영향을 줄 수 있어요."
+  },
+  {
+   "date": "2026-11-03",
+   "timeKst": "00:00",
+   "importance": 3,
+   "ko": "ISM 제조업 PMI(10월)",
+   "en": "ISM Manufacturing PMI (Oct)",
+   "actual": null,
+   "forecast": null,
+   "previous": "54.5",
+   "why": "제조업 경기와 가격 지수(물가 압력)를 함께 보여줘 경기·금리 전망을 움직여요."
+  }
+ ],
+ "earnings": [
+  {
+   "date": "2026-10-27",
+   "timeKst": "",
+   "t": "KO",
+   "name": "코카콜라",
+   "when": "장 시작 전",
+   "why": "판매량 증가율과 원가 부담, 가격 인상 효과를 봐요."
+  },
+  {
+   "date": "2026-10-27",
+   "timeKst": "",
+   "t": "BA",
+   "name": "보잉",
+   "when": "장 시작 전",
+   "why": "항공기 인도량과 현금흐름 개선 여부를 봐요."
+  },
+  {
+   "date": "2026-10-28",
+   "timeKst": "",
+   "t": "V",
+   "name": "비자",
+   "when": "장 마감 후",
+   "why": "결제 금액 증가율로 본 미국·해외 소비 흐름을 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "MSFT",
+   "name": "마이크로소프트",
+   "when": "장 마감 후",
+   "why": "애저 클라우드 성장률과 AI 설비투자 규모를 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "GOOGL",
+   "name": "알파벳(구글)",
+   "when": "장 마감 후",
+   "why": "구글 클라우드 성장과 검색 광고, 설비투자 전망을 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "NOW",
+   "name": "서비스나우",
+   "when": "장 마감 후",
+   "why": "AI 에이전트 수요가 구독 매출 성장으로 이어지는지 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "LLY",
+   "name": "일라이 릴리",
+   "when": "장 시작 전",
+   "why": "비만 치료제 매출 성장과 이익 감소 폭, 연간 가이던스를 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "MA",
+   "name": "마스터카드",
+   "when": "장 시작 전",
+   "why": "국경 간 결제 증가율로 본 글로벌 소비를 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "CAT",
+   "name": "캐터필러",
+   "when": "장 시작 전",
+   "why": "건설·광산 장비 수요와 데이터센터 발전기 매출을 봐요."
+  },
+  {
+   "date": "2026-10-29",
+   "timeKst": "",
+   "t": "MRK",
+   "name": "머크",
+   "when": "장 시작 전",
+   "why": "키트루다 매출과 신약 파이프라인 진척을 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "AMZN",
+   "name": "아마존",
+   "when": "장 마감 후",
+   "why": "AWS 성장률과 늘어나는 AI 설비투자를 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "INTC",
+   "name": "인텔",
+   "when": "장 마감 후",
+   "why": "4분기 가이던스와 파운드리 사업 진척을 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "COIN",
+   "name": "코인베이스",
+   "when": "장 마감 후",
+   "why": "가상자산 약세 속 거래 수익 감소 폭과 적자 여부를 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "XOM",
+   "name": "엑슨모빌",
+   "when": "장 시작 전",
+   "why": "높은 유가가 이익과 자사주 매입에 얼마나 반영됐는지 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "CVX",
+   "name": "셰브런",
+   "when": "장 시작 전",
+   "why": "유가 상승이 생산 이익과 현금흐름에 미친 영향을 봐요."
+  },
+  {
+   "date": "2026-10-30",
+   "timeKst": "",
+   "t": "ABBV",
+   "name": "애브비",
+   "when": "장 시작 전",
+   "why": "스카이리치·린보크 성장으로 휴미라 공백을 메우는지 봐요."
+  },
+  {
+   "date": "2026-11-03",
+   "timeKst": "06:30",
+   "t": "AAPL",
+   "name": "애플",
+   "when": "장 마감 후",
+   "why": "아이폰 18 판매와 메모리 원가 부담, 터너스 CEO의 첫 실적 발표를 봐요."
+  },
+  {
+   "date": "2026-11-03",
+   "timeKst": "",
+   "t": "PLTR",
+   "name": "팔란티어",
+   "when": "장 마감 후",
+   "why": "미국 상업 부문 매출 성장률과 연간 가이던스 상향 여부를 봐요."
+  }
+ ]
 }

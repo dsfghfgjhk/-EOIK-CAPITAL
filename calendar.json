@@ -1,160 +1,83 @@
 {
- "weekOf": "2026-10-29",
- "generatedAt": "2026-10-28T22:45:00Z",
+ "weekOf": "2026-10-30",
+ "generatedAt": "2026-10-29T22:00:00Z",
  "events": [
-  {
-   "date": "2026-10-29",
-   "timeKst": "03:00",
-   "importance": 3,
-   "ko": "FOMC 기준금리 결정",
-   "en": "FOMC Rate Decision",
-   "actual": "3.75~4.00% (동결)",
-   "forecast": "3.75~4.00%",
-   "previous": "3.75~4.00%",
-   "why": "금리가 동결됐지만 2명이 인상 쪽에 표를 던져 물가 경계가 커졌다는 신호로 읽혀요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "03:30",
-   "importance": 3,
-   "ko": "워시 연준 의장 기자회견",
-   "en": "Fed Chair Warsh Press Conference",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "다음 금리 방향에 대한 힌트가 나와 채권금리와 기술주 흐름을 흔들 수 있어요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "21:30",
-   "importance": 3,
-   "ko": "3분기 GDP 속보치 (연율, 전분기 대비)",
-   "en": "GDP QoQ Annualized Q3 Adv",
-   "actual": null,
-   "forecast": "3.2%",
-   "previous": "2.2%",
-   "why": "성장이 강하면 실적엔 좋지만 금리 인하 기대는 더 줄어들 수 있어요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "21:30",
-   "importance": 3,
-   "ko": "PCE 물가 전년 대비 (9월)",
-   "en": "PCE Price Index YoY Sep",
-   "actual": null,
-   "forecast": "3.6%",
-   "previous": "3.4%",
-   "why": "연준이 가장 중시하는 물가 지표라 예상보다 높으면 금리 부담이 커져요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "21:30",
-   "importance": 3,
-   "ko": "근원 PCE 물가 전년 대비 (9월)",
-   "en": "Core PCE YoY Sep",
-   "actual": null,
-   "forecast": null,
-   "previous": "3.0%",
-   "why": "에너지·식품을 뺀 기조 물가로 연준의 다음 결정에 직접 영향을 줘요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "개인소비지출 전월 대비 (9월)",
-   "en": "Personal Spending MoM Sep",
-   "actual": null,
-   "forecast": null,
-   "previous": "0.9%",
-   "why": "소비가 견조한지 보여줘 유통·소비재 주가에 영향을 줘요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "21:30",
-   "importance": 2,
-   "ko": "신규 실업수당 청구건수",
-   "en": "Initial Jobless Claims",
-   "actual": null,
-   "forecast": "20.0만 건",
-   "previous": "19.4만 건",
-   "why": "고용 시장이 식는지 매주 확인하는 지표예요."
-  },
   {
    "date": "2026-10-30",
    "timeKst": "21:30",
    "importance": 2,
-   "ko": "고용비용지수 (3분기, 전분기 대비)",
-   "en": "Employment Cost Index Q3",
+   "ko": "고용비용지수(ECI) 3분기 전분기 대비",
+   "en": "Employment Cost Index QoQ Q3",
    "actual": null,
    "forecast": "0.8%",
    "previous": "0.9%",
-   "why": "임금 상승 압력이 물가로 번지는지 가늠하는 지표예요."
+   "why": "임금 상승 압력이 남아 있는지 보여 줘 물가와 금리 전망에 영향을 줘요."
   },
   {
    "date": "2026-10-30",
    "timeKst": "22:45",
    "importance": 2,
-   "ko": "시카고 PMI (10월)",
-   "en": "Chicago PMI Oct",
+   "ko": "시카고 구매관리자지수(PMI)",
+   "en": "Chicago PMI (Oct)",
    "actual": null,
    "forecast": "55.8",
    "previous": "58.8",
-   "why": "중서부 제조업 경기를 보여줘 다음 주 ISM 지수의 예고편이 돼요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "23:00",
-   "importance": 2,
-   "ko": "미시간대 소비자심리지수 확정치 (10월)",
-   "en": "UMich Consumer Sentiment Final Oct",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "소비자 심리와 기대 인플레이션을 함께 보여줘 소비주와 금리에 영향을 줘요."
+   "why": "중서부 제조업 경기를 미리 보여 줘 다음 주 ISM 지표의 힌트가 돼요."
   },
   {
    "date": "2026-11-03",
    "timeKst": "00:00",
    "importance": 3,
-   "ko": "ISM 제조업 PMI (10월)",
-   "en": "ISM Manufacturing PMI Oct",
+   "ko": "ISM 제조업 구매관리자지수(PMI)",
+   "en": "ISM Manufacturing PMI (Oct)",
    "actual": null,
    "forecast": "54.7",
    "previous": "54.5",
-   "why": "50을 넘으면 제조업 확장이라 경기민감주 흐름을 좌우해요."
+   "why": "제조업 경기 흐름을 보여 줘 산업재·반도체 주가에 영향을 줘요."
+  },
+  {
+   "date": "2026-11-03",
+   "timeKst": "00:00",
+   "importance": 2,
+   "ko": "ISM 제조업 물가지불지수",
+   "en": "ISM Manufacturing Prices (Oct)",
+   "actual": null,
+   "forecast": "78.0",
+   "previous": "77.9",
+   "why": "기업 원가 부담이 커지면 물가와 금리 걱정이 다시 커질 수 있어요."
   },
   {
    "date": "2026-11-04",
    "timeKst": "00:00",
    "importance": 2,
-   "ko": "JOLTS 구인건수 (9월)",
-   "en": "JOLTS Job Openings Sep",
+   "ko": "JOLTS 구인 건수",
+   "en": "JOLTS Job Openings (Sep)",
    "actual": null,
-   "forecast": null,
+   "forecast": "677.9만 건",
    "previous": "707.9만 건",
-   "why": "기업들의 채용 수요가 줄어드는지 보여줘 고용 둔화 신호로 쓰여요."
+   "why": "구인이 줄면 노동시장이 식는다는 신호로 금리 인하 기대를 키울 수 있어요."
   },
   {
    "date": "2026-11-04",
    "timeKst": "22:15",
    "importance": 2,
-   "ko": "ADP 민간 고용 (10월)",
-   "en": "ADP Employment Change Oct",
+   "ko": "ADP 민간 고용 변화",
+   "en": "ADP Employment Change (Oct)",
    "actual": null,
    "forecast": null,
-   "previous": null,
-   "why": "다음 주 공식 고용지표에 앞서 민간 고용 흐름을 미리 보여줘요."
+   "previous": "9만 건",
+   "why": "금요일 고용보고서를 앞두고 민간 고용 분위기를 미리 보여 줘요."
   },
   {
    "date": "2026-11-05",
    "timeKst": "00:00",
    "importance": 3,
-   "ko": "ISM 서비스업 PMI (10월)",
-   "en": "ISM Services PMI Oct",
+   "ko": "ISM 서비스업 구매관리자지수(PMI)",
+   "en": "ISM Services PMI (Oct)",
    "actual": null,
-   "forecast": null,
+   "forecast": "54.5",
    "previous": "54.9",
-   "why": "미국 경제의 대부분인 서비스업 경기를 보여줘 증시 전반에 영향이 커요."
+   "why": "미국 경제의 대부분인 서비스업 경기를 보여 줘 증시 전반에 영향을 줘요."
   },
   {
    "date": "2026-11-05",
@@ -164,114 +87,130 @@
    "en": "Initial Jobless Claims",
    "actual": null,
    "forecast": null,
+   "previous": "19.4만 건",
+   "why": "해고 흐름을 매주 보여 줘 경기 둔화 여부를 가늠하는 잣대가 돼요."
+  },
+  {
+   "date": "2026-11-05",
+   "timeKst": "22:30",
+   "importance": 2,
+   "ko": "3분기 노동생산성 전분기 대비(예비치)",
+   "en": "Nonfarm Productivity QoQ Q3 Prel",
+   "actual": null,
+   "forecast": null,
+   "previous": "1.4%",
+   "why": "생산성이 오르면 임금이 올라도 물가 부담이 덜해 기업 이익에 우호적이에요."
+  },
+  {
+   "date": "2026-11-05",
+   "timeKst": "22:30",
+   "importance": 2,
+   "ko": "3분기 단위노동비용 전분기 대비(예비치)",
+   "en": "Unit Labor Costs QoQ Q3 Prel",
+   "actual": null,
+   "forecast": null,
+   "previous": "1.2%",
+   "why": "인건비가 빠르게 오르면 물가와 기업 마진에 부담이 돼요."
+  },
+  {
+   "date": "2026-11-06",
+   "timeKst": "22:30",
+   "importance": 3,
+   "ko": "비농업 고용 변화",
+   "en": "Nonfarm Payrolls (Oct)",
+   "actual": null,
+   "forecast": null,
+   "previous": "2.9만 건",
+   "why": "고용이 약하면 금리 인하 기대가, 강하면 금리 부담이 커져 증시를 크게 흔들어요."
+  },
+  {
+   "date": "2026-11-06",
+   "timeKst": "22:30",
+   "importance": 3,
+   "ko": "민간 비농업 고용 변화",
+   "en": "Private Nonfarm Payrolls (Oct)",
+   "actual": null,
+   "forecast": "3.9만 건",
+   "previous": "4.6만 건",
+   "why": "정부를 뺀 민간 고용으로 실제 경기 체력을 더 잘 보여 줘요."
+  },
+  {
+   "date": "2026-11-06",
+   "timeKst": "22:30",
+   "importance": 3,
+   "ko": "실업률",
+   "en": "Unemployment Rate (Oct)",
+   "actual": null,
+   "forecast": null,
    "previous": null,
-   "why": "고용 시장이 식는지 매주 확인하는 지표예요."
+   "why": "실업률이 오르면 경기 둔화 우려와 금리 인하 기대가 함께 커져요."
+  },
+  {
+   "date": "2026-11-06",
+   "timeKst": "22:30",
+   "importance": 2,
+   "ko": "평균 시간당 임금 전월 대비",
+   "en": "Average Hourly Earnings MoM (Oct)",
+   "actual": null,
+   "forecast": null,
+   "previous": "0.1%",
+   "why": "임금이 빠르게 오르면 물가 압력으로 이어져 금리 기대를 바꿀 수 있어요."
+  },
+  {
+   "date": "2026-11-07",
+   "timeKst": "00:00",
+   "importance": 2,
+   "ko": "미시간대 소비자심리지수(예비치)",
+   "en": "UMich Consumer Sentiment Prel (Nov)",
+   "actual": null,
+   "forecast": "48.5",
+   "previous": "48.0",
+   "why": "소비 심리가 바닥권이라 소비 관련주 흐름을 가늠하는 데 쓰여요."
+  },
+  {
+   "date": "2026-11-07",
+   "timeKst": "00:00",
+   "importance": 2,
+   "ko": "미시간대 1년 기대인플레이션(예비치)",
+   "en": "UMich 1-Yr Inflation Expectations Prel (Nov)",
+   "actual": null,
+   "forecast": "4.4%",
+   "previous": "4.7%",
+   "why": "기대인플레이션이 높으면 연준이 금리를 낮추기 어려워져요."
   }
  ],
  "earnings": [
-  {
-   "date": "2026-10-29",
-   "timeKst": "05:00",
-   "t": "MSFT",
-   "name": "마이크로소프트",
-   "when": "장 마감 후",
-   "why": "애저 성장률과 AI 설비투자 계획을 봐요 (발표 완료, 시간외 +4%)."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "05:00",
-   "t": "GOOGL",
-   "name": "알파벳",
-   "when": "장 마감 후",
-   "why": "클라우드 성장과 설비투자·현금흐름을 봐요 (발표 완료, 시간외 -10%대)."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "",
-   "t": "LLY",
-   "name": "일라이 릴리",
-   "when": "장 시작 전",
-   "why": "비만치료제 매출과 연간 가이던스를 봐요."
-  },
-  {
-   "date": "2026-10-29",
-   "timeKst": "",
-   "t": "MA",
-   "name": "마스터카드",
-   "when": "장 시작 전",
-   "why": "결제액 증가율과 해외 결제 흐름을 봐요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "05:00",
-   "t": "AMZN",
-   "name": "아마존",
-   "when": "장 마감 후",
-   "why": "AWS 성장률과 2027년 설비투자 계획을 봐요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "05:00",
-   "t": "INTC",
-   "name": "인텔",
-   "when": "장 마감 후",
-   "why": "총이익률 42% 유지 여부와 18A 공정 진행을 봐요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "05:00",
-   "t": "COIN",
-   "name": "코인베이스",
-   "when": "장 마감 후",
-   "why": "거래 매출과 스테이블코인 수익, 비용 절감을 봐요."
-  },
   {
    "date": "2026-10-30",
    "timeKst": "",
    "t": "XOM",
    "name": "엑슨모빌",
    "when": "장 시작 전",
-   "why": "고유가 속 생산량과 자사주 매입 계획을 봐요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "",
-   "t": "CVX",
-   "name": "셰브론",
-   "when": "장 시작 전",
-   "why": "유가 상승이 이익과 배당 여력에 얼마나 반영됐는지 봐요."
-  },
-  {
-   "date": "2026-10-30",
-   "timeKst": "",
-   "t": "ABBV",
-   "name": "애브비",
-   "when": "장 시작 전",
-   "why": "주력 면역 치료제 매출과 연간 전망을 봐요."
+   "why": "정제 마진 개선과 파생상품 평가손실 규모를 봐요."
   },
   {
    "date": "2026-11-03",
-   "timeKst": "06:00",
+   "timeKst": "",
    "t": "AAPL",
    "name": "애플",
    "when": "장 마감 후",
-   "why": "아이폰 판매와 연말 분기 전망, 메모리 비용 영향을 봐요."
+   "why": "아이폰 듀오 수요와 메모리 원가에 따른 총이익률을 봐요."
   },
   {
    "date": "2026-11-03",
-   "timeKst": "06:00",
+   "timeKst": "",
    "t": "PLTR",
    "name": "팔란티어",
    "when": "장 마감 후",
-   "why": "미국 기업 고객 매출 성장과 연간 가이던스 상향 여부를 봐요."
+   "why": "매출 성장 속도가 높은 밸류에이션을 정당화하는지 봐요."
   },
   {
    "date": "2026-11-04",
-   "timeKst": "06:00",
+   "timeKst": "",
    "t": "AMD",
    "name": "AMD",
    "when": "장 마감 후",
-   "why": "데이터센터 GPU 매출과 메타·오픈AI 공급 일정을 봐요."
+   "why": "데이터센터 GPU 매출과 4분기 가이던스를 봐요."
   },
   {
    "date": "2026-11-04",
@@ -279,7 +218,7 @@
    "t": "UBER",
    "name": "우버",
    "when": "장 시작 전",
-   "why": "예약 증가율과 로보택시 대응 전략을 봐요."
+   "why": "로보택시 경쟁 속 예약 증가율과 이익 감소 폭을 봐요."
   },
   {
    "date": "2026-11-04",
@@ -287,7 +226,15 @@
    "t": "MCD",
    "name": "맥도날드",
    "when": "장 시작 전",
-   "why": "미국 동일매장 매출과 저소득층 소비 흐름을 봐요."
+   "why": "저소득층 소비 둔화 속 미국 동일매장 매출을 봐요."
+  },
+  {
+   "date": "2026-11-06",
+   "timeKst": "",
+   "t": "IONQ",
+   "name": "아이온큐",
+   "when": "장 마감 후",
+   "why": "매출 성장과 증자 이후 현금 사용 계획을 봐요."
   }
  ]
 }

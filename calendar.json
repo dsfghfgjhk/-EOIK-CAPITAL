@@ -1,116 +1,72 @@
 {
- "weekOf": "2026-11-06",
- "generatedAt": "2026-11-05T21:52:45Z",
+ "weekOf": "2026-11-07",
+ "generatedAt": "2026-11-06T21:56:00Z",
  "events": [
-  {
-   "date": "2026-11-06",
-   "timeKst": "09:00",
-   "importance": 1,
-   "ko": "로건 댈러스 연은 총재 토론 진행",
-   "en": "Fed's Logan moderates discussion",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "연준 인사의 금리 관련 발언이 시장 금리 기대를 흔들 수 있어요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "22:30",
-   "importance": 3,
-   "ko": "비농업 고용(10월)",
-   "en": "Nonfarm Payrolls (Oct)",
-   "actual": null,
-   "forecast": "6.5만 명",
-   "previous": "2.9만 명",
-   "why": "고용이 예상보다 약하면 경기 우려가, 강하면 금리 부담이 커져 주식시장이 크게 움직여요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "22:30",
-   "importance": 3,
-   "ko": "실업률(10월)",
-   "en": "Unemployment Rate (Oct)",
-   "actual": null,
-   "forecast": "4.2%",
-   "previous": "4.2%",
-   "why": "실업률이 오르면 경기 둔화 신호로 읽혀 위험자산 심리가 약해질 수 있어요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "22:30",
-   "importance": 2,
-   "ko": "평균 시간당 임금 전월 대비(10월)",
-   "en": "Average Hourly Earnings MoM (Oct)",
-   "actual": null,
-   "forecast": "0.3%",
-   "previous": "0.1%",
-   "why": "임금 상승이 빠르면 물가 압력으로 이어져 금리 인하 기대가 줄어요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "23:10",
-   "importance": 1,
-   "ko": "무살렘 세인트루이스 연은 총재 연설",
-   "en": "Fed's Musalem speaks",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "고용지표 직후 연준 인사의 해석이 금리 전망에 영향을 줘요."
-  },
   {
    "date": "2026-11-07",
    "timeKst": "00:00",
    "importance": 2,
-   "ko": "미시간대 소비자심리지수 예비치(11월)",
-   "en": "UMich Consumer Sentiment Prelim (Nov)",
-   "actual": null,
-   "forecast": "48",
-   "previous": "48",
-   "why": "소비 심리가 약하면 소비 관련주와 경기 전망에 부담이 돼요."
-  },
-  {
-   "date": "2026-11-10",
-   "timeKst": "22:30",
-   "importance": 3,
-   "ko": "소비자물가지수(CPI) 전년 대비(10월)",
-   "en": "CPI YoY (Oct)",
+   "ko": "미시간대 소비자심리지수(11월 예비)",
+   "en": "UMich Consumer Sentiment (Prelim)",
    "actual": null,
    "forecast": null,
-   "previous": "3.7%",
-   "why": "물가가 다시 뛰면 연준의 금리 인상 우려가 커져 성장주에 부담이에요."
+   "previous": null,
+   "why": "소비 여력과 기대 인플레이션을 보여 줘 소비주와 금리 기대에 영향을 줘요."
+  },
+  {
+   "date": "2026-11-10",
+   "timeKst": "01:00",
+   "importance": 1,
+   "ko": "뉴욕 연은 1년 기대 인플레이션",
+   "en": "NY Fed 1-Yr Inflation Expectations",
+   "actual": null,
+   "forecast": null,
+   "previous": "3.9%",
+   "why": "소비자가 느끼는 물가 상승 기대가 높으면 금리 인상 우려가 커져요."
   },
   {
    "date": "2026-11-10",
    "timeKst": "22:30",
    "importance": 3,
-   "ko": "소비자물가지수(CPI) 전월 대비(10월)",
-   "en": "CPI MoM (Oct)",
+   "ko": "소비자물가지수(CPI) 전년 대비",
+   "en": "CPI YoY",
+   "actual": null,
+   "forecast": "3.7%",
+   "previous": "3.7%",
+   "why": "12월 금리 인상 여부를 가를 핵심 물가 지표라 증시 전체가 크게 움직일 수 있어요."
+  },
+  {
+   "date": "2026-11-10",
+   "timeKst": "22:30",
+   "importance": 3,
+   "ko": "소비자물가지수(CPI) 전월 대비",
+   "en": "CPI MoM",
    "actual": null,
    "forecast": null,
    "previous": "0.6%",
-   "why": "한 달 물가 흐름으로 유가 급등 영향이 얼마나 남았는지 보여줘요."
+   "why": "유가 상승이 물가에 얼마나 번지는지 보여 줘 금리 기대를 바꿔요."
   },
   {
    "date": "2026-11-10",
    "timeKst": "22:30",
    "importance": 3,
-   "ko": "근원 CPI 전년 대비(10월)",
-   "en": "Core CPI YoY (Oct)",
+   "ko": "근원 CPI 전년 대비",
+   "en": "Core CPI YoY",
    "actual": null,
    "forecast": null,
    "previous": "2.6%",
-   "why": "에너지·식품을 뺀 기조 물가로 연준이 가장 주목하는 숫자 중 하나예요."
+   "why": "에너지·식품을 뺀 물가라 연준이 기조적 인플레이션을 판단할 때 중요하게 봐요."
   },
   {
    "date": "2026-11-10",
    "timeKst": "22:30",
-   "importance": 2,
-   "ko": "근원 CPI 전월 대비(10월)",
-   "en": "Core CPI MoM (Oct)",
+   "importance": 3,
+   "ko": "근원 CPI 전월 대비",
+   "en": "Core CPI MoM",
    "actual": null,
    "forecast": null,
    "previous": "0.3%",
-   "why": "근원 물가가 빠르게 오르면 금리 부담이 커져요."
+   "why": "예상보다 높으면 금리 인상 기대가 커져 성장주에 부담이 돼요."
   },
   {
    "date": "2026-11-12",
@@ -121,52 +77,79 @@
    "actual": null,
    "forecast": null,
    "previous": "18.9만 건",
-   "why": "주간 고용 흐름을 가장 빨리 보여줘 경기 판단에 쓰여요."
+   "why": "고용 시장이 식는지 매주 확인하는 지표라 경기와 금리 전망에 영향을 줘요."
   },
   {
    "date": "2026-11-13",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "생산자물가지수(PPI) 전월 대비(10월)",
-   "en": "PPI MoM (Oct)",
+   "ko": "생산자물가지수(PPI) 전월 대비",
+   "en": "PPI MoM",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "기업 단계 물가가 소비자 물가로 번질지 가늠하게 해줘요."
+   "why": "기업이 받는 가격 흐름이라 소비자물가의 선행 신호로 읽혀요."
+  },
+  {
+   "date": "2026-11-14",
+   "timeKst": "00:50",
+   "importance": 1,
+   "ko": "보먼 연준 감독 부의장 발언",
+   "en": "Fed Vice Chair Bowman Speaks",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "금융 규제와 금리에 대한 연준 인사의 시각이 은행주와 금리 기대에 영향을 줘요."
   }
  ],
  "earnings": [
   {
-   "date": "2026-11-06",
+   "date": "2026-11-07",
    "timeKst": "",
-   "t": "IONQ",
-   "name": "아이온큐",
-   "when": "장 마감 후",
-   "why": "증자 뒤 매출 성장과 손실 축소 여부를 봐요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "",
-   "t": "ABNB",
-   "name": "에어비앤비",
-   "when": "장 마감 후",
-   "why": "연말 여행 수요 전망이 소비 심리를 가늠하게 해요."
-  },
-  {
-   "date": "2026-11-06",
-   "timeKst": "",
-   "t": "HUM",
-   "name": "휴매나",
+   "t": "BRK.B",
+   "name": "버크셔 해서웨이",
    "when": "장 시작 전",
-   "why": "메디케어 어드밴티지 비용 흐름이 UNH 등 보험주에 영향을 줘요."
+   "why": "보유 현금 규모와 자사주 매입 여부를 봐요."
+  },
+  {
+   "date": "2026-11-09",
+   "timeKst": "",
+   "t": "KKR",
+   "name": "KKR",
+   "when": "장 시작 전",
+   "why": "사모시장 자금 흐름과 AI 인프라 투자 의견을 봐요."
+  },
+  {
+   "date": "2026-11-09",
+   "timeKst": "",
+   "t": "CEG",
+   "name": "컨스텔레이션 에너지",
+   "when": "장 시작 전",
+   "why": "데이터센터 전력 수요 전망이 선거 뒤 규제 우려를 이길지 봐요."
+  },
+  {
+   "date": "2026-11-10",
+   "timeKst": "06:00",
+   "t": "TTWO",
+   "name": "테이크투 인터랙티브",
+   "when": "장 마감 후",
+   "why": "GTA 6 출시 일정과 연간 예약 전망을 봐요."
   },
   {
    "date": "2026-11-13",
-   "timeKst": "06:30",
+   "timeKst": "06:00",
    "t": "CSCO",
    "name": "시스코",
    "when": "장 마감 후",
-   "why": "AI 네트워크 장비 수요가 데이터센터 투자 둔화 우려를 덜어줄지 봐요."
+   "why": "AI 네트워크 장비 주문이 이어지는지 봐요."
+  },
+  {
+   "date": "2026-11-13",
+   "timeKst": "06:00",
+   "t": "AMAT",
+   "name": "어플라이드 머티리얼즈",
+   "when": "장 마감 후",
+   "why": "반도체 장비 수요 전망이 최근 장비주 급락을 정당화하는지 봐요."
   }
  ]
 }

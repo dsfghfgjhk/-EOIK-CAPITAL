@@ -1,106 +1,7 @@
 {
- "weekOf": "2026-11-12",
- "generatedAt": "2026-11-11T22:30:00Z",
+ "weekOf": "2026-11-13",
+ "generatedAt": "2026-11-12T22:25:00Z",
  "events": [
-  {
-   "date": "2026-11-12",
-   "timeKst": "22:30",
-   "importance": 2,
-   "ko": "신규 실업수당 청구건수",
-   "en": "Initial Jobless Claims",
-   "actual": null,
-   "forecast": "19.5만 건",
-   "previous": "18.9만 건",
-   "why": "고용시장이 식는지 매주 확인하는 지표라 금리 기대와 주가에 바로 반영돼요."
-  },
-  {
-   "date": "2026-11-12",
-   "timeKst": "22:30",
-   "importance": 1,
-   "ko": "연속 실업수당 청구건수",
-   "en": "Continuing Jobless Claims",
-   "actual": null,
-   "forecast": "171만 건",
-   "previous": "171.8만 건",
-   "why": "실직자가 재취업에 얼마나 오래 걸리는지 보여줘서 고용 둔화 신호로 읽혀요."
-  },
-  {
-   "date": "2026-11-12",
-   "timeKst": "23:00",
-   "importance": 1,
-   "ko": "해맥 클리블랜드 연은 총재 연설",
-   "en": "Fed Hammack Speech",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "CPI 직후라 연준 인사의 물가 인식이 금리 경로 기대를 흔들 수 있어요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "00:00",
-   "importance": 2,
-   "ko": "기존주택판매 (10월)",
-   "en": "Existing Home Sales",
-   "actual": null,
-   "forecast": "385만 건",
-   "previous": "399만 건",
-   "why": "높은 모기지 금리 속 주택 수요를 보여줘서 건설·홈인테리어주에 영향을 줘요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "00:00",
-   "importance": 1,
-   "ko": "바 연준 이사 연설",
-   "en": "Fed Barr Speech",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "연준 이사의 금리·규제 발언이 금융주와 금리 기대에 영향을 줄 수 있어요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "01:30",
-   "importance": 1,
-   "ko": "굴스비 시카고 연은 총재 연설",
-   "en": "Fed Goolsbee Speech",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "물가 재가속 우려에 대한 연준 인사의 시각이 금리 전망에 반영돼요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "03:00",
-   "importance": 1,
-   "ko": "미 국채 30년물 입찰",
-   "en": "30-Year Bond Auction",
-   "actual": null,
-   "forecast": null,
-   "previous": "5.618%",
-   "why": "입찰 수요가 약하면 장기금리가 올라 성장주에 부담이 돼요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "03:10",
-   "importance": 1,
-   "ko": "데일리 샌프란시스코 연은 총재 연설",
-   "en": "Fed Daly Speech",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "연준 인사의 추가 금리 조정 시사 여부가 시장 기대를 움직여요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "04:00",
-   "importance": 1,
-   "ko": "월간 재정수지 (10월)",
-   "en": "Monthly Budget Statement",
-   "actual": null,
-   "forecast": "-2,986억 달러",
-   "previous": "-270억 달러",
-   "why": "재정적자 규모가 국채 발행 부담과 장기금리 방향에 영향을 줘요."
-  },
   {
    "date": "2026-11-13",
    "timeKst": "08:30",
@@ -110,73 +11,73 @@
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "FOMC 핵심 인사라 발언이 연준 정책 방향의 신호로 받아들여져요."
+   "why": "12월 금리 인상 폭에 대한 힌트가 나오면 금리에 민감한 기술주가 크게 흔들릴 수 있어요."
   },
   {
    "date": "2026-11-13",
    "timeKst": "22:30",
    "importance": 3,
-   "ko": "생산자물가지수(PPI) 전월 대비 (10월)",
-   "en": "PPI MoM",
+   "ko": "생산자물가지수(PPI) 전월 대비",
+   "en": "PPI MoM (Oct)",
    "actual": null,
    "forecast": "0.4%",
    "previous": "1.3%",
-   "why": "기업 원가 압력이 소비자물가로 번질지 보여줘서 금리 기대를 좌우해요."
+   "why": "기업 물가가 또 뜨거우면 12월 금리 인상 우려가 커져 주식시장에 부담이 돼요."
   },
   {
    "date": "2026-11-13",
    "timeKst": "22:30",
    "importance": 3,
-   "ko": "근원 PPI 전월 대비 (10월)",
-   "en": "Core PPI MoM",
+   "ko": "근원 PPI 전월 대비",
+   "en": "Core PPI MoM (Oct)",
    "actual": null,
    "forecast": "0.3%",
    "previous": "0.7%",
-   "why": "식품·에너지를 뺀 물가라 기조적 인플레이션 압력을 판단하는 데 쓰여요."
+   "why": "식품·에너지를 뺀 물가 흐름이라 연준이 금리를 얼마나 올릴지 가늠하는 핵심 지표예요."
   },
   {
    "date": "2026-11-13",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "PPI 전년 대비 (10월)",
-   "en": "PPI YoY",
+   "ko": "PPI 전년 대비",
+   "en": "PPI YoY (Oct)",
    "actual": null,
    "forecast": "6.6%",
    "previous": "6.3%",
-   "why": "연간 상승률이 6%대라 물가 재가속 우려가 커지면 금리 부담이 커져요."
+   "why": "연간 상승률이 더 높아지면 인플레이션이 굳어진다는 신호로 읽혀요."
   },
   {
    "date": "2026-11-13",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "근원 PPI 전년 대비 (10월)",
-   "en": "Core PPI YoY",
+   "ko": "근원 PPI 전년 대비",
+   "en": "Core PPI YoY (Oct)",
    "actual": null,
-   "forecast": "5%",
-   "previous": "5%",
-   "why": "근원 물가가 안 내려오면 연준이 긴축 기조를 오래 유지할 수 있어요."
+   "forecast": "5.0%",
+   "previous": "5.0%",
+   "why": "근원 물가가 5% 안팎에서 내려오지 않으면 금리 부담이 이어져요."
+  },
+  {
+   "date": "2026-11-14",
+   "timeKst": "00:00",
+   "importance": 1,
+   "ko": "바 연준 이사 연설",
+   "en": "Fed Barr Speech",
+   "actual": null,
+   "forecast": null,
+   "previous": null,
+   "why": "인공지능과 불평등에 관한 연설이라 시장 영향은 작지만 정책 관련 발언이 나올 수 있어요."
   },
   {
    "date": "2026-11-14",
    "timeKst": "00:50",
    "importance": 2,
-   "ko": "보우먼 연준 부의장 연설",
-   "en": "Fed Bowman Speech",
+   "ko": "보먼 연준 감독 부의장 발언",
+   "en": "Fed Bowman Remarks",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "PPI 직후 연준 지도부의 물가 평가가 금리 경로 기대에 영향을 줘요."
-  },
-  {
-   "date": "2026-11-14",
-   "timeKst": "02:00",
-   "importance": 1,
-   "ko": "데일리 샌프란시스코 연은 총재 연설",
-   "en": "Fed Daly Speech",
-   "actual": null,
-   "forecast": null,
-   "previous": null,
-   "why": "한 주 동안 나온 물가 지표에 대한 연준의 해석을 엿볼 수 있어요."
+   "why": "은행 규제와 경제 전망 발언이 금융주와 금리 기대에 영향을 줄 수 있어요."
   },
   {
    "date": "2026-11-14",
@@ -187,220 +88,116 @@
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "연준 부의장 발언은 다음 FOMC 방향의 힌트로 해석돼요."
+   "why": "연준 2인자의 발언이라 12월 회의 방향을 가늠하는 데 쓰여요."
   },
   {
    "date": "2026-11-16",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "뉴욕 엠파이어스테이트 제조업지수 (11월)",
-   "en": "NY Empire State Manufacturing",
+   "ko": "뉴욕 엠파이어스테이트 제조업지수",
+   "en": "NY Empire State Manufacturing (Nov)",
    "actual": null,
    "forecast": "10",
    "previous": "25.5",
-   "why": "11월 첫 제조업 지표라 경기 흐름 변화를 가장 먼저 보여줘요."
+   "why": "11월 첫 제조업 지표라 경기 둔화 여부를 빨리 보여줘요."
   },
   {
    "date": "2026-11-17",
    "timeKst": "22:30",
    "importance": 3,
-   "ko": "소매판매 전월 대비 (10월)",
-   "en": "Retail Sales MoM",
+   "ko": "소매판매 전월 대비",
+   "en": "Retail Sales MoM (Oct)",
    "actual": null,
    "forecast": "0.6%",
    "previous": "0.8%",
-   "why": "미국 경제의 핵심인 소비가 버티는지 보여줘서 소비주와 금리 기대에 직결돼요."
+   "why": "소비가 미국 경제의 약 70%라 소매판매가 약하면 경기 우려, 강하면 금리 우려가 커져요."
   },
   {
    "date": "2026-11-17",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "자동차 제외 소매판매 전월 대비 (10월)",
-   "en": "Retail Sales Ex Autos MoM",
+   "ko": "근원 소매판매(자동차 제외) 전월 대비",
+   "en": "Retail Sales Ex Autos MoM (Oct)",
    "actual": null,
-   "forecast": "0.5%",
+   "forecast": "0.4%",
    "previous": "0.9%",
-   "why": "변동이 큰 자동차를 빼고 소비의 기초 체력을 확인할 수 있어요."
+   "why": "자동차를 뺀 소비 흐름이라 실제 소비 체력을 더 잘 보여줘요."
   },
   {
    "date": "2026-11-17",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "소매판매 컨트롤그룹 전월 대비 (10월)",
-   "en": "Retail Sales Control Group MoM",
+   "ko": "소매판매(자동차·휘발유 제외) 전월 대비",
+   "en": "Retail Sales Ex Gas/Autos MoM (Oct)",
    "actual": null,
-   "forecast": "0.1%",
-   "previous": "0.1%",
-   "why": "GDP 소비 항목 계산에 쓰여서 4분기 성장률 전망을 바꿀 수 있어요."
-  },
-  {
-   "date": "2026-11-17",
-   "timeKst": "22:30",
-   "importance": 1,
-   "ko": "수입물가 전월 대비 (10월)",
-   "en": "Import Prices MoM",
-   "actual": null,
-   "forecast": "1.7%",
-   "previous": "1.1%",
-   "why": "수입물가가 오르면 소비자물가 상승 압력이 커져요."
+   "forecast": "0.3%",
+   "previous": "0.2%",
+   "why": "유가 영향을 뺀 소비라 소비주 실적 전망과 직결돼요."
   },
   {
    "date": "2026-11-17",
    "timeKst": "23:15",
    "importance": 2,
-   "ko": "산업생산 전월 대비 (10월)",
-   "en": "Industrial Production MoM",
+   "ko": "산업생산 전월 대비",
+   "en": "Industrial Production MoM (Oct)",
    "actual": null,
    "forecast": "0.6%",
    "previous": "0.7%",
-   "why": "공장·광업·유틸리티 생산 흐름으로 제조업 경기를 확인할 수 있어요."
-  },
-  {
-   "date": "2026-11-17",
-   "timeKst": "23:15",
-   "importance": 1,
-   "ko": "설비가동률 (10월)",
-   "en": "Capacity Utilization",
-   "actual": null,
-   "forecast": "76.9%",
-   "previous": "76.9%",
-   "why": "가동률이 높으면 공급 쪽 물가 압력이 커질 수 있다는 신호예요."
-  },
-  {
-   "date": "2026-11-18",
-   "timeKst": "00:00",
-   "importance": 1,
-   "ko": "NAHB 주택시장지수 (11월)",
-   "en": "NAHB Housing Market Index",
-   "actual": null,
-   "forecast": "29",
-   "previous": "29",
-   "why": "주택건설업체 심리를 보여줘서 건설·자재주 흐름에 영향을 줘요."
-  },
-  {
-   "date": "2026-11-18",
-   "timeKst": "00:00",
-   "importance": 1,
-   "ko": "기업재고 전월 대비 (9월)",
-   "en": "Business Inventories MoM",
-   "actual": null,
-   "forecast": "0.2%",
-   "previous": "0.4%",
-   "why": "재고 증감이 GDP 계산과 향후 생산 흐름에 영향을 줘요."
+   "why": "공장 가동이 꺾이면 경기 둔화 신호로 읽혀 산업재 주가에 영향을 줘요."
   },
   {
    "date": "2026-11-18",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "주택착공건수 (10월)",
-   "en": "Housing Starts",
+   "ko": "주택착공·건축허가",
+   "en": "Housing Starts & Building Permits (Oct)",
    "actual": null,
-   "forecast": "120만 건",
-   "previous": "122.1만 건",
-   "why": "고금리 속 주택 공급 흐름을 보여줘서 건설·홈인테리어주에 영향을 줘요."
-  },
-  {
-   "date": "2026-11-18",
-   "timeKst": "22:30",
-   "importance": 2,
-   "ko": "건축허가건수 (10월, 잠정)",
-   "en": "Building Permits",
-   "actual": null,
-   "forecast": "136만 건",
-   "previous": "139.8만 건",
-   "why": "향후 착공의 선행지표라 주택경기 방향을 미리 읽을 수 있어요."
-  },
-  {
-   "date": "2026-11-19",
-   "timeKst": "00:00",
-   "importance": 1,
-   "ko": "잠정주택판매 전월 대비 (10월)",
-   "en": "Pending Home Sales MoM",
-   "actual": null,
-   "forecast": "-1.0%",
-   "previous": "-7.3%",
-   "why": "계약 기준이라 향후 기존주택 거래 흐름을 미리 보여줘요."
+   "forecast": null,
+   "previous": null,
+   "why": "금리가 5% 근처라 주택 경기가 얼마나 식는지 확인하는 지표예요."
   },
   {
    "date": "2026-11-19",
    "timeKst": "04:00",
    "importance": 3,
-   "ko": "FOMC 의사록 공개 (10월 회의)",
-   "en": "FOMC Minutes",
+   "ko": "FOMC 의사록 공개",
+   "en": "FOMC Minutes (Oct 27-28)",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "위원들의 물가·금리 논의가 드러나 12월 FOMC 전망이 크게 바뀔 수 있어요."
+   "why": "10월 회의에서 위원들이 추가 금리 인상을 얼마나 논의했는지 드러나 시장이 크게 반응할 수 있어요."
   },
   {
    "date": "2026-11-19",
    "timeKst": "22:30",
-   "importance": 2,
+   "importance": 3,
    "ko": "신규 실업수당 청구건수",
    "en": "Initial Jobless Claims",
    "actual": null,
-   "forecast": "19.4만 건",
+   "forecast": null,
    "previous": null,
-   "why": "고용시장이 식는지 매주 확인하는 지표라 금리 기대와 주가에 바로 반영돼요."
-  },
-  {
-   "date": "2026-11-19",
-   "timeKst": "22:30",
-   "importance": 1,
-   "ko": "연속 실업수당 청구건수",
-   "en": "Continuing Jobless Claims",
-   "actual": null,
-   "forecast": "172.5만 건",
-   "previous": null,
-   "why": "재취업이 어려워지는지 보여줘서 고용 둔화 신호로 읽혀요."
+   "why": "고용시장이 여전히 탄탄한지 매주 확인하는 지표라 금리 전망에 영향을 줘요."
   },
   {
    "date": "2026-11-19",
    "timeKst": "22:30",
    "importance": 2,
-   "ko": "필라델피아 연은 제조업지수 (11월)",
-   "en": "Philadelphia Fed Manufacturing",
-   "actual": null,
-   "forecast": "19",
-   "previous": "20.9",
-   "why": "엠파이어 지수와 함께 11월 제조업 경기와 가격 압력을 확인할 수 있어요."
-  },
-  {
-   "date": "2026-11-19",
-   "timeKst": "22:50",
-   "importance": 1,
-   "ko": "해맥 클리블랜드 연은 총재 연설",
-   "en": "Fed Hammack Speech",
+   "ko": "필라델피아 연은 제조업지수",
+   "en": "Philly Fed Manufacturing (Nov)",
    "actual": null,
    "forecast": null,
    "previous": null,
-   "why": "FOMC 의사록 직후 연준 인사의 해석이 금리 기대를 다시 움직일 수 있어요."
+   "why": "지역 제조업 경기와 가격 압력을 보여줘 인플레이션 판단에 쓰여요."
   }
  ],
  "earnings": [
   {
-   "date": "2026-11-13",
-   "timeKst": "",
-   "t": "CSCO",
-   "name": "시스코",
-   "when": "장 마감 후",
-   "why": "AI 데이터센터 네트워크 장비 수주와 가이던스를 봐요."
-  },
-  {
-   "date": "2026-11-13",
-   "timeKst": "",
-   "t": "AMAT",
-   "name": "어플라이드 머티어리얼즈",
-   "when": "장 마감 후",
-   "why": "반도체 장비 수요와 중국 매출 비중, 내년 전망을 봐요."
-  },
-  {
    "date": "2026-11-17",
-   "timeKst": "21:30",
+   "timeKst": "",
    "t": "DIS",
-   "name": "디즈니",
+   "name": "월트디즈니",
    "when": "장 시작 전",
-   "why": "스트리밍 수익성과 테마파크 수요를 봐요."
+   "why": "추가 1주 효과(약 6억 달러)와 테마파크·스트리밍 이익, 감원 계획이 관심이에요."
   },
   {
    "date": "2026-11-17",
@@ -408,23 +205,15 @@
    "t": "HD",
    "name": "홈디포",
    "when": "장 시작 전",
-   "why": "고금리 속 주택 리모델링 수요와 연간 가이던스를 봐요."
-  },
-  {
-   "date": "2026-11-18",
-   "timeKst": "06:20",
-   "t": "NVDA",
-   "name": "엔비디아",
-   "when": "장 마감 후",
-   "why": "데이터센터 매출과 다음 분기 가이던스가 AI 반도체 전체 흐름을 좌우해요."
+   "why": "고금리 속 주택 수리 수요가 얼마나 버티는지 봐요."
   },
   {
    "date": "2026-11-18",
    "timeKst": "",
-   "t": "TGT",
-   "name": "타깃",
-   "when": "장 시작 전",
-   "why": "연말 쇼핑 시즌 전망과 소비 둔화 여부를 봐요."
+   "t": "NVDA",
+   "name": "엔비디아",
+   "when": "장 마감 후",
+   "why": "젠슨 황 사임 뒤 첫 실적이라 데이터센터 매출과 고객 이탈 여부가 핵심이에요."
   },
   {
    "date": "2026-11-18",
@@ -432,7 +221,7 @@
    "t": "LOW",
    "name": "로우스",
    "when": "장 시작 전",
-   "why": "주택 관련 소비와 동일점포 매출 흐름을 봐요."
+   "why": "주택 관련 소비 흐름을 홈디포와 함께 확인해요."
   },
   {
    "date": "2026-11-18",
@@ -440,7 +229,15 @@
    "t": "TJX",
    "name": "TJX",
    "when": "장 시작 전",
-   "why": "할인 유통 수요로 소비자의 가격 민감도를 확인해요."
+   "why": "할인 소매점 수요로 소비자 체력을 가늠해요."
+  },
+  {
+   "date": "2026-11-18",
+   "timeKst": "",
+   "t": "TGT",
+   "name": "타깃",
+   "when": "장 시작 전",
+   "why": "연말 쇼핑 시즌 전망이 소매주 전반에 영향을 줘요."
   },
   {
    "date": "2026-11-19",
@@ -448,15 +245,23 @@
    "t": "PANW",
    "name": "팔로알토 네트웍스",
    "when": "장 마감 후",
-   "why": "AI 보안 플랫폼 전환 속도와 차세대 보안 매출을 봐요."
+   "why": "보안 소프트웨어 수요와 AI 관련 매출 성장이 관심이에요."
   },
   {
    "date": "2026-11-19",
-   "timeKst": "21:00",
+   "timeKst": "",
    "t": "WMT",
    "name": "월마트",
    "when": "장 시작 전",
-   "why": "미국 소비 체력과 연말 시즌 가이던스, 관세 영향을 봐요."
+   "why": "미국 소비 전반과 연말 가이던스를 보여주는 대표 실적이에요."
+  },
+  {
+   "date": "2026-11-20",
+   "timeKst": "",
+   "t": "INTU",
+   "name": "인튜이트",
+   "when": "장 마감 후",
+   "why": "AI 경쟁 속 소프트웨어 성장세가 유지되는지 봐요."
   }
  ]
 }
